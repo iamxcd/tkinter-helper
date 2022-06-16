@@ -129,6 +129,9 @@ export default {
         type: type,
         top: top,
         left: left,
+        width: 60,
+        height: 30,
+        text: "按钮",
       });
     },
     allowDrop(e) {

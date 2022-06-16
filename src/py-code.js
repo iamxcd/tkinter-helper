@@ -4,6 +4,7 @@ export default class PyCode {
     export_code() {
         return `
 import tkinter as tk
+from tkinter import ttk
 `
     }
 
@@ -44,9 +45,7 @@ def init():
         for (const i in elemetns) {
             let e = elemetns[i]
             code += `
-    
     ${e['type']}_${e['id']}(root)
-
         `
         }
 
@@ -66,8 +65,8 @@ if __name__ == "__main__":
         return `
 
 def tk_button_${ele.id}(root):
-    btn = tk.Button(root, text ="${ele?.text}")
-    btn.place(x=${ele.top}, y=${ele.left}, width=${ele.width}, height=${ele.height})
+    btn = ttk.Button(root, text ="${ele?.text}")
+    btn.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
 `
     }
 }
