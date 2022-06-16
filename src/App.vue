@@ -1,8 +1,17 @@
 <template>
   <div class="home">
+    <div class="header">
+      <div class="logo">
+        LOGO
+      </div>
+      <div class="menu">
+        <el-button type="primary"
+          @click="copyPy()">复制</el-button>
+      </div>
+    </div>
     <div>
       <button draggable="true"
-        id="py_btn"
+        id="tk_button"
         @dragstart="dragstart($event)">元素</button>
     </div>
     <div id="window"
@@ -27,6 +36,8 @@
 
 <script>
 import uniqid from "uniqid";
+
+import GenerateCode from "./generate-code";
 export default {
   name: "HomeView",
   data() {
@@ -127,6 +138,11 @@ export default {
       this.window.width = width;
       this.window.height = height;
     },
+    copyPy() {
+      let t = new GenerateCode(this.window, this.elements);
+      let code = t.build();
+      console.log(code);
+    },
   },
 };
 </script>
@@ -141,6 +157,22 @@ export default {
   border: 1px solid #cccccc;
   border-top-width: 4px;
   background: url("./assets/bg.png") 0px 0px;
+}
+.header {
+  border-bottom: 1px solid #d1d1d1;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  .logo {
+    flex: 1;
+    width: 200px;
+    font-size: 24px;
+    line-height: 70px;
+    padding-left: 30px;
+  }
+
+  .menu {
+  }
 }
 </style>
 
