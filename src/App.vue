@@ -56,6 +56,7 @@
           type="text">
       </div>
     </div>
+    <code-view></code-view>
   </div>
 </template>
 
@@ -68,7 +69,7 @@ export default {
   data() {
     return {
       window: {
-        top: 100,
+        top: 130,
         left: 450,
         width: 600,
         height: 500,

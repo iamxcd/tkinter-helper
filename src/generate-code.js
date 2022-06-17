@@ -1,4 +1,4 @@
-import PyCode from "./py-code";
+import PyTpl from "./py-tpl";
 export default class GenerateCode {
     constructor(win, elements) {
         this.win = win
@@ -6,20 +6,22 @@ export default class GenerateCode {
     }
 
     build() {
-        let py = new PyCode()
-        let exportcode = py.export_code();
-        let main_win_code = py.main_win(
+        let py = new PyTpl()
+        let depend_package_code = py.depend_package();
+        let vars_code = py.vars(this.elements)
+        let win_code = py.win(
             this.win.text,
             this.win.width,
             this.win.height
         );
         let init_code = py.init(this.elements);
+        let show_code = py.show()
         let func_code = ""
         for (const k in this.elements) {
             func_code += this.create_func(py, this.elements[k])
         }
         let main_code = py.main();
-        let all_code = exportcode + main_win_code + init_code + func_code + main_code
+        let all_code = depend_package_code + vars_code + init_code + win_code + show_code + func_code + main_code
         return all_code
     }
 
