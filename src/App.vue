@@ -34,7 +34,7 @@
     </div>
     <div id="win_title"
       @mousedown="elementMove($event)"
-      :style="{'top':window.top  +'px','left':window.left+'px','width':window.width + 'px'}">
+      :style="{'top':window.top-30+'px','left':window.left+'px','width':window.width + 'px'}">
       <span class="title">{{window.text}}</span>
     </div>
     <div class="attrs_box">
@@ -96,6 +96,10 @@ export default {
       //算出鼠标相对元素的位置
       let disX = e.clientX - ele.offsetLeft;
       let disY = e.clientY - ele.offsetTop;
+
+      if (index == undefined) {
+        disY = disY - 30; // 减去标题栏的高度
+      }
 
       document.onmousemove = (e) => {
         //鼠标按下并移动的事件
@@ -214,7 +218,7 @@ export default {
   position: absolute;
   background-color: #fff;
   border: 1px solid #cccccc;
-  border-top-width: 4px;
+  border-top-width: 2px;
   background: url("./assets/bg.png") 0px 0px;
 }
 #win_title {
