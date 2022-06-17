@@ -18,7 +18,6 @@ class Win:
             let e = elemetns[i]
             vars += `
     ${e.type}_${e.id} = None
-
         `
         }
         return header + vars
@@ -29,15 +28,12 @@ class Win:
         let header = `
     def __init__(self):
         self.root = self.__win()
-           
     `
         let code = "" // 赋值代码
         for (const i in elemetns) {
             let e = elemetns[i]
             code += `
-
         self.${e['type']}_${e['id']} = self.__${e['type']}_${e['id']}()
-
             `
         }
 
@@ -77,6 +73,7 @@ class Win:
         return `
 if __name__ == "__main__":
     win = Win()
+    # TODO 绑定事件或其他处理
     win.show()
 `
     }

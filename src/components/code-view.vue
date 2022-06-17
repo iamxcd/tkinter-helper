@@ -1,35 +1,54 @@
 <template>
   <div>
-    <el-dialog title="提示"
+    <el-dialog title="Python"
       :visible.sync="is_show"
-      width="50%">
-      <codemirror ref="mycode"
-        v-modle="curCode"
-        :options="cmOptions"
-        class="code">
-      </codemirror>
+      width="80%">
+      <codemirror v-model="code"
+        :options="cmOption" />
     </el-dialog>
   </div>
 </template>
 
 <script>
+import { codemirror } from "vue-codemirror";
+import "codemirror/lib/codemirror.css";
+import "codemirror/theme/base16-light.css";
+require("codemirror/mode/python/python.js");
+
 export default {
+  components: {
+    codemirror,
+  },
   data() {
     return {
-      is_show: true,
-      curCode: "777",
-      cmOptions: {
-        mode: "text/x-python", //第一个将模式名称映射到它们的构造函数，第二个将MIME类型映射到模式规范。
-        theme: "liquibyte", //编辑器样式的主题
-        indentWithTabs: true, //在缩进时，是否tabSize 应该用N个制表符替换前N *个空格。默认值为false。
-        smartIndent: true, //是否使用模式提供的上下文相关缩进（或者只是缩进与之前的行相同）。默认为true。
-        lineNumbers: true, //是否在编辑器左侧显示行号。
-        matchBrackets: true, //括号匹配
+      code: "",
+      is_show: false,
+      cmOption: {
+        lineNumbers: true,
+        mode: "text/x-python",
+        theme: "base16-light",
       },
     };
   },
+  methods: {
+    open(code) {
+      this.code = code;
+      this.is_show = true;
+    },
+  },
 };
 </script>
+<style lang="scss" scoped>
+.code {
+  height: auto !important;
+}
+</style>
 
-<style>
+<style lang="scss">
+.el-dialog__body {
+  padding: 0;
+}
+.CodeMirror {
+  height: 500px !important;
+}
 </style>

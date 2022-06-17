@@ -6,7 +6,7 @@
       </div>
       <div class="menu">
         <el-button type="primary"
-          @click="copyPy()">复制</el-button>
+          @click="viewCode()">Python</el-button>
       </div>
     </div>
     <div class="ele_box">
@@ -56,7 +56,7 @@
           type="text">
       </div>
     </div>
-    <code-view></code-view>
+    <code-view ref="code_view"></code-view>
   </div>
 </template>
 
@@ -188,10 +188,10 @@ export default {
       this.elements[index].width = width;
       this.elements[index].height = height;
     },
-    copyPy() {
+    viewCode() {
       let t = new GenerateCode(this.window, this.elements);
       let code = t.build();
-      console.log(code);
+      this.$refs['code_view'].open(code)
     },
   },
   watch: {
