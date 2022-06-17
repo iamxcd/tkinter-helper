@@ -98,8 +98,9 @@ export default {
       console.log(e);
       e.dataTransfer.setData("type", e.target.id);
 
-      e.dataTransfer.setData("x", e.layerX);
-      e.dataTransfer.setData("y", e.layerY);
+      // 获取鼠标拖动位置相对被拖动元素的偏移量
+      e.dataTransfer.setData("x", e.offsetX);
+      e.dataTransfer.setData("y", e.offsetY);
     },
     drop(evt) {
       evt.preventDefault();
