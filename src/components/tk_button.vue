@@ -1,11 +1,18 @@
 <template>
   <button>
-    123
+    {{info.text}}
+    <slot></slot>
   </button>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    info: {
+      type: Object,
+    },
+  },
+};
 </script>
 
 <style>

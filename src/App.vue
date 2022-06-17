@@ -9,7 +9,7 @@
           @click="copyPy()">复制</el-button>
       </div>
     </div>
-    <div>
+    <div class="ele_box">
       <button draggable="true"
         id="tk_button"
         @dragstart="dragstart($event)">元素</button>
@@ -22,14 +22,35 @@
       <component :is="element.type"
         v-for="(element,index) in elements"
         style="position: absolute;"
-        :style="{'top':element.top+'px','left':element.left+'px'}"
+        :id="element.id"
+        :style="{'top':element.top+'px','left':element.left+'px','width':element.width + 'px','height':element.height +'px'}"
         :key="index"
-        @mousedown.native.stop="elementMove($event,element,index)"></component>
-      <resize @resize="resize"></resize>
+        :info="element"
+        @mousedown.native.stop="elementMove($event,element,index)">
+        <resize @resize="(size)=>{eleResize(size,element,index)}"
+          v-show="curIndex == index"></resize>
+      </component>
+      <resize @resize="winResize"
+        v-show="curIndex == undefined"></resize>
     </div>
-    <div>
-      {{window}}
-      {{elements}}
+    <div class="attrs_box">
+      <span>属性</span>
+      <div>
+        width:<input v-model="form.width"
+          type="text">
+        <br>
+        height:<input v-model="form.height"
+          type="text">
+        <br>
+        top:<input v-model="form.top"
+          type="text">
+        <br>
+        left:<input v-model="form.left"
+          type="text">
+        <br>
+        text:<input v-model="form.text"
+          type="text">
+      </div>
     </div>
   </div>
 </template>
@@ -49,12 +70,23 @@ export default {
         height: 500,
       },
       elements: [],
+      curIndex: undefined, //当前选择的元素的索引 
+      form: {},
     };
   },
   methods: {
     elementMove(e, element, index) {
       let ele = e.target; //获取目标元素
       ele.style.cursor = "move";
+      this.curIndex = index;
+
+      // 将属性绑定到表单中
+      if (ele.id == "window") {
+        this.form = this.window;
+      } else {
+        this.form = this.elements[index];
+      }
+      // console.log(this.curIndex);
 
       //算出鼠标相对元素的位置
       let disX = e.clientX - ele.offsetLeft;
@@ -66,8 +98,10 @@ export default {
         let left = e.clientX - disX;
         let top = e.clientY - disY;
 
-        top = parseInt(top / 10) * 10 + (top % 10 >= 5 ? 10 : 0);
-        left = parseInt(left / 10) * 10 + (left % 10 >= 5 ? 10 : 0);
+        if (index != undefined) {
+          top = parseInt(top / 10) * 10 + (top % 10 >= 5 ? 10 : 0);
+          left = parseInt(left / 10) * 10 + (left % 10 >= 5 ? 10 : 0);
+        }
 
         if (top < 0) {
           top = 0;
@@ -83,9 +117,6 @@ export default {
         } else {
           this.window.top = top;
           this.window.left = left;
-          //绑定元素位置到positionX和positionY上面
-          // this.positionX = top;
-          // this.positionY = left;
         }
       };
       document.onmouseup = (e) => {
@@ -95,7 +126,7 @@ export default {
       };
     },
     dragstart(e) {
-      console.log(e);
+      // console.log(e);
       e.dataTransfer.setData("type", e.target.id);
 
       // 获取鼠标拖动位置相对被拖动元素的偏移量
@@ -130,7 +161,7 @@ export default {
         type: type,
         top: top,
         left: left,
-        width: 60,
+        width: 50,
         height: 30,
         text: "按钮",
       });
@@ -138,14 +169,33 @@ export default {
     allowDrop(e) {
       e.preventDefault();
     },
-    resize({ width, height }) {
+    winResize({ width, height }) {
       this.window.width = width;
       this.window.height = height;
+    },
+    eleResize({ width, height }, element, index) {
+      // console.log(width, height, element, index);
+      this.elements[index].width = width;
+      this.elements[index].height = height;
     },
     copyPy() {
       let t = new GenerateCode(this.window, this.elements);
       let code = t.build();
       console.log(code);
+    },
+  },
+  watch: {
+    form: {
+      handler(val) {
+        // console.log(val, "变化了");
+        // 数组里面的元素无法绑定 手动给赋值
+        if (this.curIndex === undefined) {
+          return;
+        }
+        // console.log(this.curIndex);
+        this.$set(this.elements, this.curIndex, val);
+      },
+      deep: true,
     },
   },
 };
@@ -177,6 +227,29 @@ export default {
 
   .menu {
   }
+}
+.ele_box {
+  width: 200px;
+  height: 500px;
+
+  padding: 10px;
+
+  background-color: #cccccc;
+  position: fixed;
+  left: 20px;
+  top: 100px;
+}
+
+.attrs_box {
+  width: 200px;
+  height: 500px;
+
+  padding: 10px;
+
+  background-color: #cccccc;
+  position: fixed;
+  right: 20px;
+  top: 100px;
 }
 </style>
 
