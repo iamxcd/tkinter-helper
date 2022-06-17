@@ -15,7 +15,6 @@
         @dragstart="dragstart($event)">元素</button>
     </div>
     <div id="window"
-      @mousedown="elementMove($event)"
       @drop="drop($event)"
       @dragover="allowDrop($event)"
       :style="{'top':window.top+'px','left':window.left+'px','width':window.width + 'px','height':window.height +'px'}">
@@ -32,6 +31,11 @@
       </component>
       <resize @resize="winResize"
         v-show="curIndex == undefined"></resize>
+    </div>
+    <div id="win_title"
+      @mousedown="elementMove($event)"
+      :style="{'top':window.top  +'px','left':window.left+'px','width':window.width + 'px'}">
+      <span class="title">{{window.text}}</span>
     </div>
     <div class="attrs_box">
       <span>属性</span>
@@ -68,9 +72,10 @@ export default {
         left: 450,
         width: 600,
         height: 500,
+        text: "我是标题",
       },
       elements: [],
-      curIndex: undefined, //当前选择的元素的索引 
+      curIndex: undefined, //当前选择的元素的索引
       form: {},
     };
   },
@@ -81,7 +86,7 @@ export default {
       this.curIndex = index;
 
       // 将属性绑定到表单中
-      if (ele.id == "window") {
+      if (index == undefined) {
         this.form = this.window;
       } else {
         this.form = this.elements[index];
@@ -211,6 +216,17 @@ export default {
   border: 1px solid #cccccc;
   border-top-width: 4px;
   background: url("./assets/bg.png") 0px 0px;
+}
+#win_title {
+  position: absolute;
+  height: 30px;
+  background-color: #fff;
+  border: 1px solid #cccccc;
+  display: flex;
+  align-items: center;
+  .title {
+    padding-left: 10px;
+  }
 }
 .header {
   border-bottom: 1px solid #d1d1d1;

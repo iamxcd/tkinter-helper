@@ -18,8 +18,8 @@ def main_win(root):
     height = ${height}
     screenwidth = root.winfo_screenwidth()
     screenheight = root.winfo_screenheight()
-    alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
-    root.geometry(alignstr)
+    geometry = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
+    root.geometry(geometry)
     root.resizable(width=False, height=False)
 
 `

@@ -9,7 +9,7 @@ export default class GenerateCode {
         let py = new PyCode()
         let exportcode = py.export_code();
         let main_win_code = py.main_win(
-            "我的工具箱",
+            this.win.text,
             this.win.width,
             this.win.height
         );
