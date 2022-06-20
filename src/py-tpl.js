@@ -89,6 +89,11 @@ if __name__ == "__main__":
     }
 
     tk_input(ele) {
-        return ``
+        return `
+    def __tk_input_${ele.id}(self):
+        ipt = ttk.Entry(self.root)
+        ipt.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
+        return ipt
+`
     }
 }

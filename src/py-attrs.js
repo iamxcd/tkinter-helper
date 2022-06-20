@@ -2,9 +2,7 @@
 const common_attr = {
     top: 0,
     left: 0,
-    width: 0,
-    height: 0,
-    text: "",
+    width: 0
 }
 export default class Attrs {
     tk_button() {
@@ -19,8 +17,7 @@ export default class Attrs {
         return {
             ...common_attr,
             width: 150,
-            height: 24,
-            text: "输入框",
+            height: 24
         }
     }
 }

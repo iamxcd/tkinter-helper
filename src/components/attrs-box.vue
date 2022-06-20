@@ -18,7 +18,7 @@
       <el-form-item label="left">
         <el-input v-model="form.left"></el-input>
       </el-form-item>
-      <el-form-item label="text">
+      <el-form-item v-if="form.text" label="text">
         <el-input v-model="form.text"></el-input>
       </el-form-item>
     </el-form>
