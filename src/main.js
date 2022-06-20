@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import components from './components/auto-reg.js'
+import components from './components/tk_widget/auto-reg.js'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';

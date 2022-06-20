@@ -78,6 +78,7 @@ if __name__ == "__main__":
 `
     }
 
+    ////////////////////////////////////////// 以下是组件
     tk_button(ele) {
         return `
     def __tk_button_${ele.id}(self):
@@ -85,5 +86,9 @@ if __name__ == "__main__":
         btn.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
         return btn
 `
+    }
+
+    tk_input(ele) {
+        return ``
     }
 }

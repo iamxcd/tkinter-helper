@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-dialog title="Python"
+      top="30px"
       :visible.sync="is_show"
       width="80%">
       <codemirror v-model="code"

@@ -1,62 +1,69 @@
 <template>
   <div class="home">
-    <div class="header">
-      <div class="logo">
-        LOGO
-      </div>
-      <div class="menu">
-        <el-button type="primary"
-          @click="viewCode()">Python</el-button>
-      </div>
-    </div>
-    <div class="ele_box">
-      <button draggable="true"
-        id="tk_button"
-        @dragstart="dragstart($event)">元素</button>
-    </div>
-    <div id="window"
-      @drop="drop($event)"
-      @dragover="allowDrop($event)"
-      :style="{'top':window.top+'px','left':window.left+'px','width':window.width + 'px','height':window.height +'px'}">
-      <component :is="element.type"
-        v-for="(element,index) in elements"
-        style="position: absolute;"
-        :id="element.id"
-        :style="{'top':element.top+'px','left':element.left+'px','width':element.width + 'px','height':element.height +'px'}"
-        :key="index"
-        :info="element"
-        @mousedown.native.stop="elementMove($event,element,index)">
-        <resize @resize="(size)=>{eleResize(size,element,index)}"
-          v-show="curIndex == index"></resize>
-      </component>
-      <resize @resize="winResize"
-        v-show="curIndex == undefined"></resize>
-    </div>
-    <div id="win_title"
-      @mousedown="elementMove($event)"
-      :style="{'top':window.top-30+'px','left':window.left+'px','width':window.width + 'px'}">
-      <span class="title">{{window.text}}</span>
-    </div>
-    <div class="attrs_box">
-      <span>属性</span>
-      <div>
-        width:<input v-model="form.width"
-          type="text">
-        <br>
-        height:<input v-model="form.height"
-          type="text">
-        <br>
-        top:<input v-model="form.top"
-          type="text">
-        <br>
-        left:<input v-model="form.left"
-          type="text">
-        <br>
-        text:<input v-model="form.text"
-          type="text">
-      </div>
-    </div>
-    <code-view ref="code_view"></code-view>
+    <el-container>
+      <el-header class="header">
+        <div class="logo">
+          LOGO
+        </div>
+        <div class="menu">
+          <el-button type="primary"
+            @click="viewCode()">Python</el-button>
+        </div>
+      </el-header>
+      <el-container>
+        <el-aside width="250px">
+          <WidgetBox></WidgetBox>
+        </el-aside>
+        <el-main>
+          <div id="window"
+            @drop="drop($event)"
+            @dragover="allowDrop($event)"
+            :style="{'top':window.top+'px','left':window.left+'px','width':window.width + 'px','height':window.height +'px'}">
+            <component :is="element.type"
+              v-for="(element,index) in elements"
+              style="position: absolute;"
+              :id="element.id"
+              :style="{'top':element.top+'px','left':element.left+'px','width':element.width + 'px','height':element.height +'px'}"
+              :key="index"
+              :info="element"
+              @mousedown.native.stop="elementMove($event,element,index)">
+              <Resize @resize="(size)=>{eleResize(size,element,index)}"
+                v-show="curIndex == index"></Resize>
+            </component>
+            <Resize @resize="winResize"
+              v-show="curIndex == undefined"></Resize>
+          </div>
+          <div id="win_title"
+            @mousedown="elementMove($event)"
+            :style="{'top':window.top-30+'px','left':window.left+'px','width':window.width + 'px'}">
+            <span class="title">{{window.text}}</span>
+          </div>
+        </el-main>
+        <el-aside width="250px">
+          <div class="attrs_box">
+            <span>属性</span>
+            <div>
+              width:<input v-model="form.width"
+                type="text">
+              <br>
+              height:<input v-model="form.height"
+                type="text">
+              <br>
+              top:<input v-model="form.top"
+                type="text">
+              <br>
+              left:<input v-model="form.left"
+                type="text">
+              <br>
+              text:<input v-model="form.text"
+                type="text">
+            </div>
+          </div>
+        </el-aside>
+      </el-container>
+    </el-container>
+
+    <CodeView ref="code_view"></CodeView>
   </div>
 </template>
 
@@ -64,7 +71,12 @@
 import uniqid from "uniqid";
 
 import GenerateCode from "./generate-code";
+import CodeView from "./components/code-view.vue";
+import Resize from "./components/resize.vue";
+import WidgetBox from "./components/widget-box.vue";
+import PyAttrs from "./py-attrs.js";
 export default {
+  components: { CodeView, Resize, WidgetBox },
   name: "HomeView",
   data() {
     return {
@@ -135,14 +147,6 @@ export default {
         ele.style.cursor = "default";
       };
     },
-    dragstart(e) {
-      // console.log(e);
-      e.dataTransfer.setData("type", e.target.id);
-
-      // 获取鼠标拖动位置相对被拖动元素的偏移量
-      e.dataTransfer.setData("x", e.offsetX);
-      e.dataTransfer.setData("y", e.offsetY);
-    },
     drop(evt) {
       evt.preventDefault();
 
@@ -166,14 +170,14 @@ export default {
         left = 0;
       }
 
+      let py = new PyAttrs();
       this.elements.push({
+        ...py[type](),
+
         id: uniqid(),
         type: type,
         top: top,
-        left: left,
-        width: 50,
-        height: 30,
-        text: "按钮",
+        left: left
       });
     },
     allowDrop(e) {
@@ -191,7 +195,7 @@ export default {
     viewCode() {
       let t = new GenerateCode(this.window, this.elements);
       let code = t.build();
-      this.$refs['code_view'].open(code)
+      this.$refs["code_view"].open(code);
     },
   },
   watch: {
@@ -248,17 +252,6 @@ export default {
 
   .menu {
   }
-}
-.ele_box {
-  width: 200px;
-  height: 500px;
-
-  padding: 10px;
-
-  background-color: #cccccc;
-  position: fixed;
-  left: 20px;
-  top: 100px;
 }
 
 .attrs_box {
