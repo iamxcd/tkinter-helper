@@ -11,7 +11,6 @@
           v-for="(ele,index) in widgetList"
           @dragstart="dragstart($event)"
           :key="index">
-          <i class="el-icon-edit icon"></i>
           <div class="title">
             {{ele.title}}
           </div>
@@ -63,21 +62,22 @@ export default {
       flex-wrap: wrap;
       justify-content: space-between;
       .item {
-        display: inline-block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
         background: #fff;
         color: #000;
-        min-width: 70px;
         width: 30%;
-        height: 70px;
-        line-height: 1;
-        text-align: center;
-        border: 1px solid #fff;
+        height: 30px;
+
+        margin: 3px 0;
+
+        border: 1px solid #eee;
+        border-radius: 4px;
 
         cursor: pointer;
 
-        .icon {
-          padding: 10px 5px 12px;
-        }
         .title {
           font-size: 12px;
         }
