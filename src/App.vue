@@ -11,9 +11,7 @@
         </div>
       </el-header>
       <el-container>
-        <el-aside width="250px">
-          <WidgetBox></WidgetBox>
-        </el-aside>
+        <WidgetBox></WidgetBox>
         <el-main>
           <div id="window"
             @drop="drop($event)"
@@ -39,27 +37,7 @@
             <span class="title">{{window.text}}</span>
           </div>
         </el-main>
-        <el-aside width="250px">
-          <div class="attrs_box">
-            <span>属性</span>
-            <div>
-              width:<input v-model="form.width"
-                type="text">
-              <br>
-              height:<input v-model="form.height"
-                type="text">
-              <br>
-              top:<input v-model="form.top"
-                type="text">
-              <br>
-              left:<input v-model="form.left"
-                type="text">
-              <br>
-              text:<input v-model="form.text"
-                type="text">
-            </div>
-          </div>
-        </el-aside>
+        <AttrsBox v-model="form"></AttrsBox>
       </el-container>
     </el-container>
 
@@ -75,8 +53,9 @@ import CodeView from "./components/code-view.vue";
 import Resize from "./components/resize.vue";
 import WidgetBox from "./components/widget-box.vue";
 import PyAttrs from "./py-attrs.js";
+import AttrsBox from "./components/attrs-box.vue";
 export default {
-  components: { CodeView, Resize, WidgetBox },
+  components: { CodeView, Resize, WidgetBox, AttrsBox },
   name: "HomeView",
   data() {
     return {
@@ -177,7 +156,7 @@ export default {
         id: uniqid(),
         type: type,
         top: top,
-        left: left
+        left: left,
       });
     },
     allowDrop(e) {
@@ -198,26 +177,11 @@ export default {
       this.$refs["code_view"].open(code);
     },
   },
-  watch: {
-    form: {
-      handler(val) {
-        // console.log(val, "变化了");
-        // 数组里面的元素无法绑定 手动给赋值
-        if (this.curIndex === undefined) {
-          return;
-        }
-        // console.log(this.curIndex);
-        this.$set(this.elements, this.curIndex, val);
-      },
-      deep: true,
-    },
-  },
 };
 </script>
 
 <style lang="scss" scoped>
 .home {
-  height: 100%;
 }
 #window {
   position: absolute;
@@ -239,7 +203,7 @@ export default {
 }
 .header {
   border-bottom: 1px solid #d1d1d1;
-  height: 70px;
+  height: 70px !important;
   display: flex;
   align-items: center;
   .logo {
@@ -252,18 +216,6 @@ export default {
 
   .menu {
   }
-}
-
-.attrs_box {
-  width: 200px;
-  height: 500px;
-
-  padding: 10px;
-
-  background-color: #cccccc;
-  position: fixed;
-  right: 20px;
-  top: 100px;
 }
 </style>
 

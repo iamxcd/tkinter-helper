@@ -44,9 +44,13 @@ export default {
 
 <style lang="scss" scoped>
 .ele_box {
+  width: 250px;
   border-right: 1px solid #d1d1d1;
   background-color: #fff;
-
+  position: fixed;
+  left: 10px;
+  top: 70px;
+  z-index: 1000;
   .group {
     margin: 0 10px;
     .group_name {
