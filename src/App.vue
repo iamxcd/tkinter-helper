@@ -3,7 +3,7 @@
     <el-container>
       <el-header class="header">
         <div class="logo">
-          LOGO
+          Tkinter界面设计
         </div>
         <div class="menu">
           <el-button type="primary"

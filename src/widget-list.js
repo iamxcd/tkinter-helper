@@ -6,21 +6,5 @@ export default [
     {
         title: '输入框',
         type: 'tk_input'
-    },
-    {
-        title: '输入框',
-        type: 'tk_input'
-    },
-    {
-        title: '输入框',
-        type: 'tk_input'
-    },
-    {
-        title: '输入框',
-        type: 'tk_input'
-    },
-    {
-        title: '输入框',
-        type: 'tk_input'
     }
 ]
