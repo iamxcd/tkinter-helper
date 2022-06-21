@@ -14,5 +14,9 @@ export default [
     {
         title: '文本框',
         type: 'tk_text'
+    },
+    {
+        title: '单选框',
+        type: 'tk_radio_button'
     }
 ]

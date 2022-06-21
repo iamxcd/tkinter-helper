@@ -38,4 +38,13 @@ export default class Attrs {
             height: 100
         }
     }
+
+    tk_radio_button() {
+        return {
+            ...common_attr,
+            width: 80,
+            height: 24,
+            text: '单选框'
+        }
+    }
 }

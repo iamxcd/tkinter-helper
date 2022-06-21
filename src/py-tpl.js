@@ -114,4 +114,13 @@ if __name__ == "__main__":
         return text
 `
     }
+
+    tk_radio_button(ele) {
+        return `
+    def __tk_radio_button_${ele.id}(self):
+        rb = Radiobutton(self.root,text="${ele.text}")
+        rb.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
+        return rb
+`
+    }
 }
