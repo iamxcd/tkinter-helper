@@ -47,4 +47,13 @@ export default class Attrs {
             text: '单选框'
         }
     }
+
+    tk_check_button() {
+        return {
+            ...common_attr,
+            width: 80,
+            height: 24,
+            text: '多选框'
+        }
+    }
 }

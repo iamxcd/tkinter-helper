@@ -18,5 +18,9 @@ export default [
     {
         title: '单选框',
         type: 'tk_radio_button'
+    },
+    {
+        title: '多选框',
+        type: 'tk_check_button'
     }
 ]

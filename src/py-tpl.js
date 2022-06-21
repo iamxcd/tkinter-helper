@@ -123,4 +123,13 @@ if __name__ == "__main__":
         return rb
 `
     }
+
+    tk_check_button(ele) {
+        return `
+    def __tk_check_button_${ele.id}(self):
+        cb = Checkbutton(self.root,text="${ele.text}")
+        cb.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
+        return cb
+`
+    }
 }
