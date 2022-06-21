@@ -20,4 +20,13 @@ export default class Attrs {
             height: 24
         }
     }
+
+    tk_label() {
+        return {
+            ...common_attr,
+            width: 50,
+            height: 24,
+            text: "标签",
+        }
+    }
 }

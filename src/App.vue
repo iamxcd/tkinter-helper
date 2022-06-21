@@ -3,7 +3,7 @@
     <el-container>
       <el-header class="header">
         <div class="logo">
-          Tkinter Helper
+          TkHelper
         </div>
         <div class="menu">
           <el-button type="primary"

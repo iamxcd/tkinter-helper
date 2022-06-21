@@ -96,4 +96,13 @@ if __name__ == "__main__":
         return ipt
 `
     }
+
+    tk_label(ele) {
+        return `
+    def __tk_label_${ele.id}(self):
+        label = ttk.Label(self.root,text="${ele.text}")
+        label.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
+        return label
+`
+    }
 }
