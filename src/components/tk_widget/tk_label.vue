@@ -28,5 +28,6 @@ export default {
 .lable {
   border: 1px dashed #000;
   text-align: center;
+  overflow: hidden;
 }
 </style>

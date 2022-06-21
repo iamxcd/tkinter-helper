@@ -22,5 +22,9 @@ export default [
     {
         title: '多选框',
         type: 'tk_check_button'
+    },
+    {
+        title: '列表框',
+        type: 'tk_list_box'
     }
 ]

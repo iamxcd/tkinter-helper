@@ -56,4 +56,12 @@ export default class Attrs {
             text: '多选框'
         }
     }
+
+    tk_list_box() {
+        return {
+            ...common_attr,
+            width: 150,
+            height: 100
+        }
+    }
 }

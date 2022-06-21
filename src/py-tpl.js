@@ -132,4 +132,16 @@ if __name__ == "__main__":
         return cb
 `
     }
+
+    tk_list_box(ele) {
+        return `
+    def __tk_list_box_${ele.id}(self):
+        lb = Listbox(self.root)
+        lb.insert(END, "列表框")
+        lb.insert(END, "Python")
+        lb.insert(END, "Tkinter Helper")
+        lb.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
+        return lb
+`
+    }
 }

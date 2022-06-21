@@ -28,5 +28,6 @@ export default {
 <style lang="scss" scoped>
 .tk_check_button {
   border: 1px dashed #000;
+  overflow: hidden;
 }
 </style>
