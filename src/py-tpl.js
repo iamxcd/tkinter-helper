@@ -3,8 +3,8 @@ export default class PyCode {
     // 依赖包
     depend_package() {
         return `
-import tkinter as tk
-from tkinter import ttk
+from tkinter import *
+from tkinter.ttk import *
 `
     }
 
@@ -45,7 +45,7 @@ class Win:
     win(title, width, height) {
         return `
     def __win(self):
-        root = tk.Tk()
+        root = Tk()
         root.title("${title}")
         # 设置大小 居中展示
         width = ${width}
@@ -82,7 +82,7 @@ if __name__ == "__main__":
     tk_button(ele) {
         return `
     def __tk_button_${ele.id}(self):
-        btn = ttk.Button(self.root, text="${ele?.text}")
+        btn = Button(self.root, text="${ele?.text}")
         btn.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
         return btn
 `
@@ -91,7 +91,7 @@ if __name__ == "__main__":
     tk_input(ele) {
         return `
     def __tk_input_${ele.id}(self):
-        ipt = ttk.Entry(self.root)
+        ipt = Entry(self.root)
         ipt.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
         return ipt
 `
@@ -100,9 +100,18 @@ if __name__ == "__main__":
     tk_label(ele) {
         return `
     def __tk_label_${ele.id}(self):
-        label = ttk.Label(self.root,text="${ele.text}")
+        label = Label(self.root,text="${ele.text}")
         label.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
         return label
+`
+    }
+
+    tk_text(ele) {
+        return `
+    def __tk_text_${ele.id}(self):
+        text = Text(self.root)
+        text.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
+        return text
 `
     }
 }

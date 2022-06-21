@@ -10,5 +10,9 @@ export default [
     {
         title: '输入框',
         type: 'tk_input'
+    },
+    {
+        title: '文本框',
+        type: 'tk_text'
     }
 ]

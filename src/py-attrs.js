@@ -13,6 +13,7 @@ export default class Attrs {
             text: "按钮",
         }
     }
+
     tk_input() {
         return {
             ...common_attr,
@@ -27,6 +28,14 @@ export default class Attrs {
             width: 50,
             height: 24,
             text: "标签",
+        }
+    }
+
+    tk_text() {
+        return {
+            ...common_attr,
+            width: 150,
+            height: 100
         }
     }
 }
