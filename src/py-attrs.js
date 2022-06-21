@@ -64,4 +64,12 @@ export default class Attrs {
             height: 100
         }
     }
+
+    tk_select_box() {
+        return {
+            ...common_attr,
+            width: 150,
+            height: 24
+        }
+    }
 }

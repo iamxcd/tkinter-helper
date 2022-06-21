@@ -144,4 +144,14 @@ if __name__ == "__main__":
         return lb
 `
     }
+
+    tk_select_box(ele) {
+        return `
+    def __tk_select_box_${ele.id}(self):
+        cb = Combobox(self.root, state="readonly")
+        cb['values'] = ("下拉选择框", "Python", "Tkinter Helper")
+        cb.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
+        return cb
+`
+    }
 }

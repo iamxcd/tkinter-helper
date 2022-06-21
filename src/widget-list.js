@@ -26,5 +26,9 @@ export default [
     {
         title: '列表框',
         type: 'tk_list_box'
+    },
+    {
+        title: '下拉框',
+        type: 'tk_select_box'
     }
 ]
