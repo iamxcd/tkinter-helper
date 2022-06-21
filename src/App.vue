@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     elementMove(e, element, index) {
-      let ele = e.target; //获取目标元素
+      let ele = e.currentTarget; //获取组件元素
       ele.style.cursor = "move";
       this.curIndex = index;
 
