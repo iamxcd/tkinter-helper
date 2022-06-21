@@ -61,6 +61,11 @@ export default {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
+      &:after {
+        content: "";
+        width: 30%;
+        border: 1px solid transparent;
+      }
       .item {
         display: flex;
         align-items: center;
