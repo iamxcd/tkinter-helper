@@ -47,10 +47,12 @@ export default {
   width: 300px;
 
   position: fixed;
-  top: 70px;
+  top: 90px;
   right: 10px;
-  border-left: 1px solid #d1d1d1;
+  border: 1px solid #d1d1d1;
   background-color: #fff;
+
+  padding-bottom: 30px;
 
   z-index: 1000;
   .title {
