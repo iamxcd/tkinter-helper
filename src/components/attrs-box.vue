@@ -6,6 +6,12 @@
       label-position="left"
       :model="form"
       label-width="50px">
+      <el-form-item label="ID"
+        v-if="form.id != null">
+        <el-input v-model="form.id">
+          <template slot="prepend">{{form.type}}</template>
+        </el-input>
+      </el-form-item>
       <el-form-item label="width">
         <el-input v-model="form.width"></el-input>
       </el-form-item>
