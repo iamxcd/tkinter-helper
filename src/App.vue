@@ -18,6 +18,7 @@
             @dragover="allowDrop($event)"
             :style="{'top':window.top+'px','left':window.left+'px','width':window.width + 'px','height':window.height +'px'}">
             <component :is="element.type"
+              @contextmenu.native="showMenu($event,element,index)"
               v-for="(element,index) in elements"
               style="position: absolute;"
               :id="element.id"
@@ -51,6 +52,8 @@
     </el-container>
 
     <CodeView ref="code_view"></CodeView>
+    <VueContextMenu :contextMenuData="contextMenuData"
+      @delEle="delEle"></VueContextMenu>
   </div>
 </template>
 
@@ -63,8 +66,9 @@ import Resize from "./components/resize.vue";
 import WidgetBox from "./components/widget-box.vue";
 import PyAttrs from "./py-attrs.js";
 import AttrsBox from "./components/attrs-box.vue";
+import VueContextMenu from "./components/VueContextMenu/VueContextMenu.vue";
 export default {
-  components: { CodeView, Resize, WidgetBox, AttrsBox },
+  components: { CodeView, Resize, WidgetBox, AttrsBox, VueContextMenu },
   name: "HomeView",
   data() {
     return {
@@ -78,14 +82,34 @@ export default {
       elements: [],
       curIndex: undefined, //当前选择的元素的索引
       form: {},
+      // contextmenu data (菜单数据)
+      contextMenuData: {
+        menuName: "demo",
+        eleIndex: null,
+        // The coordinates of the display(菜单显示的位置)
+        axis: {
+          x: null,
+          y: null,
+        },
+        // Menu options (菜单选项)
+        menulists: [
+          {
+            fnHandler: "delEle", // Binding events(绑定事件)
+            btnName: "删除", // The name of the menu option (菜单名称)
+          },
+        ],
+      },
     };
   },
   methods: {
     elementMove(e, element, index) {
+      // 只处理右键点击事件
+      if (e.which != 1) {
+        return;
+      }
       let ele = e.currentTarget; //获取组件. 绑定事件的元素
-      ele.style.cursor = "move";
+      // ele.style.cursor = "move";
       this.curIndex = index;
-
       // 将属性绑定到表单中
       if (index == undefined) {
         this.form = this.window;
@@ -132,7 +156,7 @@ export default {
       document.onmouseup = (e) => {
         document.onmousemove = null;
         document.onmouseup = null;
-        ele.style.cursor = "default";
+        // ele.style.cursor = "default";
       };
     },
     drop(evt) {
@@ -184,6 +208,24 @@ export default {
       let t = new GenerateCode(this.window, this.elements);
       let code = t.build();
       this.$refs["code_view"].open(code);
+    },
+    showMenu(event, ele, index) {
+      event.preventDefault();
+      let x = event.clientX;
+      let y = event.clientY;
+      // Get the current location
+      this.contextMenuData.axis = {
+        x,
+        y,
+      };
+      this.contextMenuData.eleIndex = index;
+    },
+    delEle() {
+      let i = this.contextMenuData.eleIndex;
+      if (i != null) {
+        this.elements.splice(i, 1);
+        this.contextMenuData.eleIndex = null;
+      }
     },
   },
 };
