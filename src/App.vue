@@ -10,7 +10,7 @@
             @click="viewCode()">Python</el-button>
         </div>
       </el-header>
-      <el-container>
+      <el-container style="height:calc(100vh - 60px - 60px - 1px);">
         <WidgetBox></WidgetBox>
         <el-main>
           <div id="window"
@@ -39,6 +39,15 @@
         </el-main>
         <AttrsBox v-model="form"></AttrsBox>
       </el-container>
+      <el-footer class="footer">
+        <div class="info">
+          <span> TkHelper布局助手 | </span>
+          <a href="https://www.zhihu.com/people/iamxcd"
+            target="_blank">知乎 | </a>
+          <a href="http://beian.miit.gov.cn/"
+            target="_blank">蜀ICP备18032036号</a>
+        </div>
+      </el-footer>
     </el-container>
 
     <CodeView ref="code_view"></CodeView>
@@ -203,18 +212,34 @@ export default {
 }
 .header {
   border-bottom: 1px solid #d1d1d1;
-  height: 70px !important;
   display: flex;
   align-items: center;
+  box-shadow: 0 1px rgb(12 13 14 / 10%), 0 1px 6px rgb(60 65 70 / 10%);
+
   .logo {
     flex: 1;
     width: 200px;
     font-size: 24px;
-    line-height: 70px;
+    line-height: 60px;
     padding-left: 30px;
   }
 
   .menu {
+  }
+}
+
+.footer {
+  border-top: 1px solid rgba(12, 13, 14, 0.1);
+
+  .info {
+    font-size: 10px;
+    text-align: center;
+    line-height: 60px;
+    color: #707070;
+    a {
+      text-decoration: none;
+      color: #707070;
+    }
   }
 }
 </style>
@@ -224,5 +249,6 @@ body {
   user-select: none;
   margin: 0;
   padding: 0;
+  background-color: #fafafa;
 }
 </style>
