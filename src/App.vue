@@ -6,6 +6,8 @@
           TkHelper
         </div>
         <div class="menu">
+          <el-button type="danger"
+            @click="clearCache()">清理缓存</el-button>
           <el-button type="primary"
             @click="viewCode()">Python</el-button>
         </div>
@@ -13,10 +15,10 @@
       <el-container style="height:calc(100vh - 60px - 60px - 1px);">
         <WidgetBox></WidgetBox>
         <el-main>
-          <div id="window"
+          <div id="win"
             @drop="drop($event)"
             @dragover="allowDrop($event)"
-            :style="{'top':window.top+'px','left':window.left+'px','width':window.width + 'px','height':window.height +'px'}">
+            :style="{'top':win.top+'px','left':win.left+'px','width':win.width + 'px','height':win.height +'px'}">
             <component :is="element.type"
               @contextmenu.native="showMenu($event,element,index)"
               v-for="(element,index) in elements"
@@ -34,8 +36,8 @@
           </div>
           <div id="win_title"
             @mousedown="elementMove($event)"
-            :style="{'top':window.top-30+'px','left':window.left+'px','width':window.width + 'px'}">
-            <span class="title">{{window.text}}</span>
+            :style="{'top':win.top-30+'px','left':win.left+'px','width':win.width + 'px'}">
+            <span class="title">{{win.text}}</span>
           </div>
         </el-main>
         <AttrsBox v-model="form"></AttrsBox>
@@ -72,7 +74,7 @@ export default {
   name: "HomeView",
   data() {
     return {
-      window: {
+      win: {
         top: 130,
         left: 450,
         width: 600,
@@ -101,6 +103,40 @@ export default {
       },
     };
   },
+  created() {
+    let ele = localStorage.getItem("elements");
+    if (ele != null) {
+      this.$confirm("是否恢复上次的编辑结果?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.elements = JSON.parse(ele);
+          let win = localStorage.getItem("win");
+          if (win != null) {
+            this.win = JSON.parse(win);
+          }
+        })
+        .catch(() => {
+          localStorage.clear();
+        });
+    }
+  },
+  watch: {
+    elements: {
+      handler(val) {
+        localStorage.setItem("elements", JSON.stringify(val));
+      },
+      deep: true,
+    },
+    win: {
+      handler(val) {
+        localStorage.setItem("win", JSON.stringify(val));
+      },
+      deep: true,
+    },
+  },
   methods: {
     elementMove(e, element, index) {
       // 只处理右键点击事件
@@ -112,7 +148,7 @@ export default {
       this.curIndex = index;
       // 将属性绑定到表单中
       if (index == undefined) {
-        this.form = this.window;
+        this.form = this.win;
       } else {
         this.form = this.elements[index];
       }
@@ -149,8 +185,8 @@ export default {
           this.elements[index].top = top;
           this.elements[index].left = left;
         } else {
-          this.window.top = top;
-          this.window.left = left;
+          this.win.top = top;
+          this.win.left = left;
         }
       };
       document.onmouseup = (e) => {
@@ -196,8 +232,8 @@ export default {
       e.preventDefault();
     },
     winResize({ width, height }) {
-      this.window.width = width;
-      this.window.height = height;
+      this.win.width = width;
+      this.win.height = height;
     },
     eleResize({ width, height }, element, index) {
       // console.log(width, height, element, index);
@@ -205,7 +241,7 @@ export default {
       this.elements[index].height = height;
     },
     viewCode() {
-      let t = new GenerateCode(this.window, this.elements);
+      let t = new GenerateCode(this.win, this.elements);
       let code = t.build();
       this.$refs["code_view"].open(code);
     },
@@ -227,6 +263,9 @@ export default {
         this.contextMenuData.eleIndex = null;
       }
     },
+    clearCache() {
+      localStorage.clear();
+    },
   },
 };
 </script>
@@ -234,7 +273,7 @@ export default {
 <style lang="scss" scoped>
 .home {
 }
-#window {
+#win {
   position: absolute;
   background-color: #fff;
   border: 1px solid #cccccc;
