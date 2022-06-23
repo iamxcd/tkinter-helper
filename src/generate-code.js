@@ -8,7 +8,6 @@ export default class GenerateCode {
     build() {
         let py = new PyTpl()
         let depend_package_code = py.depend_package();
-        let vars_code = py.vars(this.elements)
         let win_code = py.win(
             this.win.text,
             this.win.width,
@@ -21,7 +20,7 @@ export default class GenerateCode {
             func_code += this.create_func(py, this.elements[k])
         }
         let main_code = py.main();
-        let all_code = depend_package_code + vars_code + init_code + win_code + show_code + func_code + main_code
+        let all_code = depend_package_code + init_code + win_code + show_code + func_code + main_code
         return all_code
     }
 

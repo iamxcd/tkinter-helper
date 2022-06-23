@@ -8,35 +8,20 @@ from tkinter.ttk import *
 `
     }
 
-    vars(elemetns) {
-        let header = `
-class Win:
-    root = None
-        `
-        let vars = ""
-        for (const i in elemetns) {
-            let e = elemetns[i]
-            vars += `
-    ${e.type}_${e.id} = None
-        `
-        }
-        return header + vars
-    }
-
     // 初始化
     init(elemetns) {
         let header = `
+class Win:
     def __init__(self):
-        self.root = self.__win()
-    `
+        self.root = self.__win()`
         let code = "" // 赋值代码
         for (const i in elemetns) {
             let e = elemetns[i]
             code += `
-        self.${e['type']}_${e['id']} = self.__${e['type']}_${e['id']}()
-            `
+        self.${e['type']}_${e['id']} = self.__${e['type']}_${e['id']}()`
         }
-
+        code += `
+`
         return header + code
     }
 
@@ -56,7 +41,6 @@ class Win:
         root.geometry(geometry)
         root.resizable(width=False, height=False)
         return root
-
 `
     }
 
@@ -64,16 +48,15 @@ class Win:
         return `
     def show(self):
         self.root.mainloop()
-        `
+`
     }
-
 
     // 程序入口
     main() {
         return `
 if __name__ == "__main__":
     win = Win()
-    # TODO 绑定事件或其他处理
+    # TODO 绑定点击事件或其他逻辑处理
     win.show()
 `
     }
