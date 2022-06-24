@@ -2,6 +2,14 @@
 
 >TkinterHelper（Tkinter布局助手）是一款为Tkinter打造，仅需拖拽组件进行布局，所见即所得，非常方便就能做出一个GUI界面，再配合 pyinstall 库将程序打包成exe，简直是开发小工具的利器。
 
+## 展示和体验
+
+[体验地址](https://​www.codingstudy.cn/tkinter-helper/)
+
+截图展示
+
+![](./files/img1.png)
+
 ## Tkinter 简介
 tkinter 是 Python 自带的标准库，因此无须另行安装，它支持跨平台运行，不仅可以在 Windows 平台上运行，还支持在 Linux 和 Mac 平台上运行。
 
@@ -14,10 +22,6 @@ tkinter 是 Python 自带的标准库，因此无须另行安装，它支持跨�
 ## Tkinter的缺点
 - 对界面美观、性能、大小有要求的程序不适用。
 - 打包后体积过大。
-
-## TkinterHelper 展示
-
-​www.codingstudy.cn/tkinter-helper/
 
 ## 目前支持的组件
 - 标签
