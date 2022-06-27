@@ -3,7 +3,7 @@
     <el-container>
       <el-header class="header">
         <div class="logo">
-          TkHelper
+          TkinterHelper
         </div>
         <div class="menu">
           <el-button type="danger"
@@ -44,9 +44,11 @@
       </el-container>
       <el-footer class="footer">
         <div class="info">
-          <span> TkHelper布局助手 | </span>
-          <a href="https://www.zhihu.com/people/iamxcd"
-            target="_blank">知乎 | </a>
+          <span> TkinterHelper布局助手 | </span>
+          <a href="https://github.com/iamxcd/tkinter-helper"
+            target="_blank">github | </a>
+          <a href="https://zhuanlan.zhihu.com/p/532678277"
+            target="_blank">使用说明 | </a>
           <a href="http://beian.miit.gov.cn/"
             target="_blank">蜀ICP备18032036号</a>
         </div>
@@ -79,7 +81,7 @@ export default {
         left: 450,
         width: 600,
         height: 500,
-        text: "我是标题",
+        text: "我是标题 ~ TkinterHelper",
       },
       elements: [],
       curIndex: undefined, //当前选择的元素的索引
@@ -122,6 +124,11 @@ export default {
           localStorage.clear();
         });
     }
+
+    this.form = this.win;
+  },
+  mounted() {
+    this.keyDownInit();
   },
   watch: {
     elements: {
@@ -138,6 +145,30 @@ export default {
     },
   },
   methods: {
+    keyDownInit() {
+      document.onkeydown = (evt) => {
+        let keys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+        if (keys.indexOf(evt.key) > -1) {
+          evt.preventDefault();
+          switch (evt.key) {
+            case "ArrowUp":
+              if (this.form.top >= 1) this.form.top -= 1;
+              break;
+            case "ArrowDown":
+              this.form.top += 1;
+              break;
+            case "ArrowLeft":
+              if (this.form.left >= 1) this.form.left -= 1;
+              break;
+            case "ArrowRight":
+              this.form.left += 1;
+              break;
+            default:
+              break;
+          }
+        }
+      };
+    },
     elementMove(e, element, index) {
       // 只处理右键点击事件
       if (e.which != 1) {
