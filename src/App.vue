@@ -20,6 +20,8 @@
             @dragover="allowDrop($event)"
             :style="{'top':win.top+'px','left':win.left+'px','width':win.width + 'px','height':win.height +'px'}">
             <component :is="element.type"
+              @keydown.native="keyDown($event)"
+              :tabindex="0"
               @contextmenu.native="showMenu($event,element,index)"
               v-for="(element,index) in elements"
               style="position: absolute;"
@@ -127,9 +129,6 @@ export default {
 
     this.form = this.win;
   },
-  mounted() {
-    this.keyDownInit();
-  },
   watch: {
     elements: {
       handler(val) {
@@ -145,29 +144,27 @@ export default {
     },
   },
   methods: {
-    keyDownInit() {
-      document.onkeydown = (evt) => {
-        let keys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
-        if (keys.indexOf(evt.key) > -1) {
-          evt.preventDefault();
-          switch (evt.key) {
-            case "ArrowUp":
-              if (this.form.top >= 1) this.form.top -= 1;
-              break;
-            case "ArrowDown":
-              this.form.top += 1;
-              break;
-            case "ArrowLeft":
-              if (this.form.left >= 1) this.form.left -= 1;
-              break;
-            case "ArrowRight":
-              this.form.left += 1;
-              break;
-            default:
-              break;
-          }
+    keyDown(evt) {
+      let keys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+      if (keys.indexOf(evt.key) > -1) {
+        evt.preventDefault();
+        switch (evt.key) {
+          case "ArrowUp":
+            if (this.form.top >= 1) this.form.top -= 1;
+            break;
+          case "ArrowDown":
+            this.form.top += 1;
+            break;
+          case "ArrowLeft":
+            if (this.form.left >= 1) this.form.left -= 1;
+            break;
+          case "ArrowRight":
+            this.form.left += 1;
+            break;
+          default:
+            break;
         }
-      };
+      }
     },
     elementMove(e, element, index) {
       // 只处理右键点击事件
@@ -362,5 +359,8 @@ body {
   margin: 0;
   padding: 0;
   background-color: #fafafa;
+}
+* {
+  outline: none;
 }
 </style>
