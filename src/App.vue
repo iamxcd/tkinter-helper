@@ -7,9 +7,25 @@
         </div>
         <div class="menu">
           <el-button type="danger"
-            @click="clearCache()">清理缓存</el-button>
+            @click="clearData()">清理数据</el-button>
           <el-button type="primary"
             @click="viewCode()">Python</el-button>
+          <el-dropdown split-button
+            type="primary"
+            class="export_btn"
+            @click="onClickExport">
+            导出
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>
+                <el-upload action=""
+                  :before-upload="beforeUpload"
+                  :limit="1">
+                  导入布局文件
+                </el-upload>
+
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </div>
       </el-header>
       <el-container style="height:calc(100vh - 60px - 60px - 1px);">
@@ -73,6 +89,7 @@ import WidgetBox from "./components/widget-box.vue";
 import PyAttrs from "./py-attrs.js";
 import AttrsBox from "./components/attrs-box.vue";
 import VueContextMenu from "./components/VueContextMenu/VueContextMenu.vue";
+import { Base64 } from "js-base64";
 export default {
   components: { CodeView, Resize, WidgetBox, AttrsBox, VueContextMenu },
   name: "HomeView",
@@ -165,6 +182,49 @@ export default {
             break;
         }
       }
+    },
+    onClickExport() {
+      // 创建隐藏的可下载链接
+      let eleLink = document.createElement("a");
+      // 指定文件名和后缀
+      eleLink.download = this.win.text + ".tk";
+      eleLink.style.display = "none";
+      // 字符内容转变成blob地址
+      let content = {
+        win: this.win,
+        elements: this.elements,
+      };
+      content = JSON.stringify(content);
+      content = Base64.encode(content);
+      let blob = new Blob([content]);
+      eleLink.href = URL.createObjectURL(blob);
+      // 触发点击
+      document.body.appendChild(eleLink);
+      eleLink.click();
+      // 然后移除
+      document.body.removeChild(eleLink);
+    },
+    beforeUpload(file) {
+      let reader = new FileReader();
+      reader.readAsText(file, "utf8");
+      reader.onload = () => {
+        // console.log(res);
+        try {
+          let info = reader.result;
+          info = Base64.decode(info);
+          info = JSON.parse(info);
+          if (!info.win || !info.elements) {
+            throw new Error();
+          }
+          this.win = info.win;
+          this.elements = info.elements;
+          this.$message.success("数据导入成功");
+        } catch (error) {
+          this.$message.error("文件解析错误");
+        }
+      };
+      // console.log(file);
+      return false;
     },
     elementMove(e, element, index) {
       // 只处理右键点击事件
@@ -291,8 +351,19 @@ export default {
         this.contextMenuData.eleIndex = null;
       }
     },
-    clearCache() {
-      localStorage.clear();
+    clearData() {
+      this.$confirm("此操作将会清空数据和缓存, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+        this.elements = [];
+        localStorage.clear();
+        this.$message({
+          type: "success",
+          message: "删除成功!",
+        });
+      });
     },
   },
 };
@@ -334,6 +405,9 @@ export default {
   }
 
   .menu {
+    .export_btn {
+      margin-left: 10px;
+    }
   }
 }
 
