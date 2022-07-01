@@ -99,7 +99,7 @@ if __name__ == "__main__":
 编译成exe需要用到 pyinstaller 库，安装好包后执行以下打包代码
 
 ```bash
-pyinstall ./view.py -F -w
+pyinstaller ./view.py -F -w
 
 # -F 打包成单个文件
 # -w 不展示命令框
