@@ -16,7 +16,7 @@ export default {
       let h = info.height;
       document.onmousemove = (e) => {
         this.$emit("resize", {
-          width: Math.max(40, parseInt(e.pageX - x + w)),
+          width: Math.max(24, parseInt(e.pageX - x + w)),
           height: Math.max(24, parseInt(e.pageY - y + h)),
         });
       };

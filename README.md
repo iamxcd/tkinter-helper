@@ -1,6 +1,6 @@
 # Tkinter Helper
 
->TkinterHelper（Tkinter布局助手）是一款为Tkinter打造，仅需拖拽组件进行布局，所见即所得，非常方便就能做出一个GUI界面，再配合 pyinstall 库将程序打包成exe，简直是开发小工具的利器。
+>TkinterHelper（Tkinter布局助手）是一款为Tkinter打造，仅需拖拽组件进行布局，所见即所得，非常方便就能做出一个GUI界面，再配合 pyinstaller 库将程序打包成exe，简直是开发小工具的利器。
 
 ## 展示
 
@@ -33,6 +33,7 @@ tkinter 是 Python 自带的标准库，因此无须另行安装，它支持跨�
 - 单选框
 - 多选框
 - 列表框
+- 进度条(垂直/水平)
 
 ## 功能
 - 组件拖拽布局。

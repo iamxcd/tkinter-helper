@@ -72,4 +72,12 @@ export default class Attrs {
             height: 24
         }
     }
+
+    tk_progressbar() {
+        return {
+            ...common_attr,
+            width: 150,
+            height: 24
+        }
+    }
 }

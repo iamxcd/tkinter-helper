@@ -137,4 +137,18 @@ if __name__ == "__main__":
         return cb
 `
     }
+
+    tk_progressbar(ele) {
+        let orient = "HORIZONTAL" // 默认横向
+        if (ele.width < ele.height) {
+            orient = "VERTICAL"  // 高度大于宽度  改为竖向
+        }
+
+        return `
+    def __tk_progressbar_${ele.id}(self):
+        progressbar = Progressbar(self.root, orient=${orient})
+        progressbar.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
+        return progressbar
+`
+    }
 }

@@ -30,5 +30,9 @@ export default [
     {
         title: '下拉框',
         type: 'tk_select_box'
-    }
+    },
+    {
+        title: '进度条',
+        type: 'tk_progressbar'
+    },
 ]
