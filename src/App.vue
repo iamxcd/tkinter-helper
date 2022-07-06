@@ -126,14 +126,15 @@ export default {
   },
   created() {
     let ele = localStorage.getItem("elements");
-    if (ele != null) {
+    ele = JSON.parse(ele);
+    if (ele != null && ele.length > 0) {
       this.$confirm("是否恢复上次的编辑结果?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       })
         .then(() => {
-          this.elements = JSON.parse(ele);
+          this.elements = ele;
           let win = localStorage.getItem("win");
           if (win != null) {
             this.win = JSON.parse(win);
