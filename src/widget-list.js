@@ -35,4 +35,8 @@ export default [
         title: '进度条',
         type: 'tk_progressbar'
     },
+    {
+        title: '表格',
+        type: 'tk_table'
+    },
 ]

@@ -151,4 +151,29 @@ if __name__ == "__main__":
         return progressbar
 `
     }
+
+    tk_table(ele) {
+        return `
+    def __tk_table_${ele.id}(self):
+        # 表头字段 表头宽度
+        columns = {"ID":50, "网站名": 100, "地址": 300}
+        # 初始化表格 表格是基于Treeview，tkinter本身没有表格。show="headings" 为隐藏首列。
+        tk_table = Treeview(self.root, show="headings", columns=list(columns))
+        for text, width in columns.items():  # 批量设置列属性
+            tk_table.heading(text, text=text, anchor='center')
+            tk_table.column(text, anchor='center', width=width, stretch=False) # stretch 不自动拉伸
+        
+        data = [
+            [1,"github", "https://github.com/iamxcd/tkinter-helper"],
+            [2,"演示地址", "https://www.codingstudy.cn/tkinter-helper"]
+        ]
+        
+        # 导入初始数据
+        for values in data:
+            tk_table.insert('', END, values=values)
+        
+        tk_table.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
+        return tk_table
+`
+    }
 }

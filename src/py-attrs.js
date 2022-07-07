@@ -80,4 +80,12 @@ export default class Attrs {
             height: 24
         }
     }
+
+    tk_table() {
+        return {
+            ...common_attr,
+            width: 450,
+            height: 70
+        }
+    }
 }
