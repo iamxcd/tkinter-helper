@@ -2,31 +2,10 @@
   <div class="home">
     <el-container>
       <el-header class="header">
-        <div class="logo">
-          TkinterHelper
-        </div>
-        <div class="menu">
-          <el-button type="danger"
-            @click="clearData()">清理数据</el-button>
-          <el-button type="primary"
-            @click="viewCode()">Python</el-button>
-          <el-dropdown split-button
-            type="primary"
-            class="export_btn"
-            @click="onClickExport">
-            导出
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>
-                <el-upload action=""
-                  :before-upload="beforeUpload"
-                  :limit="1">
-                  导入布局文件
-                </el-upload>
-
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </div>
+        <IHeader @viewCode="viewCode"
+          @clearData="clearData"
+          @onClickExport="onClickExport"
+          :beforeUpload="beforeUpload"></IHeader>
       </el-header>
       <el-container style="height:calc(100vh - 60px - 60px - 1px);">
         <WidgetBox></WidgetBox>
@@ -63,15 +42,7 @@
         <AttrsBox v-model="form"></AttrsBox>
       </el-container>
       <el-footer class="footer">
-        <div class="info">
-          <span> TkinterHelper布局助手 | </span>
-          <a href="https://github.com/iamxcd/tkinter-helper"
-            target="_blank">github | </a>
-          <a href="https://zhuanlan.zhihu.com/p/532678277"
-            target="_blank">使用说明 | </a>
-          <a href="http://beian.miit.gov.cn/"
-            target="_blank">蜀ICP备18032036号</a>
-        </div>
+        <IFooter></IFooter>
       </el-footer>
     </el-container>
 
@@ -88,12 +59,23 @@ import GenerateCode from "./generate-code";
 import CodeView from "./components/code-view.vue";
 import Resize from "./components/resize.vue";
 import WidgetBox from "./components/widget-box.vue";
+import IHeader from "./components/iheader.vue";
+import IFooter from "./components/ifooter.vue";
 import PyAttrs from "./py-attrs.js";
 import AttrsBox from "./components/attrs-box.vue";
 import VueContextMenu from "./components/VueContextMenu/VueContextMenu.vue";
 import { Base64 } from "js-base64";
+
 export default {
-  components: { CodeView, Resize, WidgetBox, AttrsBox, VueContextMenu },
+  components: {
+    CodeView,
+    Resize,
+    WidgetBox,
+    AttrsBox,
+    VueContextMenu,
+    IHeader,
+    IFooter,
+  },
   name: "HomeView",
   data() {
     return {
@@ -395,38 +377,7 @@ export default {
 }
 .header {
   border-bottom: 1px solid #d1d1d1;
-  display: flex;
-  align-items: center;
   box-shadow: 0 1px rgb(12 13 14 / 10%), 0 1px 6px rgb(60 65 70 / 10%);
-
-  .logo {
-    flex: 1;
-    width: 200px;
-    font-size: 24px;
-    line-height: 60px;
-    padding-left: 30px;
-  }
-
-  .menu {
-    .export_btn {
-      margin-left: 10px;
-    }
-  }
-}
-
-.footer {
-  border-top: 1px solid rgba(12, 13, 14, 0.1);
-
-  .info {
-    font-size: 10px;
-    text-align: center;
-    line-height: 60px;
-    color: #707070;
-    a {
-      text-decoration: none;
-      color: #707070;
-    }
-  }
 }
 </style>
 
