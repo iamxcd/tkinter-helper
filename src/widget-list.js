@@ -39,4 +39,8 @@ export default [
         title: '表格',
         type: 'tk_table'
     },
+    {
+        title: '容器',
+        type: 'tk_frame'
+    }
 ]

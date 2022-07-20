@@ -88,4 +88,13 @@ export default class Attrs {
             height: 70
         }
     }
+
+    tk_frame() {
+        return {
+            ...common_attr,
+            width: 500,
+            height: 300,
+            frame: true
+        }
+    }
 }

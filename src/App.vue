@@ -45,6 +45,8 @@
               :style="{'top':element.top+'px','left':element.left+'px','width':element.width + 'px','height':element.height +'px'}"
               :key="index"
               :info="element"
+              @drop="drop($event)"
+              @dragover="allowDrop($event)"
               @mousedown.native.stop="elementMove($event,element,index)">
               <Resize @resize="(size)=>{eleResize(size,element,index)}"
                 v-show="curIndex == index"></Resize>
