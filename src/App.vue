@@ -12,7 +12,7 @@
         <el-main>
           <Elements></Elements>
         </el-main>
-        <AttrsBox v-model="form"></AttrsBox>
+        <AttrsBox v-model="attrsForm"></AttrsBox>
       </el-container>
       <el-footer class="footer">
         <IFooter></IFooter>
@@ -36,7 +36,7 @@ import Elements from "./components/elements.vue";
 
 import VueContextMenu from "./components/VueContextMenu/VueContextMenu.vue";
 import { Base64 } from "js-base64";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     CodeView,
@@ -50,7 +50,6 @@ export default {
   name: "HomeView",
   data() {
     return {
-      form: {},
       // contextmenu data (菜单数据)
       contextMenuData: {
         menuName: "demo",
@@ -69,6 +68,9 @@ export default {
         ],
       },
     };
+  },
+  computed: {
+    ...mapGetters(["attrsForm"]),
   },
   methods: {
     ...mapActions(["setCurId"]),
@@ -138,7 +140,7 @@ export default {
       return false;
     },
     viewCode() {
-      let t = new GenerateCode(this.win, this.win.elements);
+      let t = new GenerateCode(_global.frame);
       let code = t.build();
       this.$refs["code_view"].open(code);
     },

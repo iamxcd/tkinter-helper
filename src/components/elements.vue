@@ -29,14 +29,6 @@ export default {
   data() {
     return {
       id: "win",
-      frame: {
-        top: 130,
-        left: 450,
-        width: 600,
-        height: 500,
-        text: "我是标题 ~ TkinterHelper",
-        elements: [],
-      },
     };
   },
   created() {
@@ -59,11 +51,13 @@ export default {
           localStorage.clear();
         });
     }
-
-    this.form = this.frame;
+    this.$store.dispatch("setAttrsForm", this.frame);
   },
   computed: {
     ...mapGetters(["curId"]),
+    frame() {
+      return _global.frame;
+    },
   },
   watch: {
     frame: {

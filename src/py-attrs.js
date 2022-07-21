@@ -98,4 +98,15 @@ export default class Attrs {
             elements: []
         }
     }
+
+    tk_tabs() {
+        return {
+            ...common_attr,
+            width: 500,
+            height: 300,
+            frame: true,
+            tabs: ['选项卡1'],
+            elements: [] // 子元素通过  tab: 0  字段 区分是哪一个选项上的
+        }
+    }
 }

@@ -17,6 +17,28 @@ class Win:
         let code = "" // 赋值代码
         for (const i in elemetns) {
             let e = elemetns[i]
+            if (e.frame) {
+                code += `
+        self.${e['type']}_${e['id']} = Frame${e['id']}(self.root)`
+            } else {
+                code += `
+        self.${e['type']}_${e['id']} = self.__${e['type']}_${e['id']}()`
+            }
+        }
+        code += `
+`
+        return header + code
+    }
+
+
+    frame_init(frame, elemetns) {
+        let header = `
+class Frame${frame.id}():
+    def __init__(self,root):
+        self.root = self.__frame(root)`
+        let code = "" // 赋值代码
+        for (const i in elemetns) {
+            let e = elemetns[i]
             code += `
         self.${e['type']}_${e['id']} = self.__${e['type']}_${e['id']}()`
         }
@@ -40,6 +62,14 @@ class Win:
         geometry = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
         root.geometry(geometry)
         root.resizable(width=False, height=False)
+        return root
+`
+    }
+    frame(frame) {
+        return `
+    def __frame(self,root):
+        frame = Frame(root)
+        frame.place(x=${frame.left}, y=${frame.top}, width=${frame.width}, height=${frame.height})
         return root
 `
     }
