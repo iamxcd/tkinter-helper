@@ -75,7 +75,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["setCurId"]),
+    ...mapActions(["setCurId", "setAttrsForm"]),
     winResize({ width, height }) {
       this.frame.width = width;
       this.frame.height = height;
@@ -124,11 +124,6 @@ export default {
         evt.preventDefault();
       }
     },
-    eleResize({ width, height }, element, index) {
-      // console.log(width, height, element, index);
-      this.frame.elements[index].width = width;
-      this.frame.elements[index].height = height;
-    },
     isWin(id) {
       return id == "win";
     },
@@ -141,6 +136,46 @@ export default {
     },
     getFrameIndex(id) {
       return _.findIndex(this.frame.elements, { id, frame: true });
+    },
+    winMove(e) {
+      // 只处理右键点击事件
+      if (e.which != 1) {
+        return;
+      }
+      let ele = e.currentTarget; //获取组件. 绑定事件的元素
+      // ele.style.cursor = "move";
+      this.$store.dispatch("setCurId", "win");
+      // 将属性绑定到表单中
+      this.$store.dispatch("setAttrsForm", this.frame);
+
+      // console.log(this.curIndex);
+
+      //算出鼠标相对元素的位置
+      let disX = e.clientX - ele.offsetLeft;
+      let disY = e.clientY - ele.offsetTop;
+
+      disY = disY - 30; // 减去标题栏的高度
+
+      document.onmousemove = (e) => {
+        //鼠标按下并移动的事件
+        //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
+        let left = e.clientX - disX;
+        let top = e.clientY - disY;
+
+        if (top < 0) {
+          top = 0;
+        }
+        if (left < 0) {
+          left = 0;
+        }
+        this.frame.top = top;
+        this.frame.left = left;
+      };
+      document.onmouseup = (e) => {
+        document.onmousemove = null;
+        document.onmouseup = null;
+        // ele.style.cursor = "default";
+      };
     },
   },
 };

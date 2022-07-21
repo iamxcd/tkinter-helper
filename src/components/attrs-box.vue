@@ -4,45 +4,42 @@
     <el-form ref="form"
       class="form"
       label-position="left"
-      :model="form"
+      :model="attrsForm"
       label-width="50px">
       <el-form-item label="ID"
-        v-if="form.id != null">
-        <el-input v-model="form.id">
-          <template slot="prepend">{{form.type}}</template>
+        v-if="attrsForm.id != null">
+        <el-input v-model="attrsForm.id">
+          <template slot="prepend">{{attrsForm.type}}</template>
         </el-input>
       </el-form-item>
       <el-form-item label="width">
-        <el-input v-model="form.width"></el-input>
+        <el-input v-model="attrsForm.width"></el-input>
       </el-form-item>
       <el-form-item label="height">
-        <el-input v-model="form.height"></el-input>
+        <el-input v-model="attrsForm.height"></el-input>
       </el-form-item>
       <el-form-item label="top">
-        <el-input v-model="form.top"></el-input>
+        <el-input v-model="attrsForm.top"></el-input>
       </el-form-item>
       <el-form-item label="left">
-        <el-input v-model="form.left"></el-input>
+        <el-input v-model="attrsForm.left"></el-input>
       </el-form-item>
-      <el-form-item v-if="form.text != null"
+      <el-form-item v-if="attrsForm.text != null"
         label="text">
-        <el-input v-model="form.text"></el-input>
+        <el-input v-model="attrsForm.text"></el-input>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
-  model: {
-    prop: "form",
-    event: "change",
-  },
-  props: {
-    form: Object,
-  },
   data() {
     return {};
+  },
+  computed: {
+    ...mapGetters(["attrsForm"]),
   },
 };
 </script>
