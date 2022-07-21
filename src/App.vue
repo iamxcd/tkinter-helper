@@ -10,13 +10,7 @@
       <el-container style="height:calc(100vh - 60px - 60px - 1px);">
         <WidgetBox></WidgetBox>
         <el-main>
-          <Elements id="win"
-            :frame="win"></Elements>
-          <div id="win_title"
-            @mousedown="winMove($event)"
-            :style="{'top':win.top-30+'px','left':win.left+'px','width':win.width + 'px'}">
-            <span class="title">{{win.text}}</span>
-          </div>
+          <Elements></Elements>
         </el-main>
         <AttrsBox v-model="form"></AttrsBox>
       </el-container>
@@ -56,14 +50,6 @@ export default {
   name: "HomeView",
   data() {
     return {
-      win: {
-        top: 130,
-        left: 450,
-        width: 600,
-        height: 500,
-        text: "我是标题 ~ TkinterHelper",
-        elements: [],
-      },
       form: {},
       // contextmenu data (菜单数据)
       contextMenuData: {
@@ -83,44 +69,6 @@ export default {
         ],
       },
     };
-  },
-  created() {
-    let ele = localStorage.getItem("elements");
-    ele = JSON.parse(ele);
-    if (ele != null && ele.length > 0) {
-      this.$confirm("是否恢复上次的编辑结果?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-        .then(() => {
-          this.elements = ele;
-          let win = localStorage.getItem("win");
-          if (win != null) {
-            this.win = JSON.parse(win);
-          }
-        })
-        .catch(() => {
-          localStorage.clear();
-        });
-    }
-
-    this.form = this.win;
-  },
-  watch: {
-    elements: {
-      handler(val) {
-        localStorage.setItem("elements", JSON.stringify(val));
-      },
-      deep: true,
-    },
-    win: {
-      handler(val) {
-        console.log(val);
-        localStorage.setItem("win", JSON.stringify(val));
-      },
-      deep: true,
-    },
   },
   methods: {
     ...mapActions(["setCurId"]),
@@ -276,18 +224,6 @@ export default {
 .header {
   border-bottom: 1px solid #d1d1d1;
   box-shadow: 0 1px rgb(12 13 14 / 10%), 0 1px 6px rgb(60 65 70 / 10%);
-}
-
-#win_title {
-  position: absolute;
-  height: 30px;
-  background-color: #fff;
-  border: 1px solid #cccccc;
-  display: flex;
-  align-items: center;
-  .title {
-    padding-left: 10px;
-  }
 }
 </style>
 
