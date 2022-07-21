@@ -1,6 +1,6 @@
 <template>
   <div :style="style"
-    class="frame">
+    class="tk_frame">
 
     <slot></slot>
   </div>
@@ -25,7 +25,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.frame {
+.tk_frame {
+  position: absolute;
   border: 1px dashed #000;
 }
 </style>

@@ -10,29 +10,8 @@
       <el-container style="height:calc(100vh - 60px - 60px - 1px);">
         <WidgetBox></WidgetBox>
         <el-main>
-          <div id="win"
-            @drop="drop($event)"
-            @dragover="allowDrop($event)"
-            :style="{'top':win.top+'px','left':win.left+'px','width':win.width + 'px','height':win.height +'px'}">
-            <component :is="element.type"
-              @keydown.native="keyDown($event)"
-              :tabindex="0"
-              @contextmenu.native="showMenu($event,element,index)"
-              v-for="(element,index) in elements"
-              style="position: absolute;"
-              :id="element.id"
-              :style="{'top':element.top+'px','left':element.left+'px','width':element.width + 'px','height':element.height +'px'}"
-              :key="index"
-              :info="element"
-              @drop="drop($event)"
-              @dragover="allowDrop($event)"
-              @mousedown.native.stop="elementMove($event,element,index)">
-              <Resize @resize="(size)=>{eleResize(size,element,index)}"
-                v-show="curIndex == index"></Resize>
-            </component>
-            <Resize @resize="winResize"
-              v-show="curIndex == undefined"></Resize>
-          </div>
+          <elements id="win"
+            :frame="win"></elements>
           <div id="win_title"
             @mousedown="elementMove($event)"
             :style="{'top':win.top-30+'px','left':win.left+'px','width':win.width + 'px'}">
@@ -53,15 +32,11 @@
 </template>
 
 <script>
-import uniqid from "uniqid";
-
 import GenerateCode from "./generate-code";
 import CodeView from "./components/code-view.vue";
-import Resize from "./components/resize.vue";
 import WidgetBox from "./components/widget-box.vue";
 import IHeader from "./components/iheader.vue";
 import IFooter from "./components/ifooter.vue";
-import PyAttrs from "./py-attrs.js";
 import AttrsBox from "./components/attrs-box.vue";
 import VueContextMenu from "./components/VueContextMenu/VueContextMenu.vue";
 import { Base64 } from "js-base64";
@@ -69,7 +44,6 @@ import { Base64 } from "js-base64";
 export default {
   components: {
     CodeView,
-    Resize,
     WidgetBox,
     AttrsBox,
     VueContextMenu,
@@ -85,9 +59,8 @@ export default {
         width: 600,
         height: 500,
         text: "我是标题 ~ TkinterHelper",
+        elements: [],
       },
-      elements: [],
-      curIndex: undefined, //当前选择的元素的索引
       form: {},
       // contextmenu data (菜单数据)
       contextMenuData: {
@@ -140,12 +113,70 @@ export default {
     },
     win: {
       handler(val) {
+        console.log(val);
         localStorage.setItem("win", JSON.stringify(val));
       },
       deep: true,
     },
   },
   methods: {
+    elementMove(e, element, index) {
+      // 只处理右键点击事件
+      if (e.which != 1) {
+        return;
+      }
+      let ele = e.currentTarget; //获取组件. 绑定事件的元素
+      // ele.style.cursor = "move";
+      this.curIndex = index;
+      // 将属性绑定到表单中
+      if (index == undefined) {
+        this.form = this.win;
+      } else {
+        this.form = this.win.elements[index];
+      }
+      // console.log(this.curIndex);
+
+      //算出鼠标相对元素的位置
+      let disX = e.clientX - ele.offsetLeft;
+      let disY = e.clientY - ele.offsetTop;
+
+      if (index == undefined) {
+        disY = disY - 30; // 减去标题栏的高度
+      }
+
+      document.onmousemove = (e) => {
+        //鼠标按下并移动的事件
+        //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
+        let left = e.clientX - disX;
+        let top = e.clientY - disY;
+
+        if (index != undefined) {
+          top = parseInt(top / 10) * 10 + (top % 10 >= 5 ? 10 : 0);
+          left = parseInt(left / 10) * 10 + (left % 10 >= 5 ? 10 : 0);
+        }
+
+        if (top < 0) {
+          top = 0;
+        }
+        if (left < 0) {
+          left = 0;
+        }
+
+        // 内部元素
+        if (index != undefined) {
+          this.win.elements[index].top = top;
+          this.win.elements[index].left = left;
+        } else {
+          this.win.top = top;
+          this.win.left = left;
+        }
+      };
+      document.onmouseup = (e) => {
+        document.onmousemove = null;
+        document.onmouseup = null;
+        // ele.style.cursor = "default";
+      };
+    },
     keyDown(evt) {
       let keys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
       if (keys.indexOf(evt.key) > -1) {
@@ -211,110 +242,8 @@ export default {
       // console.log(file);
       return false;
     },
-    elementMove(e, element, index) {
-      // 只处理右键点击事件
-      if (e.which != 1) {
-        return;
-      }
-      let ele = e.currentTarget; //获取组件. 绑定事件的元素
-      // ele.style.cursor = "move";
-      this.curIndex = index;
-      // 将属性绑定到表单中
-      if (index == undefined) {
-        this.form = this.win;
-      } else {
-        this.form = this.elements[index];
-      }
-      // console.log(this.curIndex);
-
-      //算出鼠标相对元素的位置
-      let disX = e.clientX - ele.offsetLeft;
-      let disY = e.clientY - ele.offsetTop;
-
-      if (index == undefined) {
-        disY = disY - 30; // 减去标题栏的高度
-      }
-
-      document.onmousemove = (e) => {
-        //鼠标按下并移动的事件
-        //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
-        let left = e.clientX - disX;
-        let top = e.clientY - disY;
-
-        if (index != undefined) {
-          top = parseInt(top / 10) * 10 + (top % 10 >= 5 ? 10 : 0);
-          left = parseInt(left / 10) * 10 + (left % 10 >= 5 ? 10 : 0);
-        }
-
-        if (top < 0) {
-          top = 0;
-        }
-        if (left < 0) {
-          left = 0;
-        }
-
-        // 内部元素
-        if (index != undefined) {
-          this.elements[index].top = top;
-          this.elements[index].left = left;
-        } else {
-          this.win.top = top;
-          this.win.left = left;
-        }
-      };
-      document.onmouseup = (e) => {
-        document.onmousemove = null;
-        document.onmouseup = null;
-        // ele.style.cursor = "default";
-      };
-    },
-    drop(evt) {
-      evt.preventDefault();
-
-      let type = evt.dataTransfer.getData("type");
-
-      // console.log(evt.layerX, evt.layerY);
-      let x = evt.dataTransfer.getData("x");
-      let y = evt.dataTransfer.getData("y");
-
-      let top = evt.layerY - y;
-      let left = evt.layerX - x;
-      // console.log(evt.layerX, evt.target.offsetLeft);
-
-      top = parseInt(top / 10) * 10 + (top % 10 >= 5 ? 10 : 0);
-      left = parseInt(left / 10) * 10 + (left % 10 >= 5 ? 10 : 0);
-
-      if (top < 0) {
-        top = 0;
-      }
-      if (left < 0) {
-        left = 0;
-      }
-
-      let py = new PyAttrs();
-      this.elements.push({
-        ...py[type](),
-
-        id: uniqid(),
-        type: type,
-        top: top,
-        left: left,
-      });
-    },
-    allowDrop(e) {
-      e.preventDefault();
-    },
-    winResize({ width, height }) {
-      this.win.width = width;
-      this.win.height = height;
-    },
-    eleResize({ width, height }, element, index) {
-      // console.log(width, height, element, index);
-      this.elements[index].width = width;
-      this.elements[index].height = height;
-    },
     viewCode() {
-      let t = new GenerateCode(this.win, this.elements);
+      let t = new GenerateCode(this.win, this.win.elements);
       let code = t.build();
       this.$refs["code_view"].open(code);
     },
@@ -332,7 +261,7 @@ export default {
     delEle() {
       let i = this.contextMenuData.eleIndex;
       if (i != null) {
-        this.elements.splice(i, 1);
+        this.win.elements.splice(i, 1);
         this.contextMenuData.eleIndex = null;
       }
     },
@@ -357,13 +286,12 @@ export default {
 <style lang="scss" scoped>
 .home {
 }
-#win {
-  position: absolute;
-  background-color: #fff;
-  border: 1px solid #cccccc;
-  border-top-width: 2px;
-  background: url("./assets/bg.png") 0px 0px;
+
+.header {
+  border-bottom: 1px solid #d1d1d1;
+  box-shadow: 0 1px rgb(12 13 14 / 10%), 0 1px 6px rgb(60 65 70 / 10%);
 }
+
 #win_title {
   position: absolute;
   height: 30px;
@@ -374,10 +302,6 @@ export default {
   .title {
     padding-left: 10px;
   }
-}
-.header {
-  border-bottom: 1px solid #d1d1d1;
-  box-shadow: 0 1px rgb(12 13 14 / 10%), 0 1px 6px rgb(60 65 70 / 10%);
 }
 </style>
 

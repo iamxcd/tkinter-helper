@@ -94,7 +94,8 @@ export default class Attrs {
             ...common_attr,
             width: 500,
             height: 300,
-            frame: true
+            frame: true,
+            elements: []
         }
     }
 }
