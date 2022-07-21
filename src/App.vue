@@ -10,8 +10,8 @@
       <el-container style="height:calc(100vh - 60px - 60px - 1px);">
         <WidgetBox></WidgetBox>
         <el-main>
-          <elements id="win"
-            :frame="win"></elements>
+          <Elements id="win"
+            :frame="win"></Elements>
           <div id="win_title"
             @mousedown="elementMove($event)"
             :style="{'top':win.top-30+'px','left':win.left+'px','width':win.width + 'px'}">
@@ -38,9 +38,10 @@ import WidgetBox from "./components/widget-box.vue";
 import IHeader from "./components/iheader.vue";
 import IFooter from "./components/ifooter.vue";
 import AttrsBox from "./components/attrs-box.vue";
+import Elements from "./components/elements.vue";
+
 import VueContextMenu from "./components/VueContextMenu/VueContextMenu.vue";
 import { Base64 } from "js-base64";
-
 export default {
   components: {
     CodeView,
@@ -49,6 +50,7 @@ export default {
     VueContextMenu,
     IHeader,
     IFooter,
+    Elements,
   },
   name: "HomeView",
   data() {
