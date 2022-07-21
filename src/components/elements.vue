@@ -14,17 +14,20 @@
 import uniqid from "uniqid";
 import PyAttrs from "@/py-attrs.js";
 import Resize from "@/components/resize.vue";
+import { mapGetters, mapActions } from "vuex";
 export default {
   props: ["id", "frame"],
   components: {
     Resize,
   },
   data() {
-    return {
-      curId: "win", //当前选择的元素的索引
-    };
+    return {};
+  },
+  computed: {
+    ...mapGetters(["curId"]),
   },
   methods: {
+    ...mapActions(["setCurId"]),
     winResize({ width, height }) {
       this.frame.width = width;
       this.frame.height = height;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <component :is="element.type"
       @keydown.native="keyDown($event)"
       :tabindex="0"
@@ -25,17 +25,20 @@
 
 <script>
 import Resize from "@/components/resize.vue";
+import { mapActions, mapGetters } from "vuex";
 export default {
   props: ["frame"],
   components: {
     Resize,
   },
   data() {
-    return {
-      curId: "win", //当前选择的元素的索引
-    };
+    return {};
+  },
+  computed: {
+    ...mapGetters(["curId"]),
   },
   methods: {
+    ...mapActions(["setCurId"]),
     elementMove(e, element, index) {
       // 只处理右键点击事件
       if (e.which != 1) {
@@ -43,7 +46,7 @@ export default {
       }
       let ele = e.currentTarget; //获取组件. 绑定事件的元素
       // ele.style.cursor = "move";
-      this.curId = element.id;
+      this.$store.dispatch("setCurId", element.id);
       // 将属性绑定到表单中
       if (index == "win") {
         this.form = this.frame;
@@ -98,5 +101,9 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.container {
+  width: 100%;
+  height: 100%;
+}
 </style>

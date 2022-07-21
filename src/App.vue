@@ -13,7 +13,7 @@
           <Elements id="win"
             :frame="win"></Elements>
           <div id="win_title"
-            @mousedown="elementMove($event)"
+            @mousedown="winMove($event)"
             :style="{'top':win.top-30+'px','left':win.left+'px','width':win.width + 'px'}">
             <span class="title">{{win.text}}</span>
           </div>
@@ -42,6 +42,7 @@ import Elements from "./components/elements.vue";
 
 import VueContextMenu from "./components/VueContextMenu/VueContextMenu.vue";
 import { Base64 } from "js-base64";
+import { mapActions } from "vuex";
 export default {
   components: {
     CodeView,
@@ -122,29 +123,24 @@ export default {
     },
   },
   methods: {
-    elementMove(e, element, index) {
+    ...mapActions(["setCurId"]),
+    winMove(e) {
       // 只处理右键点击事件
       if (e.which != 1) {
         return;
       }
       let ele = e.currentTarget; //获取组件. 绑定事件的元素
       // ele.style.cursor = "move";
-      this.curIndex = index;
+      this.$store.dispatch("setCurId", "win");
       // 将属性绑定到表单中
-      if (index == undefined) {
-        this.form = this.win;
-      } else {
-        this.form = this.win.elements[index];
-      }
+      this.form = this.win;
       // console.log(this.curIndex);
 
       //算出鼠标相对元素的位置
       let disX = e.clientX - ele.offsetLeft;
       let disY = e.clientY - ele.offsetTop;
 
-      if (index == undefined) {
-        disY = disY - 30; // 减去标题栏的高度
-      }
+      disY = disY - 30; // 减去标题栏的高度
 
       document.onmousemove = (e) => {
         //鼠标按下并移动的事件
@@ -152,26 +148,14 @@ export default {
         let left = e.clientX - disX;
         let top = e.clientY - disY;
 
-        if (index != undefined) {
-          top = parseInt(top / 10) * 10 + (top % 10 >= 5 ? 10 : 0);
-          left = parseInt(left / 10) * 10 + (left % 10 >= 5 ? 10 : 0);
-        }
-
         if (top < 0) {
           top = 0;
         }
         if (left < 0) {
           left = 0;
         }
-
-        // 内部元素
-        if (index != undefined) {
-          this.win.elements[index].top = top;
-          this.win.elements[index].left = left;
-        } else {
-          this.win.top = top;
-          this.win.left = left;
-        }
+        this.win.top = top;
+        this.win.left = left;
       };
       document.onmouseup = (e) => {
         document.onmousemove = null;
