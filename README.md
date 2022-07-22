@@ -1,16 +1,23 @@
-# Tkinter Helper
+# Tkinter Helper（Tkinter布局助手）
 
 >TkinterHelper（Tkinter布局助手）是一款为Tkinter打造，仅需拖拽组件进行布局，所见即所得，非常方便就能做出一个GUI界面，再配合 pyinstaller 库将程序打包成exe，简直是开发小工具的利器。
 
-## 展示
+## 效果展示
+[点我](https://​www.codingstudy.cn/tkinter-helper/)立即体验Tkinter布局助手， [点我](./files/demo.tk)可下载布局文件，并尝试在编辑器中导入，[点我](./files/demo.py)可查看生成的python代码。
 
-[体验地址](https://​www.codingstudy.cn/tkinter-helper/)
+### 布局界面效果图
+![布局界面效果图](./files/img.png)
 
-[demo](./demo.py)
+### win10下运行后效果图
+![运行后效果图](./files/win10.png)
 
-截图展示
+### mac下运行效果
 
-![](./files/img1.png)
+> 暂未截图，欢迎提PR
+
+### linux下运行效果
+
+>暂未截图，欢迎提PR
 
 ## Tkinter 简介
 tkinter 是 Python 自带的标准库，因此无须另行安装，它支持跨平台运行，不仅可以在 Windows 平台上运行，还支持在 Linux 和 Mac 平台上运行。
@@ -23,7 +30,7 @@ tkinter 是 Python 自带的标准库，因此无须另行安装，它支持跨�
 
 ## Tkinter的缺点
 - 对界面美观、性能、大小有要求的程序不适用。
-- 打包后体积过大。
+- 打包成单个exe体积过大。
 
 ## 目前支持的组件
 - 标签
@@ -35,6 +42,8 @@ tkinter 是 Python 自带的标准库，因此无须另行安装，它支持跨�
 - 列表框
 - 进度条(垂直/水平)
 - 表格组件
+- 容器(Frame)
+- 标签容器(LabelFrame)
 
 ## 功能
 - 组件拖拽布局。
