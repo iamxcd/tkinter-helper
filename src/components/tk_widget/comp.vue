@@ -32,13 +32,31 @@ export default {
     Resize,
   },
   data() {
-    return {};
+    return {
+      // contextmenu data (菜单数据)
+      contextMenuData: {
+        menuName: "demo",
+        eleIndex: null,
+        // The coordinates of the display(菜单显示的位置)
+        axis: {
+          x: null,
+          y: null,
+        },
+        // Menu options (菜单选项)
+        menulists: [
+          {
+            fnHandler: "delEle", // Binding events(绑定事件)
+            btnName: "删除", // The name of the menu option (菜单名称)
+          },
+        ],
+      },
+    };
   },
   computed: {
-    ...mapGetters(["curId"]),
+    ...mapGetters(["curId", "attrsForm"]),
   },
   methods: {
-    ...mapActions(["setCurId", "setAttrsForm"]),
+    ...mapActions(["setCurId", "setAttrsForm", "showContextMenu"]),
     elementMove(e, element, index) {
       // 只处理右键点击事件
       if (e.which != 1) {
@@ -80,6 +98,38 @@ export default {
         document.onmouseup = null;
         // ele.style.cursor = "default";
       };
+    },
+    keyDown(evt) {
+      let keys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+      if (keys.indexOf(evt.key) > -1) {
+        evt.preventDefault();
+        switch (evt.key) {
+          case "ArrowUp":
+            if (this.attrsForm.top >= 1) this.attrsForm.top -= 1;
+            break;
+          case "ArrowDown":
+            this.attrsForm.top += 1;
+            break;
+          case "ArrowLeft":
+            if (this.attrsForm.left >= 1) this.attrsForm.left -= 1;
+            break;
+          case "ArrowRight":
+            this.attrsForm.left += 1;
+            break;
+          default:
+            break;
+        }
+      }
+    },
+    showMenu(event, ele, index) {
+      event.preventDefault();
+      this.$store.dispatch("showContextMenu", {
+        x: event.clientX,
+        y: event.clientY,
+        index,
+        ele,
+        frame: this.frame,
+      });
     },
     eleResize({ width, height }, element, index) {
       this.frame.elements[index].width = width;

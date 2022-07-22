@@ -72,49 +72,64 @@ export default {
     },
   },
   watch: {
-    "contextMenuData.axis"(val) {
-      var x = val.x;
-      var y = val.y;
-      var innerWidth = window.innerWidth;
-      var innerHeight = window.innerHeight;
-      var _this = this;
-      var index = _this.transferIndex;
-      var menuName = "vue-contextmenuName-" + _this.contextMenuData.menuName;
-      var menu = document.getElementsByClassName(menuName)[index];
-      menu.style.display = "block";
-      var menuHeight = this.contextMenuData.menulists.length * 30;
-      var menuWidth = 150;
-      menu.style.top =
-        (y + menuHeight > innerHeight ? innerHeight - menuHeight : y) + "px";
-      menu.style.left =
-        (x + menuWidth > innerWidth ? innerWidth - menuWidth : x) + "px";
-      document.addEventListener(
-        "mouseup",
-        function (e) {
-          // 解决mac电脑在鼠标右键后会执行mouseup事件
-          if (e.button === 0) {
-            menu.style.display = "none";
-          }
-        },
-        false
-      );
-      if (x + 2 * menuWidth > innerWidth && y + 2 * menuHeight > innerHeight) {
-        this.floatDirection = "float-status-4";
-      }
-      if (x + 2 * menuWidth < innerWidth && y + 2 * menuHeight > innerHeight) {
-        this.floatDirection = "float-status-1";
-      }
-      if (x + 2 * menuWidth > innerWidth && y + 2 * menuHeight < innerHeight) {
-        this.floatDirection = "float-status-3";
-      }
-      if (x + 2 * menuWidth < innerWidth && y + 2 * menuHeight < innerHeight) {
-        this.floatDirection = "float-status-2";
-      }
+    "contextMenuData.axis": {
+      handler(val) {
+        var x = val.x;
+        var y = val.y;
+        var innerWidth = window.innerWidth;
+        var innerHeight = window.innerHeight;
+        var _this = this;
+        var index = _this.transferIndex;
+        var menuName = "vue-contextmenuName-" + _this.contextMenuData.menuName;
+        var menu = document.getElementsByClassName(menuName)[index];
+        menu.style.display = "block";
+        var menuHeight = this.contextMenuData.menulists.length * 30;
+        var menuWidth = 150;
+        menu.style.top =
+          (y + menuHeight > innerHeight ? innerHeight - menuHeight : y) + "px";
+        menu.style.left =
+          (x + menuWidth > innerWidth ? innerWidth - menuWidth : x) + "px";
+        document.addEventListener(
+          "mouseup",
+          function (e) {
+            // 解决mac电脑在鼠标右键后会执行mouseup事件
+            if (e.button === 0) {
+              menu.style.display = "none";
+            }
+          },
+          false
+        );
+        if (
+          x + 2 * menuWidth > innerWidth &&
+          y + 2 * menuHeight > innerHeight
+        ) {
+          this.floatDirection = "float-status-4";
+        }
+        if (
+          x + 2 * menuWidth < innerWidth &&
+          y + 2 * menuHeight > innerHeight
+        ) {
+          this.floatDirection = "float-status-1";
+        }
+        if (
+          x + 2 * menuWidth > innerWidth &&
+          y + 2 * menuHeight < innerHeight
+        ) {
+          this.floatDirection = "float-status-3";
+        }
+        if (
+          x + 2 * menuWidth < innerWidth &&
+          y + 2 * menuHeight < innerHeight
+        ) {
+          this.floatDirection = "float-status-2";
+        }
+      },
+      deep: true,
     },
   },
   methods: {
     fnHandler(item) {
-      this.$emit(item.fnHandler);
+      this.$emit("handler", item.fnHandler);
     },
   },
 };

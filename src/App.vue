@@ -20,8 +20,8 @@
     </el-container>
 
     <CodeView ref="code_view"></CodeView>
-    <VueContextMenu :contextMenuData="contextMenuData"
-      @delEle="delEle"></VueContextMenu>
+    <VueContextMenu :contextMenuData="contextMenu"
+      @handler="contextMenuHandler"></VueContextMenu>
   </div>
 </template>
 
@@ -33,8 +33,8 @@ import IHeader from "./components/iheader.vue";
 import IFooter from "./components/ifooter.vue";
 import AttrsBox from "./components/attrs-box.vue";
 import Elements from "./components/elements.vue";
-
-import VueContextMenu from "./components/VueContextMenu/VueContextMenu.vue";
+import VueContextMenu from "@/components/VueContextMenu/VueContextMenu.vue";
+import ContextMenuHandler from "@/context-menu-handler.js";
 import { Base64 } from "js-base64";
 import { mapActions, mapGetters } from "vuex";
 export default {
@@ -42,60 +42,20 @@ export default {
     CodeView,
     WidgetBox,
     AttrsBox,
-    VueContextMenu,
     IHeader,
     IFooter,
     Elements,
+    VueContextMenu,
   },
   name: "HomeView",
   data() {
-    return {
-      // contextmenu data (菜单数据)
-      contextMenuData: {
-        menuName: "demo",
-        eleIndex: null,
-        // The coordinates of the display(菜单显示的位置)
-        axis: {
-          x: null,
-          y: null,
-        },
-        // Menu options (菜单选项)
-        menulists: [
-          {
-            fnHandler: "delEle", // Binding events(绑定事件)
-            btnName: "删除", // The name of the menu option (菜单名称)
-          },
-        ],
-      },
-    };
+    return {};
   },
   computed: {
-    ...mapGetters(["attrsForm"]),
+    ...mapGetters(["attrsForm", "contextMenu"]),
   },
   methods: {
     ...mapActions(["setCurId"]),
-    keyDown(evt) {
-      let keys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
-      if (keys.indexOf(evt.key) > -1) {
-        evt.preventDefault();
-        switch (evt.key) {
-          case "ArrowUp":
-            if (this.form.top >= 1) this.form.top -= 1;
-            break;
-          case "ArrowDown":
-            this.form.top += 1;
-            break;
-          case "ArrowLeft":
-            if (this.form.left >= 1) this.form.left -= 1;
-            break;
-          case "ArrowRight":
-            this.form.left += 1;
-            break;
-          default:
-            break;
-        }
-      }
-    },
     onClickExport() {
       // 创建隐藏的可下载链接
       let eleLink = document.createElement("a");
@@ -144,23 +104,9 @@ export default {
       let code = t.build();
       this.$refs["code_view"].open(code);
     },
-    showMenu(event, ele, index) {
-      event.preventDefault();
-      let x = event.clientX;
-      let y = event.clientY;
-      // Get the current location
-      this.contextMenuData.axis = {
-        x,
-        y,
-      };
-      this.contextMenuData.eleIndex = index;
-    },
-    delEle() {
-      let i = this.contextMenuData.eleIndex;
-      if (i != null) {
-        this.win.elements.splice(i, 1);
-        this.contextMenuData.eleIndex = null;
-      }
+    contextMenuHandler(handlerName) {
+      let handler = new ContextMenuHandler(this.contextMenu, handlerName);
+      handler.run();
     },
     clearData() {
       this.$confirm("此操作将会清空数据和缓存, 是否继续?", "提示", {
