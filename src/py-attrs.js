@@ -106,7 +106,7 @@ export default class Attrs {
             height: 150,
             frame: true,
             elements: [],
-            text: "标签"
+            text: "标签容器"
         }
     }
 

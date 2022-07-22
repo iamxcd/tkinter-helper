@@ -52,20 +52,19 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(["attrsForm", "contextMenu"]),
+    ...mapGetters(["attrsForm", "contextMenu", "frame"]),
   },
   methods: {
-    ...mapActions(["setCurId"]),
+    ...mapActions(["setFrame"]),
     onClickExport() {
       // 创建隐藏的可下载链接
       let eleLink = document.createElement("a");
       // 指定文件名和后缀
-      eleLink.download = this.win.text + ".tk";
+      eleLink.download = this.frame.text + ".tk";
       eleLink.style.display = "none";
       // 字符内容转变成blob地址
       let content = {
-        win: this.win,
-        elements: this.elements,
+        win: this.frame,
       };
       content = JSON.stringify(content);
       content = Base64.encode(content);
@@ -86,11 +85,10 @@ export default {
           let info = reader.result;
           info = Base64.decode(info);
           info = JSON.parse(info);
-          if (!info.win || !info.elements) {
+          if (!info.win) {
             throw new Error();
           }
-          this.win = info.win;
-          this.elements = info.elements;
+          this.$store.dispatch("setFrame", info.win);
           this.$message.success("数据导入成功");
         } catch (error) {
           this.$message.error("文件解析错误");
@@ -100,7 +98,7 @@ export default {
       return false;
     },
     viewCode() {
-      let t = new GenerateCode(_global.frame);
+      let t = new GenerateCode(this.frame);
       let code = t.build();
       this.$refs["code_view"].open(code);
     },
@@ -114,7 +112,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        this.elements = [];
+        this.frame.elements = [];
         localStorage.clear();
         this.$message({
           type: "success",

@@ -1,14 +1,14 @@
 <template>
-
-    <div class="info">
-      <span> TkinterHelper布局助手 | </span>
-      <a href="https://github.com/iamxcd/tkinter-helper"
-        target="_blank">github | </a>
-      <a href="https://zhuanlan.zhihu.com/p/532678277"
-        target="_blank">使用说明 | </a>
-      <a href="http://beian.miit.gov.cn/"
-        target="_blank">蜀ICP备18032036号</a>
-    </div>
+  <div class="info">
+    <span>{{$config.name}} | </span>
+    <span>V{{$config.version}} | </span>
+    <a href="https://github.com/iamxcd/tkinter-helper"
+      target="_blank">github | </a>
+    <a href="https://zhuanlan.zhihu.com/p/532678277"
+      target="_blank">使用说明 | </a>
+    <a href="http://beian.miit.gov.cn/"
+      target="_blank">蜀ICP备18032036号</a>
+  </div>
 
 </template>
 

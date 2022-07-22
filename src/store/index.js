@@ -27,15 +27,27 @@ export default new Vuex.Store({
         },
       ],
     },
+    frame: {
+      top: 130,
+      left: 450,
+      width: 600,
+      height: 500,
+      text: "我是标题 ~ Tkinter布局助手",
+      elements: [],
+    },
   },
   getters: {
     curId: (state) => state.curId,
     attrsForm: (state) => state.attrsForm,
     contextMenu: (state) => state.contextMenu,
+    frame: (state) => state.frame,
   },
   mutations: {
     SET_CUR_ID(state, id) {
       state.curId = id
+    },
+    SET_FRAME(state, frame) {
+      state.frame = frame
     },
     SET_ATTRS_FORM(state, form) {
       state.attrsForm = form
@@ -60,7 +72,11 @@ export default new Vuex.Store({
     },
     showContextMenu({ commit }, params) {
       commit("SET_CONTEXT_MENU", params)
+    },
+    setFrame({ commit }, frame) {
+      commit("SET_FRAME", frame)
     }
+
   },
   modules: {
   }

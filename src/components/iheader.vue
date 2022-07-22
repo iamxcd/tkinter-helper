@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="logo">
-      TkinterHelper
+      {{$config.name}}
     </div>
     <div class="menu">
       <el-button type="danger"

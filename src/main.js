@@ -5,7 +5,7 @@ import components from './components/tk_widget/auto-reg.js'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import store from './store'
-import "./config.js"
+import config from "./config.js"
 
 Vue.use(ElementUI, {
   "size": "mini",
@@ -13,6 +13,7 @@ Vue.use(ElementUI, {
 });
 
 Vue.config.productionTip = false
+Vue.prototype.$config = config
 Vue.use(components)
 
 window._ = require('lodash');

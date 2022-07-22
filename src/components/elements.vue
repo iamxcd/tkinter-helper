@@ -34,37 +34,32 @@ export default {
     };
   },
   created() {
-    let ele = localStorage.getItem("elements");
-    ele = JSON.parse(ele);
-    if (ele != null && ele.length > 0) {
+    let win = localStorage.getItem("win");
+    win = JSON.parse(win);
+    if (win != null) {
       this.$confirm("是否恢复上次的编辑结果?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       })
         .then(() => {
-          this.elements = ele;
-          let win = localStorage.getItem("win");
-          if (win != null) {
-            this.win = JSON.parse(win);
-          }
+          this.$store.dispatch("setFrame", win);
+          this.$store.dispatch("setAttrsForm", win);
         })
         .catch(() => {
           localStorage.clear();
+          this.$store.dispatch("setAttrsForm", this.frame);
         });
+    } else {
+      this.$store.dispatch("setAttrsForm", this.frame);
     }
-    this.$store.dispatch("setAttrsForm", this.frame);
   },
   computed: {
-    ...mapGetters(["curId"]),
-    frame() {
-      return _global.frame;
-    },
+    ...mapGetters(["curId", "frame"]),
   },
   watch: {
     frame: {
       handler(val) {
-        console.log(val);
         localStorage.setItem("win", JSON.stringify(val));
       },
       deep: true,
