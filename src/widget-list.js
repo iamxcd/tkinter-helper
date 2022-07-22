@@ -42,5 +42,9 @@ export default [
     {
         title: '容器',
         type: 'tk_frame'
+    },
+    {
+        title: '标签容器',
+        type: 'tk_label_frame'
     }
 ]

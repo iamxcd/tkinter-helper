@@ -19,7 +19,7 @@ class Win:
             let e = elemetns[i]
             if (e.frame) {
                 code += `
-        self.${e['type']}_${e['id']} = Frame${e['id']}(self.root)`
+        self.${e['type']}_${e['id']} = Frame_${e['id']}(self.root)`
             } else {
                 code += `
         self.${e['type']}_${e['id']} = self.__${e['type']}_${e['id']}()`
@@ -33,7 +33,7 @@ class Win:
 
     frame_init(frame, elemetns) {
         let header = `
-class Frame${frame.id}():
+class Frame_${frame.id}():
     def __init__(self,root):
         self.root = self.__frame(root)`
         let code = "" // 赋值代码
@@ -46,7 +46,6 @@ class Frame${frame.id}():
 `
         return header + code
     }
-
 
     // 主窗口
     win(title, width, height) {
@@ -70,7 +69,16 @@ class Frame${frame.id}():
     def __frame(self,root):
         frame = Frame(root)
         frame.place(x=${frame.left}, y=${frame.top}, width=${frame.width}, height=${frame.height})
-        return root
+        return frame
+`
+    }
+
+    label_frame(frame) {
+        return `
+    def __frame(self,root):
+        frame = LabelFrame(root,text="${frame.text}")
+        frame.place(x=${frame.left}, y=${frame.top}, width=${frame.width}, height=${frame.height})
+        return frame
 `
     }
 

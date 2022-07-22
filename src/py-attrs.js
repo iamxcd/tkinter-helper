@@ -92,18 +92,29 @@ export default class Attrs {
     tk_frame() {
         return {
             ...common_attr,
-            width: 500,
-            height: 300,
+            width: 200,
+            height: 150,
             frame: true,
             elements: []
+        }
+    }
+
+    tk_label_frame() {
+        return {
+            ...common_attr,
+            width: 200,
+            height: 150,
+            frame: true,
+            elements: [],
+            text: "标签"
         }
     }
 
     tk_tabs() {
         return {
             ...common_attr,
-            width: 500,
-            height: 300,
+            width: 200,
+            height: 150,
             frame: true,
             tabs: ['选项卡1'],
             elements: [] // 子元素通过  tab: 0  字段 区分是哪一个选项上的

@@ -39,8 +39,13 @@ export default class GenerateCode {
          * 创建构造函数 向外暴露组件
          * 创建各个组件 创建组件的方法 私有
          */
+
+        const maps = {
+            'tk_frame': 'frame',
+            'tk_label_frame': 'label_frame',
+        }
         let init_code = py.frame_init(ele, ele.elements)
-        let frame_code = py.frame(ele)
+        let frame_code = py[maps[ele.type]](ele)
         let func_code = ""
         for (const k in ele.elements) {
             let tmp = _.cloneDeep(ele.elements[k])
