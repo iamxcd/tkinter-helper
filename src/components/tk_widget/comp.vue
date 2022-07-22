@@ -3,7 +3,7 @@
     <component :is="element.type"
       @keydown.native="keyDown($event)"
       :tabindex="0"
-      @contextmenu.native="showMenu($event,element,index)"
+      @contextmenu.native.stop.prevent="showMenu($event,index)"
       v-for="(element,index) in frame.elements"
       style="position: absolute;"
       :id="element.id"
@@ -121,14 +121,14 @@ export default {
         }
       }
     },
-    showMenu(event, ele, index) {
+    showMenu(event, index) {
       event.preventDefault();
       this.$store.dispatch("showContextMenu", {
         x: event.clientX,
         y: event.clientY,
         index,
-        ele,
         frame: this.frame,
+        position: "element",
       });
     },
     eleResize({ width, height }, element, index) {

@@ -49,9 +49,6 @@ export default class GenerateCode {
         let func_code = ""
         for (const k in ele.elements) {
             let tmp = _.cloneDeep(ele.elements[k])
-            tmp.top += ele.top
-            tmp.left += ele.left
-            console.log(tmp, ele.elements[k])
             func_code += this.create_func(py, tmp)
         }
 

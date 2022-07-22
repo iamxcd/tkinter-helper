@@ -7,4 +7,5 @@ window._global = {
         text: "我是标题 ~ TkinterHelper",
         elements: [],
     },
+    version: '2.0.0'
 }

@@ -5,9 +5,7 @@ import components from './components/tk_widget/auto-reg.js'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import store from './store'
-import "./global.js"
-
-
+import "./config.js"
 
 Vue.use(ElementUI, {
   "size": "mini",
@@ -19,7 +17,8 @@ Vue.use(components)
 
 window._ = require('lodash');
 
-new Vue({
+// 挂载到全局
+window._VUE = new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')

@@ -33,7 +33,7 @@ class Win:
 
     frame_init(frame, elemetns) {
         let header = `
-class Frame_${frame.id}():
+class Frame_${frame.id}:
     def __init__(self,root):
         self.root = self.__frame(root)`
         let code = "" // 赋值代码

@@ -1,7 +1,7 @@
 <template>
   <fieldset :style="style"
     class="tk_label_frame">
-    <legend>个人信息</legend>
+    <legend>{{info.text}}</legend>
     <slot></slot>
   </fieldset>
 

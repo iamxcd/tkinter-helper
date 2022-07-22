@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <!-- @contextmenu.prevent.stop="showMenu($event,'win')" -->
     <div :id="id"
       @drop="drop($event)"
       @dragover="allowDrop($event)"
@@ -9,6 +10,7 @@
       <Resize @resize="winResize"
         v-show="curId == 'win'"></Resize>
     </div>
+    <!-- @contextmenu.prevent.stop="showMenu($event,'title')" -->
     <div id="win_title"
       @mousedown="winMove($event)"
       :style="{'top':frame.top-30+'px','left':frame.left+'px','width':frame.width + 'px'}">
@@ -104,7 +106,7 @@ export default {
         top: top,
         left: left,
       };
-      console.log(newele);
+
       let id = evt.toElement.id;
       if (this.isWin(id)) {
         this.frame.elements.push(newele);
@@ -130,6 +132,15 @@ export default {
     },
     getFrameIndex(id) {
       return _.findIndex(this.frame.elements, { id, frame: true });
+    },
+    showMenu(event, position) {
+      event.preventDefault();
+      this.$store.dispatch("showContextMenu", {
+        x: event.clientX,
+        y: event.clientY,
+        frame: this.frame,
+        position,
+      });
     },
     winMove(e) {
       // 只处理右键点击事件

@@ -11,16 +11,19 @@ export default new Vuex.Store({
       menuName: "demo",
       frame: null,
       eleIndex: null,
-      // 菜单显示的位置
+      position: null,
       axis: {
         x: null,
         y: null,
       },
-      // 菜单选项
       menulists: [
         {
-          fnHandler: "delEle",// 绑定事件
-          btnName: "删除", // 菜单名称
+          fnHandler: "eleCopy",
+          btnName: "复制组件",
+        },
+        {
+          fnHandler: "eleDel",
+          btnName: "删除",
         },
       ],
     },
@@ -37,13 +40,14 @@ export default new Vuex.Store({
     SET_ATTRS_FORM(state, form) {
       state.attrsForm = form
     },
-    SET_CONTEXT_MENU(state, { x, y, index, frame, menu = [] }) {
-      state.contextMenu.eleIndex = index
-      state.contextMenu.frame = frame
-      state.contextMenu.axis.x = x
-      state.contextMenu.axis.y = y
-      if (menu.length > 0) {
-        state.contextMenu.menulists = menu
+    SET_CONTEXT_MENU(state, params) {
+      state.contextMenu.position = params.position
+      state.contextMenu.eleIndex = params.index
+      state.contextMenu.frame = params.frame
+      state.contextMenu.axis.x = params.x
+      state.contextMenu.axis.y = params.y
+      if (params.menu && params.menu.length > 0) {
+        state.contextMenu.menulists = params.menu
       }
     }
   },
@@ -54,9 +58,8 @@ export default new Vuex.Store({
     setAttrsForm({ commit }, form) {
       commit("SET_ATTRS_FORM", form)
     },
-    showContextMenu({ commit },
-      { x, y, index, frame }) {
-      commit("SET_CONTEXT_MENU", { x, y, index, frame })
+    showContextMenu({ commit }, params) {
+      commit("SET_CONTEXT_MENU", params)
     }
   },
   modules: {
