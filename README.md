@@ -3,7 +3,7 @@
 >TkinterHelper（Tkinter布局助手）是一款为Tkinter打造，仅需拖拽组件进行布局，所见即所得，非常方便就能做出一个GUI界面，再配合 pyinstaller 库将程序打包成exe，简直是开发小工具的利器。
 
 ## 效果展示
-[点我](https://​www.codingstudy.cn/tkinter-helper/)立即体验Tkinter布局助手， [点我](./files/demo.tk)可下载布局文件，并尝试在编辑器中导入，[点我](./files/demo.py)可查看生成的python代码。
+[点我](https://www.pytk.net/tkinter-helper/)立即体验Tkinter布局助手， [点我](./files/demo.tk)可下载布局文件，并尝试在编辑器中导入，[点我](./files/demo.py)可查看生成的python代码。
 
 ### 布局界面效果图
 ![布局界面效果图](./files/img.png)
