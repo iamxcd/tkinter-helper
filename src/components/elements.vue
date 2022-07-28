@@ -107,7 +107,12 @@ export default {
         this.frame.elements.push(newele);
       } else if (this.isFrame(id)) {
         let index = this.getFrameIndex(id);
-        this.frame.elements[index].elements.push(newele);
+        let frame = this.frame.elements[index];
+        // 处理特殊情况 选项卡 记录当前的tab索引
+        if (frame.type == "tk_tabs") {
+          newele.tab = frame.curTab;
+        }
+        frame.elements.push(newele);
       }
     },
     allowDrop(evt) {

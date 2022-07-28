@@ -1,7 +1,7 @@
 <template>
   <fieldset :style="style"
     class="tk_label_frame">
-    <legend>{{info.text}}</legend>
+    <legend class="title">{{info.text}}</legend>
     <slot></slot>
   </fieldset>
 
@@ -29,9 +29,9 @@ export default {
 .tk_label_frame {
   position: absolute;
   border: 1px solid #bbb;
-  .label {
-    top: -12px;
-    left: 20px;
+  .title {
+    font-size: 12px;
+    font-weight: 500;
   }
 }
 </style>

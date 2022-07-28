@@ -5,6 +5,7 @@
       :tabindex="0"
       @contextmenu.native.stop.prevent="showMenu($event,index)"
       v-for="(element,index) in frame.elements"
+      v-show="isShow(frame,element)"
       style="position: absolute;"
       :id="element.id"
       :style="{'top':element.top+'px','left':element.left+'px','width':element.width + 'px','height':element.height +'px'}"
@@ -134,6 +135,15 @@ export default {
     eleResize({ width, height }, element, index) {
       this.frame.elements[index].width = width;
       this.frame.elements[index].height = height;
+    },
+    /**
+     * 处理特殊情况 切换选项卡 隐藏非当前选项卡的组件
+     */
+    isShow(frame, ele) {
+      if (frame.type != "tk_tabs") {
+        return true;
+      }
+      return frame.curTab == ele.tab;
     },
   },
 };

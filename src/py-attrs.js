@@ -116,7 +116,8 @@ export default class Attrs {
             width: 200,
             height: 150,
             frame: true,
-            tabs: ['选项卡1'],
+            curTab: 0,
+            tabs: ['选项卡1', '选项卡2'],
             elements: [] // 子元素通过  tab: 0  字段 区分是哪一个选项上的
         }
     }

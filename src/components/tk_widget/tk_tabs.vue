@@ -3,17 +3,17 @@
     class="tk_tabs">
     <div class="tabs">
       <div class="tab"
-        v-for="(title,index) in tabs"
+        v-for="(title,index) in info.tabs"
         :key="index"
-        @click="curTab = index"
-        :class="{active:curTab==index}">
+        @click="info.curTab = index"
+        :class="{active:info.curTab==index}">
         {{title}}
       </div>
     </div>
-    <div class="content">
-
+    <div class="content"
+      :id="id">
+      <slot></slot>
     </div>
-    <slot></slot>
   </div>
 </template>
 
@@ -23,11 +23,13 @@ export default {
     info: {
       type: Object,
     },
+    id: {
+      type: String,
+    },
   },
   data() {
     return {
       curTab: 0,
-      tabs: ["选项卡1", "选项卡2"],
     };
   },
   computed: {
@@ -46,14 +48,16 @@ export default {
   position: absolute;
   .tabs {
     height: 24px;
-    font-size: 12px;
+
     line-height: 24px;
     display: flex;
     .tab {
       padding: 0 2px;
-      font-weight: 500;
       border: 1px solid #bbb;
       border-left: none;
+      border-bottom: none;
+      font-size: 12px;
+      font-weight: 500;
       &:first-child {
         border-left: 1px solid #bbb;
       }
@@ -67,6 +71,10 @@ export default {
     margin-top: -1px;
     border: 1px solid #bbb;
     height: calc(100% - 24px);
+    width: 100%;
+
+    position: absolute;
+    border: 1px solid #bbb;
   }
 }
 </style>
