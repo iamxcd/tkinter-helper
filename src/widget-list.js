@@ -46,5 +46,9 @@ export default [
     {
         title: '标签容器',
         type: 'tk_label_frame'
+    },
+    {
+        title: '选项卡',
+        type: 'tk_tabs'
     }
 ]
