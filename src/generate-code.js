@@ -1,3 +1,4 @@
+import { _ } from "core-js";
 import PyTpl from "./py-tpl";
 export default class GenerateCode {
     constructor(frame) {
@@ -43,17 +44,37 @@ export default class GenerateCode {
         const maps = {
             'tk_frame': 'frame',
             'tk_label_frame': 'label_frame',
+            'tk_tabs': 'tabs_frame',
         }
         let init_code = py.frame_init(ele, ele.elements)
         let frame_code = py[maps[ele.type]](ele)
         let func_code = ""
-        for (const k in ele.elements) {
-            let tmp = _.cloneDeep(ele.elements[k])
-            func_code += this.create_func(py, tmp)
+        let cls = ""
+        if (ele.type != 'tk_tabs') {
+            for (const k in ele.elements) {
+                let tmp = _.cloneDeep(ele.elements[k])
+                func_code += this.create_func(py, tmp)
+            }
+        } else {
+            cls = this.create_tabs_frame(py, ele)
         }
 
-        let all_code = init_code + frame_code + func_code
+        let all_code = init_code + frame_code + func_code + cls
 
         return all_code
+    }
+
+    create_tabs_frame(py, ele) {
+        let cls = ""
+        for (const i in ele.tabs) {
+            let tmp = {
+                type: 'tk_frame',
+                id: ele.id + "_" + i,
+                elements: _.filter(ele.elements, { 'tab': Number(i) })
+            }
+            cls += this.create_class(py, tmp)
+        }
+
+        return cls
     }
 }

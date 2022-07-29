@@ -37,13 +37,15 @@ class Frame_${frame.id}:
     def __init__(self,root):
         self.root = self.__frame(root)`
         let code = "" // 赋值代码
-        for (const i in elemetns) {
-            let e = elemetns[i]
-            code += `
+        if (frame.type != "tk_tabs") {
+            for (const i in elemetns) {
+                let e = elemetns[i]
+                code += `
         self.${e['type']}_${e['id']} = self.__${e['type']}_${e['id']}()`
+            }
+            code += `
+        `
         }
-        code += `
-`
         return header + code
     }
 
@@ -65,10 +67,14 @@ class Frame_${frame.id}:
 `
     }
     frame(frame) {
+        let place = `frame.place(x=${frame.left}, y=${frame.top}, width=${frame.width}, height=${frame.height})`
+        if (!frame.width | !frame.height) {
+            place = ""
+        }
         return `
     def __frame(self,root):
         frame = Frame(root)
-        frame.place(x=${frame.left}, y=${frame.top}, width=${frame.width}, height=${frame.height})
+        ${place}
         return frame
 `
     }
@@ -77,6 +83,24 @@ class Frame_${frame.id}:
         return `
     def __frame(self,root):
         frame = LabelFrame(root,text="${frame.text}")
+        frame.place(x=${frame.left}, y=${frame.top}, width=${frame.width}, height=${frame.height})
+        return frame
+`
+    }
+
+    tabs_frame(frame) {
+        let tabs_frame = ""
+        for (const i in frame.tabs) {
+            let tmp = `
+        ${frame['type']}_${frame['id']}_${i} = Frame_${frame['id']}_${i}(frame)
+        frame.add(${frame['type']}_${frame['id']}_${i}.root, text="${frame.tabs[i]}")
+`
+            tabs_frame += tmp
+        }
+        return `
+    def __frame(self,root):
+        frame = Notebook(root)
+${tabs_frame}
         frame.place(x=${frame.left}, y=${frame.top}, width=${frame.width}, height=${frame.height})
         return frame
 `
