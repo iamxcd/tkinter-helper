@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import GenerateCode from "./generate-code";
+import GenerateCode from "./core/generate-code";
 import CodeView from "./components/code-view.vue";
 import WidgetBox from "./components/widget-box.vue";
 import IHeader from "./components/iheader.vue";
@@ -34,7 +34,7 @@ import IFooter from "./components/ifooter.vue";
 import AttrsBox from "./components/attrs-box.vue";
 import Elements from "./components/elements.vue";
 import VueContextMenu from "@/components/VueContextMenu/VueContextMenu.vue";
-import ContextMenuHandler from "@/context-menu-handler.js";
+import ContextMenuHandler from "@/core/handler/context-menu-handler.js";
 import { Base64 } from "js-base64";
 import { mapActions, mapGetters } from "vuex";
 export default {

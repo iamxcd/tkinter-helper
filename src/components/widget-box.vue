@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import widgetList from "@/widget-list.js";
+import widgetList from "@/core/widget-list.js";
 export default {
   data() {
     return {

@@ -21,7 +21,7 @@
 
 <script>
 import uniqid from "uniqid";
-import PyAttrs from "@/py-attrs.js";
+import PyAttrs from "@/core/py-attrs.js";
 import Resize from "@/components/resize.vue";
 import { mapGetters, mapActions } from "vuex";
 export default {
