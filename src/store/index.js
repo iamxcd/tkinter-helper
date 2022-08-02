@@ -32,6 +32,7 @@ export default new Vuex.Store({
       left: 450,
       width: 600,
       height: 500,
+      type: 'tk_win',
       text: "我是标题 ~ Tkinter布局助手",
       elements: [],
     },
