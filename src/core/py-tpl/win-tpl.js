@@ -3,7 +3,7 @@ import CommonTpl from "./common-tpl"
 export default class WinTpl {
     make(frame, elemetns) {
         let header = `
-class Win:
+class Win_${frame.id}:
     def __init__(self):
         self.root = self.__win()`
 

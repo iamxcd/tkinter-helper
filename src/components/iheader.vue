@@ -8,6 +8,8 @@
         @click="()=>{this.$emit('clearData')}">清理数据</el-button>
       <el-button type="primary"
         @click="()=>{this.$emit('viewCode')}">Python</el-button>
+      <el-button type="primary"
+        @click="preview()">预览</el-button>
       <el-dropdown split-button
         type="primary"
         class="export_btn"
@@ -25,12 +27,20 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+
   </div>
 </template>
 
 <script>
+import { preview } from "@/config.js";
+import GenerateCode from "@/core/generate-code";
+import { mapGetters } from "vuex";
+
 export default {
   props: ["beforeUpload"],
+  computed: {
+    ...mapGetters(["frame"]),
+  },
   methods: {
     clearData() {
       this.$confirm("此操作将会清空数据和缓存, 是否继续?", "提示", {
@@ -45,6 +55,32 @@ export default {
           message: "删除成功!",
         });
       });
+    },
+    preview() {
+      let t = new GenerateCode(this.frame);
+      let code = t.build();
+
+      // 调用run方法
+      code = code + "run()";
+
+      this.$http
+        .post(preview.url, code, {
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        })
+        .then((res) => {
+          this.$message.success("发送成功");
+        })
+        .catch((err) => {
+          this.$alert(
+            "下载预览服务脚本<a href='/preview.py'>[preview.py]</a>，启动后在尝试。",
+            "服务未启动",
+            {
+              dangerouslyUseHTMLString: true,
+            }
+          );
+        });
     },
   },
 };

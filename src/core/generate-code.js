@@ -22,7 +22,7 @@ export default class GenerateCode {
         let py = new PyTpl()
         code += py.depend_package()
         code += this.create_class(this.frame)
-        code += py.main()
+        code += py.main(this.frame)
         return code
     }
 
