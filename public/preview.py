@@ -2,6 +2,16 @@ import json
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from multiprocessing import active_children, Process
 
+'''
+
+大致原理，程序启动后，会在本地开启一个http服务。Tkinter布局助手上，点击预览后，将拖拽界面的布局转为python代码，
+通过网络请求，发送到本服务，服务端接收到代码，使用exec函数执行代码。
+因为exec函数，有一定危险性，如果你使用的是fork的项目，请自行检查代码后再执行。官方下载地址如下。
+
+官方地址：https://www.pytk.net/tkinter-helper/preview.py
+
+'''
+
 # 版本号
 version = "1.0.0"
 # 预览服务默认地址
