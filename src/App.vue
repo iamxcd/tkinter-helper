@@ -51,11 +51,22 @@ export default {
   data() {
     return {};
   },
+  created() {
+    this.init();
+  },
   computed: {
     ...mapGetters(["attrsForm", "contextMenu", "frame"]),
   },
   methods: {
     ...mapActions(["setFrame"]),
+    init() {
+      this.$notify({
+        title: "邀请加群",
+        message: `Tkinter布局助手QQ交流群：: ${this.$config.qq_group}`,
+        dangerouslyUseHTMLString: true,
+        duration: 10 * 1000,
+      });
+    },
     onClickExport() {
       // 创建隐藏的可下载链接
       let eleLink = document.createElement("a");
@@ -132,6 +143,13 @@ export default {
   border-bottom: 1px solid #d1d1d1;
   box-shadow: 0 1px rgb(12 13 14 / 10%), 0 1px 6px rgb(60 65 70 / 10%);
 }
+
+.footer {
+  border-top: 1px solid rgba(12, 13, 14, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
 
 <style>
@@ -141,7 +159,12 @@ body {
   padding: 0;
   background-color: #fafafa;
 }
+
 * {
   outline: none;
+}
+
+.el-notification__content {
+  user-select: text;
 }
 </style>

@@ -43,7 +43,11 @@ ${tabs_frame}
 
             for (const key in elements) {
                 let tmp = elements[key]
-                code += base_tp[tmp.type](tmp)
+                if (tmp.frame) {
+                    code += frame_tp.make(tmp, tmp.elements)
+                } else {
+                    code += base_tp[tmp.type](tmp)
+                }
             }
         }
 

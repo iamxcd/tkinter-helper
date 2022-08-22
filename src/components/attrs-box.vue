@@ -57,7 +57,7 @@ export default {
 
   padding-bottom: 30px;
 
-  z-index: 1000;
+  z-index: 10;
   .title {
     font-weight: 600;
     font-size: 14px;
