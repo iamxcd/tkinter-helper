@@ -62,7 +62,7 @@ export default {
     init() {
       this.$notify({
         title: "邀请加群",
-        message: `Tkinter布局助手QQ交流群：: ${this.$config.qq_group}`,
+        message: `Tkinter布局助手QQ交流群: ${this.$config.qq_group}`,
         dangerouslyUseHTMLString: true,
         duration: 10 * 1000,
       });
