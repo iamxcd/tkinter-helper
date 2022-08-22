@@ -41,7 +41,7 @@ export default {
       ],
       tableData: [
         [1, "github", "https://github.com/iamxcd/tkinter-helper"],
-        [2, "演示地址", "https://www.codingstudy.cn/tkinter-helper"],
+        [2, "演示地址", "https://www.pytk.net/tkinter-helper"],
       ],
     };
   },
