@@ -33,7 +33,6 @@
 
 <script>
 import { preview } from "@/config.js";
-import GenerateCode from "@/core/generate-code";
 import { mapGetters } from "vuex";
 
 export default {
@@ -57,14 +56,13 @@ export default {
       });
     },
     preview() {
-      let t = new GenerateCode(this.frame);
-      let code = t.build();
-
-      // 调用run方法
-      code = code + "run()";
+      let tk_code = {
+        win: this.frame,
+      };
+      tk_code = JSON.stringify(tk_code);
 
       this.$http
-        .post(preview.url, code, {
+        .post(preview.url, tk_code, {
           headers: {
             "Content-Type": "text/plain",
           },
@@ -74,7 +72,7 @@ export default {
         })
         .catch((err) => {
           this.$alert(
-            "下载预览服务脚本<a href='/preview.py'>[preview.py]</a>，启动后在尝试。",
+            "预览服务未启动，请按照<a href='https://www.pytk.net/tkinter-helper-preview.html'>说明文档</a>，启动后在尝试。",
             "服务未启动",
             {
               dangerouslyUseHTMLString: true,

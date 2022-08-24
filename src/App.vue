@@ -61,9 +61,10 @@ export default {
     ...mapActions(["setFrame"]),
     init() {
       this.$notify({
-        title: "邀请加群",
+        title: "交流反馈",
         message: `Tkinter布局助手QQ交流群: ${this.$config.qq_group}`,
         dangerouslyUseHTMLString: true,
+        position: "bottom-right",
         duration: 10 * 1000,
       });
     },
