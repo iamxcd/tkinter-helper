@@ -6,7 +6,7 @@
       :style="{'top':frame.top+'px','left':frame.left+'px','width':frame.width + 'px','height':frame.height +'px'}">
       <comp :frame="frame">
       </comp>
-      <Resize @resize="winResize"
+      <Resize @resize="(size)=>{winResize(size,frame)}"
         v-show="curId == 'win'"></Resize>
     </div>
     <div id="win_title"
@@ -95,7 +95,10 @@ export default {
   background-color: #fff;
   border: 1px solid #cccccc;
   border-top-width: 2px;
-  background: url("@/assets/bg.png") 0px 0px;
+
+  background-size: 20px 20px, 20px 20px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 0),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 0);
 }
 
 #win_title {
