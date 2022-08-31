@@ -19,6 +19,7 @@ export default {
       return {
         width: this.info.width,
         height: this.info.height,
+        padding: 0,
       };
     },
   },
@@ -27,7 +28,6 @@ export default {
 
 <style lang="scss" scoped>
 .tk_label_frame {
-  position: absolute;
   border: 1px solid #bbb;
   .title {
     font-size: 12px;

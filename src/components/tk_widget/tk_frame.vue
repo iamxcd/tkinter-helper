@@ -26,7 +26,6 @@ export default {
 
 <style lang="scss" scoped>
 .tk_frame {
-  position: absolute;
   border: 1px dashed #000;
 }
 </style>

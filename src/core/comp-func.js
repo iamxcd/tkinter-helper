@@ -96,9 +96,11 @@ export function elementMove(evt, element, index, frame) {
  * @param {*} frame 
  * 
  */
-export function elementResize({ width, height }, element, index, frame) {
-    frame.elements[index].width = width;
-    frame.elements[index].height = height;
+export function elementResize({ x, y, w, h }, element, index, frame) {
+    if (x != undefined) frame.elements[index].left = x;
+    if (y != undefined) frame.elements[index].top = y;
+    if (w != undefined) frame.elements[index].width = w;
+    if (h != undefined) frame.elements[index].height = h;
 }
 
 /**

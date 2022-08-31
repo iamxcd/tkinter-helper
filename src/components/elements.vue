@@ -3,7 +3,8 @@
     <div :id="id"
       @drop="dragToFrame($event,frame)"
       @dragover="allowDrop($event,frame)"
-      :style="{'top':frame.top+'px','left':frame.left+'px','width':frame.width + 'px','height':frame.height +'px'}">
+      :style="{'top':frame.top+'px','left':frame.left+'px','width':frame.width + 'px','height':frame.height +'px'}"
+      @mousedown="onClickWin()">
       <comp :frame="frame">
       </comp>
       <Resize @resize="(size)=>{winResize(size,frame)}"
@@ -84,6 +85,9 @@ export default {
         this.$store.dispatch("setAttrsForm", this.frame);
       }
     },
+    onClickWin() {
+      this.$store.dispatch("setCurId", "win");
+    },
   },
 };
 </script>
@@ -92,10 +96,9 @@ export default {
 <style lang="scss" scoped>
 #win {
   position: absolute;
-  background-color: #fff;
+  background-color: #f0f0f0;
   border: 1px solid #cccccc;
   border-top-width: 2px;
-
   background-size: 20px 20px, 20px 20px;
   background-image: linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 0),
     linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 0);

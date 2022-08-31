@@ -38,6 +38,6 @@ export default {
   position: absolute;
   right: 0;
   bottom: 0;
-  background-color: red;
+  background-color: #409eff;
 }
 </style>

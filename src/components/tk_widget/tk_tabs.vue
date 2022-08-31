@@ -45,7 +45,6 @@ export default {
 
 <style lang="scss" scoped>
 .tk_tabs {
-  position: absolute;
   .tabs {
     height: 24px;
 

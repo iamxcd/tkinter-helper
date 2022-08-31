@@ -1,33 +1,35 @@
 <template>
   <div class="container">
-    <component :is="element.type"
-      @keydown.native="elementKeyDown($event,attrsForm)"
-      :tabindex="0"
-      @contextmenu.native.stop.prevent="elementShowMenu($event,index,frame)"
-      v-for="(element,index) in frame.elements"
-      v-show="isShowTabElement(frame,element)"
-      style="position: absolute;"
-      :id="element.id"
-      :style="{'top':element.top+'px','left':element.left+'px','width':element.width + 'px','height':element.height +'px'}"
-      :key="index"
-      :info="element"
-      :class="{frame:element.frame == true}"
+    <Draggable v-for="(element,index) in frame.elements"
+      @mousedown.native.stop="elementMove($event,element,index,frame)"
       @drop.native.stop="dragToFrame($event,frame)"
       @dragover.native.stop="allowDrop($event,frame)"
-      @mousedown.native.stop="elementMove($event,element,index,frame)">
-      <Resize @resize="(size)=>{elementResize(size,element,index,frame)}"
-        v-show="curId == element.id"></Resize>
-      <template v-if="element.frame">
-        <comp :frame="element"></comp>
-      </template>
-    </component>
+      v-show="isShowTabElement(frame,element)"
+      @resize="(size)=>{elementResize(size,element,index,frame)}"
+      :key="index"
+      :active="curId == element.id"
+      :element="element">
+      <component :is="element.type"
+        @keydown.native="elementKeyDown($event,attrsForm)"
+        :tabindex="0"
+        :style="{'top':element.top+'px','left':element.left+'px','width':element.width + 'px','height':element.height +'px'}"
+        @contextmenu.native.stop.prevent="elementShowMenu($event,index,frame)"
+        :id="element.id"
+        :info="element"
+        :class="{frame:element.frame == true}">
+        <template v-if="element.frame">
+          <comp :frame="element"></comp>
+        </template>
+      </component>
+    </Draggable>
+
   </div>
 </template>
 
 <script>
 import Resize from "@/components/resize.vue";
 import { mapActions, mapGetters } from "vuex";
-
+import Draggable from "@/components/draggable/index.vue";
 import {
   isWin,
   isFrame,
@@ -45,6 +47,7 @@ export default {
   props: ["frame"],
   components: {
     Resize,
+    Draggable,
   },
   data() {
     return {
