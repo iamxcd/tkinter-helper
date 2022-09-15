@@ -1,8 +1,7 @@
 <template>
   <div :style="style"
-    class="input">
+    class="tk_input">
     <span class="val">{{info.text}}</span>
-    <slot></slot>
   </div>
 </template>
 
@@ -25,7 +24,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.input {
+.tk_input {
   border: 1px solid #000;
   background-color: #fff;
 }

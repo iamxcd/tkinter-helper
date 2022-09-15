@@ -1,6 +1,6 @@
 <template>
   <div :style="style"
-    class="container">
+    class="tk_table">
     <table class="tbl">
       <tr class="title">
         <td v-for="(item,i) in columns"
@@ -20,7 +20,7 @@
       </tr>
     </table>
 
-    <slot></slot>
+    
   </div>
 </template>
 
@@ -57,7 +57,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
+.tk_table {
   border: 1px solid #aaa;
   background-color: #fff;
   overflow: hidden;

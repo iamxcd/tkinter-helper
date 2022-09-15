@@ -1,8 +1,7 @@
 <template>
   <div :style="style"
-    class="text">
+    class="tk_text">
     文本框
-    <slot></slot>
   </div>
 </template>
 
@@ -25,7 +24,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.text {
+.tk_text {
   border: 1px solid #000;
   background-color: #fff;
 }

@@ -8,11 +8,39 @@
           :beforeUpload="beforeUpload"></IHeader>
       </el-header>
       <el-container style="height:calc(100vh - 60px - 60px - 1px);">
-        <WidgetBox></WidgetBox>
+        <el-aside class="left_side">
+          <el-collapse class="collapse"
+            :value="['widget','tree']">
+            <el-collapse-item title="基础组件"
+              name="widget">
+              <WidgetBox></WidgetBox>
+            </el-collapse-item>
+            <el-collapse-item title="组件树"
+              name="tree">
+              开发中
+            </el-collapse-item>
+          </el-collapse>
+        </el-aside>
         <el-main>
           <Elements></Elements>
         </el-main>
-        <AttrsBox v-model="attrsForm"></AttrsBox>
+        <el-aside class="right_side">
+          <el-collapse class="collapse"
+            :value="['attr','event','style']">
+            <el-collapse-item title="组件配置"
+              name="attr">
+              <AttrsBox v-model="attrsForm"></AttrsBox>
+            </el-collapse-item>
+            <el-collapse-item title="事件绑定"
+              name="event">
+              开发中
+            </el-collapse-item>
+            <el-collapse-item title="样式设置"
+              name="style">
+              开发中
+            </el-collapse-item>
+          </el-collapse>
+        </el-aside>
       </el-container>
       <el-footer class="footer">
         <IFooter></IFooter>
@@ -52,7 +80,7 @@ export default {
     return {};
   },
   created() {
-    this.init();
+    // this.init();
   },
   computed: {
     ...mapGetters(["attrsForm", "contextMenu", "frame"]),
@@ -145,6 +173,12 @@ export default {
   box-shadow: 0 1px rgb(12 13 14 / 10%), 0 1px 6px rgb(60 65 70 / 10%);
 }
 
+.right_side {
+  width: 100%;
+  .collapse {
+  }
+}
+
 .footer {
   border-top: 1px solid rgba(12, 13, 14, 0.1);
   display: flex;
@@ -153,7 +187,7 @@ export default {
 }
 </style>
 
-<style>
+<style lang="scss">
 body {
   user-select: none;
   margin: 0;
@@ -167,5 +201,23 @@ body {
 
 .el-notification__content {
   user-select: text;
+}
+
+.el-aside {
+  width: auto;
+  .collapse {
+    border: 1px solid #d1d1d1;
+    background-color: #fff;
+    .el-collapse-item {
+      &__content {
+        padding: 10px;
+      }
+      &__header {
+        padding-left: 10px;
+        font-weight: 600;
+        font-size: 14px;
+      }
+    }
+  }
 }
 </style>

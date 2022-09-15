@@ -1,9 +1,6 @@
 <template>
   <div class="ele_box">
     <div class="group">
-      <div class="group_name">
-        基础组件
-      </div>
       <div class="list">
         <div :id="ele.type"
           class="item"
@@ -43,55 +40,39 @@ export default {
 
 <style lang="scss" scoped>
 .ele_box {
-  width: 250px;
-  border: 1px solid #d1d1d1;
-  background-color: #fff;
-  padding-bottom: 40px;
-  position: fixed;
-  left: 10px;
-  top: 90px;
-  z-index: 1000;
-  .group {
-    margin: 0 10px;
-    .group_name {
-      font-weight: 600;
-      font-size: 14px;
-      margin: 20px 4px;
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    &:after {
+      content: "";
+      width: 30%;
+      border: 1px solid transparent;
     }
-    .list {
+    .item {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      &:after {
-        content: "";
-        width: 30%;
-        border: 1px solid transparent;
+      align-items: center;
+      justify-content: center;
+
+      background: #fff;
+      color: #000;
+      width: 30%;
+      height: 30px;
+
+      margin: 3px 0;
+
+      border: 1px solid #eee;
+      border-radius: 4px;
+
+      cursor: pointer;
+
+      .title {
+        font-size: 12px;
       }
-      .item {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        background: #fff;
-        color: #000;
-        width: 30%;
-        height: 30px;
-
-        margin: 3px 0;
-
-        border: 1px solid #eee;
-        border-radius: 4px;
-
-        cursor: pointer;
-
-        .title {
-          font-size: 12px;
-        }
-      }
-      .item:hover {
-        border: 1px solid #2e73ff;
-        color: #2e73ff;
-      }
+    }
+    .item:hover {
+      border: 1px solid #2e73ff;
+      color: #2e73ff;
     }
   }
 }

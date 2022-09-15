@@ -3,7 +3,6 @@
     class="tk_radio_button">
     <input type="radio">
     <span class="val">{{info.text}}</span>
-    <slot></slot>
   </div>
 </template>
 

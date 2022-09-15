@@ -1,6 +1,6 @@
 <template>
   <div :style="style"
-    class="list_box">
+    class="tk_select_box">
     <select class="select">
       <option class="options"
         v-for="(txt,index) in list"
@@ -8,7 +8,7 @@
         {{txt}}
       </option>
     </select>
-    <slot></slot>
+
   </div>
 </template>
 
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.list_box {
+.tk_select_box {
   overflow: hidden;
   .select {
     width: 100%;

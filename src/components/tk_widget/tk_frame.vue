@@ -1,8 +1,6 @@
 <template>
   <div :style="style"
     class="tk_frame">
-
-    <slot></slot>
   </div>
 </template>
 

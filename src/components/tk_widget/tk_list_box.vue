@@ -1,13 +1,12 @@
 <template>
   <div :style="style"
-    class="list_box">
+    class="tk_list_box">
     <div v-for="(txt,index) in list"
       :key="index"
       :class="{'cur-index':curIndex==index}"
       @click="curIndex = index">
       {{txt}}
     </div>
-    <slot></slot>
   </div>
 </template>
 
@@ -36,7 +35,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.list_box {
+.tk_list_box {
   border: 1px solid #000;
   background-color: #fff;
   overflow: hidden;

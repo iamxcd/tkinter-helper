@@ -1,8 +1,8 @@
 <template>
   <div :style="style"
-    class="lable">
+    class="tk_lable">
     <span class="val">{{info.text}}</span>
-    <slot></slot>
+    
   </div>
 </template>
 
@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.lable {
+.tk_lable {
   border: 1px dashed #000;
   text-align: center;
   overflow: hidden;

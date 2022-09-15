@@ -12,7 +12,6 @@
     </div>
     <div class="content"
       :id="id">
-      <slot></slot>
     </div>
   </div>
 </template>

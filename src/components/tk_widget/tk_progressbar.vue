@@ -1,9 +1,9 @@
 <template>
   <div :style="style"
-    class="progressbar">
+    class="tk_progressbar">
     <div class="val"
       :style="valStyle"></div>
-    <slot></slot>
+    
   </div>
 </template>
 
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.progressbar {
+.tk_progressbar {
   border: 1px solid #000;
   background-color: #fff;
   padding: 2px;

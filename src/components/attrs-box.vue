@@ -1,8 +1,8 @@
 <template>
   <div class="attrs_box">
-    <div class="title">组件配置</div>
     <el-form ref="form"
       class="form"
+      size="mini"
       label-position="left"
       :model="attrsForm"
       label-width="50px">
@@ -47,24 +47,11 @@ export default {
 
 <style lang="scss" scoped>
 .attrs_box {
-  width: 300px;
-
-  position: fixed;
-  top: 90px;
-  right: 10px;
-  border: 1px solid #d1d1d1;
-  background-color: #fff;
-
-  padding-bottom: 30px;
-
   z-index: 10;
-  .title {
-    font-weight: 600;
-    font-size: 14px;
-    margin: 20px 10px;
-  }
   .form {
-    margin: 10px;
+    .el-form-item {
+      margin-bottom: 2px;
+    }
   }
 }
 </style>

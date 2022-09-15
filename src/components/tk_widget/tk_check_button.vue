@@ -3,7 +3,6 @@
     class="tk_check_button">
     <input type="checkbox">
     <span class="val">{{info.text}}</span>
-    <slot></slot>
   </div>
 </template>
 

@@ -1,7 +1,6 @@
 <template>
   <button>
     {{info.text}}
-    <slot></slot>
   </button>
 </template>
 
