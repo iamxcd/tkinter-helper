@@ -40,9 +40,6 @@ export default {
       id: "win",
     };
   },
-  created() {
-    this.init();
-  },
   computed: {
     ...mapGetters(["curId", "frame"]),
   },
@@ -64,27 +61,6 @@ export default {
     getFrameIndex,
     elementShowMenu,
     winMove,
-    init() {
-      let win = localStorage.getItem("win");
-      win = JSON.parse(win);
-      if (win != null) {
-        this.$confirm("是否恢复上次的编辑结果?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning",
-        })
-          .then(() => {
-            this.$store.dispatch("setFrame", win);
-            this.$store.dispatch("setAttrsForm", win);
-          })
-          .catch(() => {
-            localStorage.clear();
-            this.$store.dispatch("setAttrsForm", this.frame);
-          });
-      } else {
-        this.$store.dispatch("setAttrsForm", this.frame);
-      }
-    },
     onClickWin() {
       this.$store.dispatch("setCurId", "win");
     },

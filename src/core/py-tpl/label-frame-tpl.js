@@ -3,9 +3,10 @@ import CommonTpl from "./common-tpl"
 export default class LabelFrameTpl {
     make(frame, elemetns) {
         let header = `
-class Frame_${frame.id}:
+class Frame_${frame.id}(LabelFrame):
     def __init__(self,parent):
-        self.root = self.__frame(parent)`
+        super().__init__(parent)
+        self.__frame()`
         
         let code = ""
         let ct = new CommonTpl()
@@ -17,9 +18,8 @@ class Frame_${frame.id}:
     label_frame(frame) {
         return `
     def __frame(self,parent):
-        frame = LabelFrame(parent,text="${frame.text}")
-        frame.place(x=${frame.left}, y=${frame.top}, width=${frame.width}, height=${frame.height})
-        return frame
+        self.configure(text="${frame.text}")
+        self.place(x=${frame.left}, y=${frame.top}, width=${frame.width}, height=${frame.height})
 `
     }
 }

@@ -5,7 +5,7 @@ export default class BaseTpl {
     tk_button(ele) {
         return `
     def __tk_button_${ele.id}(self):
-        btn = Button(self.root, text="${ele?.text}")
+        btn = Button(self, text="${ele?.text}")
         btn.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
         return btn
 `
@@ -14,7 +14,7 @@ export default class BaseTpl {
     tk_input(ele) {
         return `
     def __tk_input_${ele.id}(self):
-        ipt = Entry(self.root)
+        ipt = Entry(self)
         ipt.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
         return ipt
 `
@@ -23,7 +23,7 @@ export default class BaseTpl {
     tk_label(ele) {
         return `
     def __tk_label_${ele.id}(self):
-        label = Label(self.root,text="${ele.text}")
+        label = Label(self,text="${ele.text}")
         label.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
         return label
 `
@@ -32,7 +32,7 @@ export default class BaseTpl {
     tk_text(ele) {
         return `
     def __tk_text_${ele.id}(self):
-        text = Text(self.root)
+        text = Text(self)
         text.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
         return text
 `
@@ -41,7 +41,7 @@ export default class BaseTpl {
     tk_radio_button(ele) {
         return `
     def __tk_radio_button_${ele.id}(self):
-        rb = Radiobutton(self.root,text="${ele.text}")
+        rb = Radiobutton(self,text="${ele.text}")
         rb.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
         return rb
 `
@@ -50,7 +50,7 @@ export default class BaseTpl {
     tk_check_button(ele) {
         return `
     def __tk_check_button_${ele.id}(self):
-        cb = Checkbutton(self.root,text="${ele.text}")
+        cb = Checkbutton(self,text="${ele.text}")
         cb.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
         return cb
 `
@@ -59,7 +59,7 @@ export default class BaseTpl {
     tk_list_box(ele) {
         return `
     def __tk_list_box_${ele.id}(self):
-        lb = Listbox(self.root)
+        lb = Listbox(self)
         lb.insert(END, "列表框")
         lb.insert(END, "Python")
         lb.insert(END, "Tkinter Helper")
@@ -71,7 +71,7 @@ export default class BaseTpl {
     tk_select_box(ele) {
         return `
     def __tk_select_box_${ele.id}(self):
-        cb = Combobox(self.root, state="readonly")
+        cb = Combobox(self, state="readonly")
         cb['values'] = ("下拉选择框", "Python", "Tkinter Helper")
         cb.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
         return cb
@@ -86,7 +86,7 @@ export default class BaseTpl {
 
         return `
     def __tk_progressbar_${ele.id}(self):
-        progressbar = Progressbar(self.root, orient=${orient})
+        progressbar = Progressbar(self, orient=${orient})
         progressbar.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
         return progressbar
 `
@@ -98,7 +98,7 @@ export default class BaseTpl {
         # 表头字段 表头宽度
         columns = {"ID":50, "网站名": 100, "地址": 300}
         # 初始化表格 表格是基于Treeview，tkinter本身没有表格。show="headings" 为隐藏首列。
-        tk_table = Treeview(self.root, show="headings", columns=list(columns))
+        tk_table = Treeview(self, show="headings", columns=list(columns))
         for text, width in columns.items():  # 批量设置列属性
             tk_table.heading(text, text=text, anchor='center')
             tk_table.column(text, anchor='center', width=width, stretch=False) # stretch 不自动拉伸
