@@ -61,10 +61,10 @@ export default class GenerateCode {
         return code
     }
 
-    find_bind_list(pkey, frame) {
+    find_bind_list(pkey, element) {
         let list = []
-        if (frame.event_bind_list) {
-            frame.event_bind_list.forEach(item => {
+        if (element.event_bind_list) {
+            element.event_bind_list.forEach(item => {
                 list.push({
                     key: pkey,
                     evt: item.name,
@@ -72,10 +72,16 @@ export default class GenerateCode {
                 })
             });
         }
-        if (frame.frame || frame.type == 'tk_win') {
-            for (const key in frame.elements) {
-                let tmp = frame.elements[key]
-                let _list = this.find_bind_list(pkey + '.' + tmp.type + '_' + tmp.id, tmp)
+        if (element.frame || element.type == 'tk_win') {
+            for (const key in element.elements) {
+                let tmp = element.elements[key]
+                let _list = []
+                if (element.type == 'tk_tabs') {
+                    let new_pkey = pkey + '.' + element.type + '_' + element.id + '_' + tmp.tab + '.' + tmp.type + '_' + tmp.id
+                    _list = this.find_bind_list(new_pkey, tmp)
+                } else {
+                    _list = this.find_bind_list(pkey + '.' + tmp.type + '_' + tmp.id, tmp)
+                }
                 list = list.concat(_list)
             }
         }

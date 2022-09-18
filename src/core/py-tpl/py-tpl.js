@@ -4,7 +4,6 @@ export default class PyCode {
     depend_package() {
         return `
 from tkinter import *
-from tkinter import messagebox
 from tkinter.ttk import *
 `
     }
@@ -12,7 +11,7 @@ from tkinter.ttk import *
     create_bind_func(func, evt) {
         return `
 def ${func}(evt):
-    messagebox.showinfo("提示", "${evt}事件 未处理")
+    print("${evt}事件未处理",evt)
         `
     }
 
@@ -35,6 +34,7 @@ def event_bind():${code}
 if __name__ == "__main__":
     win = Win_${frame.id}()
     event_bind()
+    # TODO 其他处理
     win.mainloop()
 `
     }

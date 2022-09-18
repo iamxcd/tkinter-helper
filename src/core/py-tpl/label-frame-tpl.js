@@ -17,7 +17,7 @@ class Frame_${frame.id}(LabelFrame):
 
     label_frame(frame) {
         return `
-    def __frame(self,parent):
+    def __frame(self):
         self.configure(text="${frame.text}")
         self.place(x=${frame.left}, y=${frame.top}, width=${frame.width}, height=${frame.height})
 `

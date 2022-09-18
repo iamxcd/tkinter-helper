@@ -5,9 +5,10 @@ import FrameTpl from "./frame-tpl"
 export default class TabsFrameTpl {
     make(frame, elemetns) {
         let header = `
-class Frame_${frame.id}:
+class Frame_${frame.id}(Notebook):
     def __init__(self,parent):
-        self.root = self.__frame(parent)`
+        super().__init__(parent)
+        self.__frame()`
 
         return header + this.tabs_frame(frame) + this.create_class(frame)
     }
@@ -15,17 +16,15 @@ class Frame_${frame.id}:
         let tabs_frame = ""
         for (const i in frame.tabs) {
             let tmp = `
-        ${frame['type']}_${frame['id']}_${i} = Frame_${frame['id']}_${i}(frame)
-        frame.add(${frame['type']}_${frame['id']}_${i}.root, text="${frame.tabs[i]}")
+        self.${frame['type']}_${frame['id']}_${i} = Frame_${frame['id']}_${i}(self)
+        self.add(self.${frame['type']}_${frame['id']}_${i}, text="${frame.tabs[i]}")
 `
             tabs_frame += tmp
         }
         return `
-    def __frame(self,parent):
-        frame = Notebook(parent)
+    def __frame(self):
 ${tabs_frame}
-        frame.place(x=${frame.left}, y=${frame.top}, width=${frame.width}, height=${frame.height})
-        return frame
+        self.place(x=${frame.left}, y=${frame.top}, width=${frame.width}, height=${frame.height})
 `
     }
 
