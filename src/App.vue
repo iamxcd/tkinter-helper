@@ -15,10 +15,10 @@
               name="widget">
               <WidgetBox></WidgetBox>
             </el-collapse-item>
-            <el-collapse-item title="组件树"
+            <!-- <el-collapse-item title="组件树"
               name="tree">
               开发中
-            </el-collapse-item>
+            </el-collapse-item> -->
           </el-collapse>
         </el-aside>
         <el-main>
@@ -33,12 +33,12 @@
             </el-collapse-item>
             <el-collapse-item title="事件绑定"
               name="event">
-              开发中
+              <EventBind v-model="attrsForm"></EventBind>
             </el-collapse-item>
-            <el-collapse-item title="样式设置"
+            <!-- <el-collapse-item title="样式设置"
               name="style">
               开发中
-            </el-collapse-item>
+            </el-collapse-item> -->
           </el-collapse>
         </el-aside>
       </el-container>
@@ -61,6 +61,7 @@ import IHeader from "./components/iheader.vue";
 import IFooter from "./components/ifooter.vue";
 import AttrsBox from "./components/attrs-box.vue";
 import Elements from "./components/elements.vue";
+import EventBind from "./components/event-bind.vue";
 import VueContextMenu from "@/components/VueContextMenu/VueContextMenu.vue";
 import ContextMenuHandler from "@/core/handler/context-menu-handler.js";
 import { Base64 } from "js-base64";
@@ -74,20 +75,21 @@ export default {
     IFooter,
     Elements,
     VueContextMenu,
+    EventBind,
   },
   name: "HomeView",
   data() {
     return {};
   },
   created() {
-    // this.init();
+    this.init();
   },
   computed: {
     ...mapGetters(["attrsForm", "contextMenu", "frame"]),
   },
   methods: {
     ...mapActions(["setFrame"]),
-    init() {
+    qq_group() {
       this.$notify({
         title: "交流反馈",
         message: `Tkinter布局助手QQ交流群: ${this.$config.qq_group}`,
@@ -95,6 +97,17 @@ export default {
         position: "bottom-right",
         duration: 10 * 1000,
       });
+    },
+    init() {
+      let win = localStorage.getItem("win");
+      win = JSON.parse(win);
+      if (win != null) {
+        this.$store.dispatch("setFrame", win);
+      } else {
+        win = this.frame;
+      }
+      this.$store.dispatch("setAttrsForm", win);
+      // this.qq_group();
     },
     onClickExport() {
       // 创建隐藏的可下载链接
@@ -210,7 +223,7 @@ body {
     background-color: #fff;
     .el-collapse-item {
       &__content {
-        padding: 10px;
+        padding: 2px 10px;
       }
       &__header {
         padding-left: 10px;

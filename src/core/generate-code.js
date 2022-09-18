@@ -16,13 +16,14 @@ export default class GenerateCode {
             'tk_tabs': new TabsFrameTpl(),
         }
         this.tp = new BaseTpl()
+        this.py = new PyTpl()
     }
     build() {
         let code = ''
-        let py = new PyTpl()
-        code += py.depend_package()
+        code += this.py.depend_package()
         code += this.create_class(this.frame)
-        code += py.main(this.frame)
+        code += this.event_bind('win', this.frame)
+        code += this.py.main(this.frame)
         return code
     }
 
@@ -47,5 +48,37 @@ export default class GenerateCode {
             code += this.create_class(frames[key])
         }
         return code
+    }
+
+    event_bind(key, frame) {
+        let code = ''
+        let list = this.find_bind_list(key, frame)
+        for (const i in list) {
+            let item = list[i]
+            code += this.py.create_bind_func(item.func, item.evt)
+        }
+        code += this.py.event_bind(list)
+        return code
+    }
+
+    find_bind_list(pkey, frame) {
+        let list = []
+        frame.event_bind_list.forEach(item => {
+            list.push({
+                key: pkey,
+                evt: item.name,
+                func: item.call,
+            })
+        });
+
+        if (frame.frame || frame.type == 'tk_win') {
+            for (const key in frame.elements) {
+                let tmp = frame.elements[key]
+                let _list = this.find_bind_list(pkey + '.' + tmp.type + '_' + tmp.id, tmp)
+                list = list.concat(_list)
+            }
+        }
+
+        return list
     }
 }
