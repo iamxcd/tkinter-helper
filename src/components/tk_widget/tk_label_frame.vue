@@ -2,6 +2,7 @@
   <fieldset :style="style"
     class="tk_label_frame">
     <legend class="title">{{info.text}}</legend>
+    <slot></slot>
   </fieldset>
 
 </template>
