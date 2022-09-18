@@ -29,7 +29,7 @@
       :visible.sync="isShow"
       width="30%">
       <el-form ref="eventForm"
-        class="form"
+        class="eventForm"
         label-position="left"
         :model="eventForm"
         :rules="rules"
@@ -164,7 +164,7 @@ export default {
     width: 100%;
     margin: 10px 0;
   }
-  .form {
+  .eventForm {
     .el-form-item {
       // margin-bottom: 2px;
     }

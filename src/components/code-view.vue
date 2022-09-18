@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="code_view">
     <el-dialog title="Python"
       top="30px"
       :visible.sync="is_show"
@@ -46,10 +46,13 @@ export default {
 </style>
 
 <style lang="scss">
-.el-dialog__body {
-  padding: 0;
-}
-.CodeMirror {
-  height: 500px !important;
+.code_view {
+  .el-dialog__body {
+    padding: 0;
+  }
+
+  .CodeMirror {
+    height: 500px !important;
+  }
 }
 </style>

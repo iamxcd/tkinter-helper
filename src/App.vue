@@ -107,7 +107,7 @@ export default {
         win = this.frame;
       }
       this.$store.dispatch("setAttrsForm", win);
-      // this.qq_group();
+      this.qq_group();
     },
     onClickExport() {
       // 创建隐藏的可下载链接
