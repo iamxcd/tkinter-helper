@@ -63,14 +63,15 @@ export default class GenerateCode {
 
     find_bind_list(pkey, frame) {
         let list = []
-        frame.event_bind_list.forEach(item => {
-            list.push({
-                key: pkey,
-                evt: item.name,
-                func: item.call,
-            })
-        });
-
+        if (frame.event_bind_list) {
+            frame.event_bind_list.forEach(item => {
+                list.push({
+                    key: pkey,
+                    evt: item.name,
+                    func: item.call,
+                })
+            });
+        }
         if (frame.frame || frame.type == 'tk_win') {
             for (const key in frame.elements) {
                 let tmp = frame.elements[key]

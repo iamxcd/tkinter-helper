@@ -3,9 +3,10 @@ import CommonTpl from "./common-tpl"
 export default class WinTpl {
     make(frame, elemetns) {
         let header = `
-class Win_${frame.id}:
+class Win_${frame.id}(Tk):
     def __init__(self):
-        self.root = self.__win()`
+        super().__init__()
+        self.__win()`
 
         let code = ""
         let ct = new CommonTpl()
@@ -21,17 +22,15 @@ class Win_${frame.id}:
     win(title, width, height) {
         return `
     def __win(self):
-        root = Tk()
-        root.title("${title}")
+        self.title("${title}")
         # 设置大小 居中展示
         width = ${width}
         height = ${height}
-        screenwidth = root.winfo_screenwidth()
-        screenheight = root.winfo_screenheight()
+        screenwidth = self.winfo_screenwidth()
+        screenheight = self.winfo_screenheight()
         geometry = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
-        root.geometry(geometry)
-        root.resizable(width=False, height=False)
-        return root
+        self.geometry(geometry)
+        self.resizable(width=False, height=False)
 `
     }
 }

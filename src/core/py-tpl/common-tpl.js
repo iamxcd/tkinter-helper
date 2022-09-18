@@ -10,7 +10,7 @@ export default class CommonTpl {
             let tmp = elemetns[i]
             if (tmp.frame) {
                 code += `
-        self.${tmp['type']}_${tmp['id']} = Frame_${tmp['id']}(self.root)`
+        self.${tmp['type']}_${tmp['id']} = Frame_${tmp['id']}(self)`
             } else {
                 code += `
         self.${tmp['type']}_${tmp['id']} = self.__${tmp['type']}_${tmp['id']}()`

@@ -35,7 +35,7 @@ def event_bind():${code}
 if __name__ == "__main__":
     win = Win_${frame.id}()
     event_bind()
-    win.root.mainloop()
+    win.mainloop()
 `
     }
 }
