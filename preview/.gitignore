@@ -1,0 +1,7 @@
+build/
+dist/
+.idea/
+pytpl/__pycache__/
+*.spec
+__pycache__/
+venv
