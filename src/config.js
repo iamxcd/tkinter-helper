@@ -5,6 +5,6 @@ export const preview = {
 
 export default {
     name: 'Tkinter布局助手',
-    version: '2.3.7',
+    version: '2.3.8',
     qq_group: '788392508'
 }

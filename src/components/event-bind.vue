@@ -6,10 +6,12 @@
         style="width: 100%">
         <el-table-column prop="name"
           label="事件名"
+          show-overflow-tooltip
           align="center">
         </el-table-column>
         <el-table-column prop="call"
           label="函数名"
+          show-overflow-tooltip
           align="center">
         </el-table-column>
         <el-table-column label="#"
@@ -74,6 +76,8 @@
 <script>
 import { mapGetters } from "vuex";
 import { key_event, mouse_event, other_event } from "@/core/py-events";
+import { getWidgetConfig } from "@/core/widget-list";
+
 export default {
   data() {
     return {
@@ -101,9 +105,10 @@ export default {
       return this.attrsForm.event_bind_list;
     },
     options() {
-      let keyOptions = key_event;
-      let otherOptions = other_event;
       let mouseOptions = mouse_event;
+      let keyOptions = key_event;
+      // 合并组件自有的虚拟事件
+      let otherOptions = other_event.concat(this.getVirtuaEvents());
 
       return [
         {
@@ -144,6 +149,15 @@ export default {
         name: "",
         call: "",
       };
+    },
+    getVirtuaEvents() {
+      let type = this.attrsForm.type;
+      if (type == "tk_win") {
+        return [];
+      }
+
+      let config = getWidgetConfig(type);
+      return config["virtual_events"];
     },
   },
 };

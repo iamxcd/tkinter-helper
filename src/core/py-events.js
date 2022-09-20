@@ -65,8 +65,4 @@ export const other_event = [
         'name': '<Destroy>',
         'intro': '窗口或组件销毁事件',
     },
-    {
-        'name': '<<ListboxSelect>>',
-        'intro': '列表框被选中事件',
-    }
 ];
