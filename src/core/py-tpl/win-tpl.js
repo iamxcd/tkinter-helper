@@ -3,7 +3,7 @@ import CommonTpl from "./common-tpl"
 export default class WinTpl {
     make(frame, elemetns) {
         let header = `
-class Win_${frame.id}(Tk):
+class WinGUI(Tk):
     def __init__(self):
         super().__init__()
         self.__win()`
@@ -23,7 +23,7 @@ class Win_${frame.id}(Tk):
         return `
     def __win(self):
         self.title("${title}")
-        # 设置大小 居中展示
+        # 设置窗口大小、居中
         width = ${width}
         height = ${height}
         screenwidth = self.winfo_screenwidth()

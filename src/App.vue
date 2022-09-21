@@ -166,6 +166,7 @@ export default {
         type: "warning",
       }).then(() => {
         this.frame.elements = [];
+        this.frame.event_bind_list = [];
         localStorage.clear();
         this.$message({
           type: "success",

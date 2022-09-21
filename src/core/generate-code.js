@@ -22,7 +22,8 @@ export default class GenerateCode {
         let code = ''
         code += this.py.depend_package()
         code += this.create_class(this.frame)
-        code += this.event_bind('win', this.frame)
+        code += this.py.create_class('Win(WinGUI)')
+        code += this.event_bind('self', this.frame)
         code += this.py.main(this.frame)
         return code
     }
