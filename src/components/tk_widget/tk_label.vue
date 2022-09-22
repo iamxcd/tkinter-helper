@@ -1,8 +1,8 @@
 <template>
   <div :style="style"
     class="tk_lable">
-    <span class="val">{{info.text}}</span>
-    
+    <div class="val"
+      :style="{'line-height':info.height+'px'}">{{info.text}}</div>
   </div>
 </template>
 
@@ -28,6 +28,10 @@ export default {
 .tk_lable {
   border: 1px dashed #000;
   text-align: center;
+
+  font-size: 12px;
+
+  white-space: nowrap;
   overflow: hidden;
 }
 </style>
