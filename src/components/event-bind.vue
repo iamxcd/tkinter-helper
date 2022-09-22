@@ -152,7 +152,7 @@ export default {
     },
     getVirtuaEvents() {
       let type = this.attrsForm.type;
-      if (type == "tk_win") {
+      if (!type || type == "tk_win") {
         return [];
       }
 

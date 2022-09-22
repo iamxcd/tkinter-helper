@@ -2,7 +2,10 @@
   <fieldset :style="style"
     class="tk_label_frame">
     <legend class="title">{{info.text}}</legend>
-    <slot></slot>
+    <div class="content"
+      :id="id">
+      <slot></slot>
+    </div>
   </fieldset>
 
 </template>
@@ -12,6 +15,9 @@ export default {
   props: {
     info: {
       type: Object,
+    },
+    id: {
+      type: String,
     },
   },
   computed: {
@@ -32,6 +38,13 @@ export default {
   .title {
     font-size: 12px;
     font-weight: 500;
+  }
+
+  .content {
+    margin-top: 2px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
   }
 }
 </style>

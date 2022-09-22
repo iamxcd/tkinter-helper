@@ -11,14 +11,6 @@
 ### win10下运行后效果图
 ![运行后效果图](./files/win10.png)
 
-### mac下运行效果
-
-> 暂未截图，欢迎提PR
-
-### linux下运行效果
-
->暂未截图，欢迎提PR
-
 ## Tkinter 简介
 tkinter 是 Python 自带的标准库，因此无须另行安装，它支持跨平台运行，不仅可以在 Windows 平台上运行，还支持在 Linux 和 Mac 平台上运行。
 
@@ -39,8 +31,8 @@ tkinter 是 Python 自带的标准库，因此无须另行安装，它支持跨�
 - [x] 页面自动缓存布局数据，防止刷新丢失，可手动清理。
 - [x] 布局文件导出、导入，方便二次修改。
 - [x] 容器组件嵌套
+- [x] 事件绑定
 - [ ] 样式设置
-- [ ] 事件绑定
 - [ ] 菜单栏编辑
 
 ## 目前支持的组件
@@ -67,36 +59,43 @@ tinker有三种布局模式，pack() 按照组件添加的顺序布局，grid()�
 from tkinter import *
 from tkinter.ttk import *
 
-class Win:
+class WinGUI(Tk):
     def __init__(self):
-        self.root = self.__win()
-        self.tk_button_login = self.__tk_button_login()
+        super().__init__()
+        self.__win()
+        self.tk_button_l8cpojhp = self.__tk_button_l8cpojhp()
 
     def __win(self):
-        root = Tk()
-        root.title("TkHelper 布局助手")
-        # 设置大小 居中展示
+        self.title("我是标题 ~ Tkinter布局助手")
+        # 设置窗口大小、居中
         width = 600
         height = 500
-        screenwidth = root.winfo_screenwidth()
-        screenheight = root.winfo_screenheight()
+        screenwidth = self.winfo_screenwidth()
+        screenheight = self.winfo_screenheight()
         geometry = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
-        root.geometry(geometry)
-        root.resizable(width=False, height=False)
-        return root
+        self.geometry(geometry)
+        self.resizable(width=False, height=False)
 
-    def show(self):
-        self.root.mainloop()
-
-    def __tk_button_login(self):
-        btn = Button(self.root, text="登录")
-        btn.place(x=180, y=180, width=215, height=31)
+    def __tk_button_l8cpojhp(self):
+        btn = Button(self, text="按钮")
+        btn.place(x=260, y=200, width=50, height=24)
         return btn
 
+class Win(WinGUI):
+    def __init__(self):
+        super().__init__()
+        self.__event_bind()
+
+    def on_click_btn(self,evt):
+        print("<Button-1>事件未处理",evt)
+        
+    def __event_bind(self):
+        self.tk_button_l8cpojhp.bind('<Button-1>',self.on_click_btn)
+        
 if __name__ == "__main__":
     win = Win()
-    # TODO 绑定点击事件或其他逻辑处理
-    win.show()
+    win.mainloop()
+
 ```
 ## 使用方法
 
@@ -104,8 +103,8 @@ if __name__ == "__main__":
 ```python
 if __name__ == "__main__":
     win = Win()    # 实例化窗口界面
-    # TODO 绑定点击事件或其他逻辑处理
-    win.show()     # 展示界面
+    # TODO 其他逻辑处理
+    win.mainloop()     # 展示界面
 ```
 
 如果逻辑相对复杂可再其他python文件中导入该模块，再进行业务逻辑处理。
