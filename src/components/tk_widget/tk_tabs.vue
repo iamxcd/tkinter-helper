@@ -3,7 +3,7 @@
     class="tk_tabs">
     <div class="tabs">
       <div class="tab"
-        v-for="(title,index) in info.tabs"
+        v-for="(title,index) in tabs"
         :key="index"
         @click="info.curTab = index"
         :class="{active:info.curTab==index}">
@@ -38,6 +38,9 @@ export default {
         width: this.info.width,
         height: this.info.height,
       };
+    },
+    tabs() {
+      return this.info.tabs;
     },
   },
 };

@@ -57,22 +57,26 @@ export default class BaseTpl {
     }
 
     tk_list_box(ele) {
+        let list = ''
+        for (const i in ele.options) {
+            let val = ele.options[i]
+            list += `
+        lb.insert(END, "${val}")`
+        }
         return `
     def __tk_list_box_${ele.id}(self):
-        lb = Listbox(self)
-        lb.insert(END, "列表框")
-        lb.insert(END, "Python")
-        lb.insert(END, "Tkinter Helper")
+        lb = Listbox(self)${list}
         lb.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
         return lb
 `
     }
 
     tk_select_box(ele) {
+        let val = '"' + ele.options.join('","') + '"'
         return `
     def __tk_select_box_${ele.id}(self):
         cb = Combobox(self, state="readonly")
-        cb['values'] = ("下拉选择框", "Python", "Tkinter Helper")
+        cb['values'] = (${val})
         cb.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
         return cb
 `

@@ -26,19 +26,20 @@
         </el-main>
         <el-aside class="right_side">
           <el-collapse class="collapse"
-            :value="['attr','event','style']">
+            :value="['attr','event','options']">
             <el-collapse-item title="组件配置"
               name="attr">
-              <AttrsBox v-model="attrsForm"></AttrsBox>
+              <AttrsBox></AttrsBox>
+            </el-collapse-item>
+            <el-collapse-item v-if="isTk(['tk_list_box','tk_select_box','tk_tabs'])"
+              title="选项设置"
+              name="options">
+              <SetOptions></SetOptions>
             </el-collapse-item>
             <el-collapse-item title="事件绑定"
               name="event">
-              <EventBind v-model="attrsForm"></EventBind>
+              <EventBind></EventBind>
             </el-collapse-item>
-            <!-- <el-collapse-item title="样式设置"
-              name="style">
-              开发中
-            </el-collapse-item> -->
           </el-collapse>
         </el-aside>
       </el-container>
@@ -62,6 +63,7 @@ import IFooter from "./components/ifooter.vue";
 import AttrsBox from "./components/attrs-box.vue";
 import Elements from "./components/elements.vue";
 import EventBind from "./components/event-bind.vue";
+import SetOptions from "./components/set-options.vue";
 import VueContextMenu from "@/components/VueContextMenu/VueContextMenu.vue";
 import ContextMenuHandler from "@/core/handler/context-menu-handler.js";
 import { Base64 } from "js-base64";
@@ -76,6 +78,7 @@ export default {
     Elements,
     VueContextMenu,
     EventBind,
+    SetOptions,
   },
   name: "HomeView",
   data() {
@@ -89,6 +92,9 @@ export default {
   },
   methods: {
     ...mapActions(["setFrame"]),
+    isTk(tks) {
+      return tks.indexOf(this.attrsForm.type) > -1;
+    },
     qq_group() {
       this.$notify({
         title: "交流反馈",

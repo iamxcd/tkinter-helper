@@ -61,7 +61,8 @@ export default class Attrs {
         return {
             ...common_attr,
             width: 150,
-            height: 100
+            height: 100,
+            options: ["列表框", "Python", "Tkinter Helper"],
         }
     }
 
@@ -69,7 +70,8 @@ export default class Attrs {
         return {
             ...common_attr,
             width: 150,
-            height: 24
+            height: 24,
+            options: ["列表框", "Python", "Tkinter Helper"],
         }
     }
 

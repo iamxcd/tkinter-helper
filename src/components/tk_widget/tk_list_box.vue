@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       curIndex: 0,
-      list: ["列表框", "Python", "Tkinter Helper"],
+      // list: ["列表框", "Python", "Tkinter Helper"],
     };
   },
   computed: {
@@ -29,6 +29,9 @@ export default {
         width: this.info.width,
         height: this.info.height,
       };
+    },
+    list() {
+      return this.info.options;
     },
   },
 };
