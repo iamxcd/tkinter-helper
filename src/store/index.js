@@ -28,8 +28,8 @@ export default new Vuex.Store({
       ],
     },
     frame: {
-      top: 130,
-      left: 450,
+      top: 20,
+      left: 60,
       width: 600,
       height: 500,
       id: uniqid(),

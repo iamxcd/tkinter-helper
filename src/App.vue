@@ -216,7 +216,9 @@ body {
 .el-notification__content {
   user-select: text;
 }
-
+.el-main {
+  padding: 30px 0 0 0 !important;
+}
 .el-aside {
   width: auto;
   .collapse {
