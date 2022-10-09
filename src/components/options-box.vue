@@ -3,14 +3,15 @@
     <div class="list">
       <div class="item"
         v-for="(item,index) in list"
-        :key="index">
-        {{item}}
-        <i class="el-icon-delete del_bind_btn"
+        :key="index"
+        @click="onEdit(item,index)">
+        <span class="text">{{item}}</span>
+        <i class="el-icon-delete icon"
           @click="delOption(index)"></i>
       </div>
     </div>
     <el-button class="add_options"
-      @click="isShow=true">添加</el-button>
+      @click="open()">添加</el-button>
 
     <el-dialog title="选项管理"
       :visible.sync="isShow"
@@ -44,6 +45,8 @@ export default {
   data() {
     return {
       isShow: false,
+      editMode: false,
+      editIndex: null,
       optionForm: {
         name: "",
       },
@@ -63,21 +66,46 @@ export default {
   },
   methods: {
     delOption(index) {
-      this.attrsForm[this.key].splice(index, 1);
+      this.$confirm("是否确认删除?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+        this.attrsForm[this.key].splice(index, 1);
+      });
     },
     close() {
       this.isShow = false;
+      this.editMode = false;
+      this.editIndex = null;
     },
     submit() {
       this.$refs["optionForm"].validate((valid) => {
         if (valid) {
+          if (this.editMode) {
+            this.$set(
+              this.attrsForm[this.key],
+              this.editIndex,
+              this.optionForm.name
+            );
+          } else {
+            this.attrsForm[this.key].push(this.optionForm.name);
+          }
           this.close();
-          this.attrsForm[this.key].push(this.optionForm.name);
           this.resetForm();
         } else {
           return false;
         }
       });
+    },
+    onEdit(item, index) {
+      this.editMode = true;
+      this.optionForm.name = item;
+      this.editIndex = index;
+      this.open();
+    },
+    open() {
+      this.isShow = true;
     },
     resetForm() {
       this.optionForm = {
@@ -94,6 +122,22 @@ export default {
     min-height: 100px;
     max-height: 250px;
     overflow: overlay;
+    border: 1px solid #dcdfe6;
+    border-radius: 3px;
+    padding: 2px 4px;
+    .item {
+      display: flex;
+      align-items: center;
+      padding: 2px 4px;
+      border-radius: 3px;
+      &:hover {
+        background-color: rgb(0, 120, 215);
+        color: #fff;
+      }
+      .text {
+        flex: 1;
+      }
+    }
   }
   .add_options {
     width: 100%;

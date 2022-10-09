@@ -34,7 +34,7 @@
             <el-collapse-item v-if="isTk(['tk_list_box','tk_select_box','tk_tabs'])"
               title="选项设置"
               name="options">
-              <SetOptions></SetOptions>
+              <OptionsBox></OptionsBox>
             </el-collapse-item>
             <el-collapse-item title="事件绑定"
               name="event">
@@ -63,7 +63,7 @@ import IFooter from "./components/ifooter.vue";
 import AttrsBox from "./components/attrs-box.vue";
 import Elements from "./components/elements.vue";
 import EventBind from "./components/event-bind.vue";
-import SetOptions from "./components/set-options.vue";
+import OptionsBox from "./components/options-box.vue";
 import VueContextMenu from "@/components/VueContextMenu/VueContextMenu.vue";
 import ContextMenuHandler from "@/core/handler/context-menu-handler.js";
 import { Base64 } from "js-base64";
@@ -78,7 +78,7 @@ export default {
     Elements,
     VueContextMenu,
     EventBind,
-    SetOptions,
+    OptionsBox,
   },
   name: "HomeView",
   data() {

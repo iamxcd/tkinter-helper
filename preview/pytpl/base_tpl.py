@@ -39,8 +39,7 @@ class BaseTpl:
 
     def tk_select_box(self, ele):
         cb = Combobox(self.root)
-        values = ("下拉选择框", "Python", "Tkinter Helper")
-        cb.configure(values=values)
+        cb.configure(values=ele['options'])
         cb.place(x=ele['left'], y=ele['top'], width=ele['width'], height=ele['height'])
 
     def tk_progressbar(self, ele):
