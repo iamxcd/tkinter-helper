@@ -70,6 +70,9 @@ export default {
 
 
 <style lang="scss" scoped>
+.container {
+  position: relative;
+}
 #win {
   position: absolute;
   background-color: #f0f0f0;

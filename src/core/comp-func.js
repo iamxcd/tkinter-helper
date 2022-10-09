@@ -178,8 +178,8 @@ export function isShowTabElement(frame, ele) {
  * 
  */
 export function allowDrop(evt, frame) {
-    let id = evt.toElement.id;
-    if (isWin(id) || isFrame(evt.toElement.id, frame)) {
+    let id = evt.target.id;
+    if (isWin(id) || isFrame(id, frame)) {
         evt.preventDefault();
     }
 }
@@ -219,7 +219,7 @@ export function dragToFrame(evt, frame) {
         left: left,
     };
 
-    let id = evt.toElement.id;
+    let id = evt.target.id;
     if (isWin(id)) {
         frame.elements.push(newele);
     } else if (isFrame(id, frame)) {
