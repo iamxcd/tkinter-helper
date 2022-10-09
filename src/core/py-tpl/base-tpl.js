@@ -97,24 +97,32 @@ export default class BaseTpl {
     }
 
     tk_table(ele) {
+        let obj = {}
+        for (let i = 0; i < ele.columns.length; i++) {
+            const col = ele.columns[i];
+            obj[col.name] = parseInt((col.width * ele.width) / 100)
+        }
+        let columns = JSON.stringify(obj)
+
         return `
     def __tk_table_${ele.id}(self):
         # 表头字段 表头宽度
-        columns = {"ID":50, "网站名": 100, "地址": 300}
+        columns = ${columns}
         # 初始化表格 表格是基于Treeview，tkinter本身没有表格。show="headings" 为隐藏首列。
         tk_table = Treeview(self, show="headings", columns=list(columns))
         for text, width in columns.items():  # 批量设置列属性
             tk_table.heading(text, text=text, anchor='center')
-            tk_table.column(text, anchor='center', width=width, stretch=False) # stretch 不自动拉伸
-        
-        data = [
-            [1,"github", "https://github.com/iamxcd/tkinter-helper"],
-            [2,"演示地址", "https://www.pytk.net/tkinter-helper"]
-        ]
-        
-        # 导入初始数据
-        for values in data:
-            tk_table.insert('', END, values=values)
+            tk_table.column(text, anchor='center', width=width, stretch=False)  # stretch 不自动拉伸
+
+        # 插入数据示例
+        # data = [
+        #     [1, "github", "https://github.com/iamxcd/tkinter-helper"],
+        #     [2, "演示地址", "https://www.pytk.net/tkinter-helper"]
+        # ]
+        #
+        # # 导入初始数据
+        # for values in data:
+        #     tk_table.insert('', END, values=values)
         
         tk_table.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
         return tk_table

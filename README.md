@@ -32,7 +32,7 @@ tkinter 是 Python 自带的标准库，因此无须另行安装，它支持跨�
 - [x] 布局文件导出、导入，方便二次修改。
 - [x] 容器组件嵌套
 - [x] 事件绑定
-- [ ] 组件配置(列表框选项、下拉选择框选项，选项卡编辑、表格配置)
+- [x] 组件配置(列表框选项、下拉选择框选项，选项卡编辑、表格表头配置)
 - [ ] 样式设置
 - [ ] 菜单栏编辑
 
@@ -139,3 +139,11 @@ npm run build
 ## 交流群
 
 QQ群: 788392508
+
+## 支持作者
+如果本项目有帮助到您，不妨给开发者加个鸡腿吧！
+
+<div style="text-align: center">
+<img src="https://www.pytk.net/uploads/2022/07/68881986a43ee71f.jpg" style="height:300px;display:inline;" /> 
+<img src="https://www.pytk.net/uploads/2022/07/a1c1e6a4c1334d8a.jpg" style="height:300px;display:inline;margin-left:60px" /> 
+<div>

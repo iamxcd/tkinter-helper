@@ -4,23 +4,10 @@
     <table class="tbl">
       <tr class="title">
         <td v-for="(item,i) in columns"
-          :style="{'width':item.width+'px'}"
+          :style="{'width':getpx(item.width)+'px'}"
           :key="i">{{item.name}}</td>
       </tr>
-      <tr class="list"
-        v-for="(item,i) in tableData"
-        :key="i"
-        :class="{selected: selected == i}"
-        @click="selected = i">
-        <td v-for="(val,j) in item"
-          :key="j">
-          {{val}}
-        </td>
-
-      </tr>
     </table>
-
-    
   </div>
 </template>
 
@@ -34,15 +21,11 @@ export default {
   data() {
     return {
       selected: null,
-      columns: [
-        { name: "ID", width: 50 },
-        { name: "网站名", width: 100 },
-        { name: "地址", width: 300 },
-      ],
-      tableData: [
-        [1, "github", "https://github.com/iamxcd/tkinter-helper"],
-        [2, "演示地址", "https://www.pytk.net/tkinter-helper"],
-      ],
+      // columns: [
+      //   { name: "ID", width: 50 },
+      //   { name: "网站名", width: 100 },
+      //   { name: "地址", width: 300 },
+      // ],
     };
   },
   computed: {
@@ -51,6 +34,14 @@ export default {
         width: this.info.width,
         height: this.info.height,
       };
+    },
+    columns() {
+      return this.info.columns;
+    },
+  },
+  methods: {
+    getpx(r) {
+      return (this.info.width * r) / 100;
     },
   },
 };
@@ -67,7 +58,6 @@ export default {
     td {
       text-align: center;
     }
-
     .title {
       td {
         border-right: 1px #aaa solid;

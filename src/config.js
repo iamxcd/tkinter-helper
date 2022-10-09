@@ -1,6 +1,6 @@
 export const preview = {
     url: 'http://127.0.0.1:12300',
-    version: '2.0.0',
+    version: '2.1.1',
 }
 
 export default {

@@ -87,7 +87,21 @@ export default class Attrs {
         return {
             ...common_attr,
             width: 450,
-            height: 70
+            height: 70,
+            columns: [
+                {
+                    name: 'ID',
+                    width: 20,
+                },
+                {
+                    name: '字段#1',
+                    width: 30,
+                },
+                {
+                    name: '字段#2',
+                    width: 50,
+                }
+            ]
         }
     }
 

@@ -3,10 +3,11 @@
     <div class="list">
       <div class="item"
         v-for="(item,index) in list"
-        :key="index"
-        @click="onEdit(item,index)">
+        :key="index">
         <span class="text">{{item}}</span>
-        <i class="el-icon-delete icon"
+        <i class="el-icon-edit edit_option_btn"
+          @click="onEdit(item,index)"></i>
+        <i class="el-icon-delete del_option_btn"
           @click="delOption(index)"></i>
       </div>
     </div>
@@ -136,6 +137,14 @@ export default {
       }
       .text {
         flex: 1;
+      }
+      .edit_option_btn {
+        cursor: pointer;
+        margin-right: 4px;
+      }
+      .del_option_btn {
+        color: red;
+        cursor: pointer;
       }
     }
   }

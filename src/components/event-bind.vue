@@ -142,7 +142,13 @@ export default {
       });
     },
     delBind(index) {
-      this.event_bind_list.splice(index, 1);
+      this.$confirm("是否确认删除?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+        this.event_bind_list.splice(index, 1);
+      });
     },
     resetForm() {
       this.eventForm = {

@@ -69,6 +69,7 @@ export default {
         })
         .then((res) => {
           this.$message.success("发送成功");
+          this.checkVersion();
         })
         .catch((err) => {
           this.$alert(
@@ -79,6 +80,19 @@ export default {
             }
           );
         });
+    },
+    checkVersion() {
+      this.$http.get(preview.url).then((res) => {
+        if (res.data.version != preview.version) {
+          this.$alert(
+            "预览服务非最新版本，某些功能上可能不一致，请按照<a href='https://www.pytk.net/tkinter-helper-preview.html'>说明文档</a>进行升级。",
+            "版本不一致",
+            {
+              dangerouslyUseHTMLString: true,
+            }
+          );
+        }
+      });
     },
   },
 };

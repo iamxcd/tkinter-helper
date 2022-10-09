@@ -26,7 +26,7 @@
         </el-main>
         <el-aside class="right_side">
           <el-collapse class="collapse"
-            :value="['attr','event','options']">
+            :value="['attr','event','options','table']">
             <el-collapse-item title="组件配置"
               name="attr">
               <AttrsBox></AttrsBox>
@@ -35,6 +35,11 @@
               title="选项设置"
               name="options">
               <OptionsBox></OptionsBox>
+            </el-collapse-item>
+            <el-collapse-item v-if="isTk(['tk_table'])"
+              title="表头设置"
+              name="table">
+              <ColumnsEditBox></ColumnsEditBox>
             </el-collapse-item>
             <el-collapse-item title="事件绑定"
               name="event">
@@ -64,6 +69,7 @@ import AttrsBox from "./components/attrs-box.vue";
 import Elements from "./components/elements.vue";
 import EventBind from "./components/event-bind.vue";
 import OptionsBox from "./components/options-box.vue";
+import ColumnsEditBox from "./components/columns-edit-box.vue";
 import VueContextMenu from "@/components/VueContextMenu/VueContextMenu.vue";
 import ContextMenuHandler from "@/core/handler/context-menu-handler.js";
 import { Base64 } from "js-base64";
@@ -79,6 +85,7 @@ export default {
     VueContextMenu,
     EventBind,
     OptionsBox,
+    ColumnsEditBox,
   },
   name: "HomeView",
   data() {
@@ -113,7 +120,7 @@ export default {
         win = this.frame;
       }
       this.$store.dispatch("setAttrsForm", win);
-      this.qq_group();
+      // this.qq_group();
     },
     onClickExport() {
       // 创建隐藏的可下载链接
