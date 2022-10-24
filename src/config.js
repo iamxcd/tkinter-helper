@@ -3,6 +3,8 @@ export const preview = {
     version: '2.1.1',
 }
 
+export const baseURL = 'https://v1.pytk.net/api';
+
 export default {
     name: 'Tkinter布局助手',
     version: '2.4.0',

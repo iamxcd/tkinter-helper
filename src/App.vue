@@ -4,7 +4,10 @@
       <el-header class="header">
         <IHeader @viewCode="viewCode"
           @clearData="clearData"
-          @onClickExport="onClickExport"
+          @onClickExportTk="onClickExportTk"
+          @onClickExportCode="onClickExportCode"
+          @onClickLogin="onClickLogin"
+          @onClickAvatar="onClickAvatar"
           :beforeUpload="beforeUpload"></IHeader>
       </el-header>
       <el-container style="height:calc(100vh - 60px - 60px - 1px);">
@@ -56,6 +59,10 @@
     <CodeView ref="code_view"></CodeView>
     <VueContextMenu :contextMenuData="contextMenu"
       @handler="contextMenuHandler"></VueContextMenu>
+
+    <LoginBox ref="LoginBox"></LoginBox>
+
+    <UserCenter ref="UserCenter"></UserCenter>
   </div>
 </template>
 
@@ -70,6 +77,8 @@ import Elements from "./components/elements.vue";
 import EventBind from "./components/event-bind.vue";
 import OptionsBox from "./components/options-box.vue";
 import ColumnsEditBox from "./components/columns-edit-box.vue";
+import LoginBox from "./components/login-box.vue";
+import UserCenter from "./components/user-center.vue";
 import VueContextMenu from "@/components/VueContextMenu/VueContextMenu.vue";
 import ContextMenuHandler from "@/core/handler/context-menu-handler.js";
 import { Base64 } from "js-base64";
@@ -86,6 +95,8 @@ export default {
     EventBind,
     OptionsBox,
     ColumnsEditBox,
+    LoginBox,
+    UserCenter,
   },
   name: "HomeView",
   data() {
@@ -95,10 +106,10 @@ export default {
     this.init();
   },
   computed: {
-    ...mapGetters(["attrsForm", "contextMenu", "frame"]),
+    ...mapGetters(["attrsForm", "contextMenu", "frame", "token"]),
   },
   methods: {
-    ...mapActions(["setFrame"]),
+    ...mapActions({ setFrame: "app/setFrame" }),
     isTk(tks) {
       return tks.indexOf(this.attrsForm.type) > -1;
     },
@@ -115,14 +126,17 @@ export default {
       let win = localStorage.getItem("win");
       win = JSON.parse(win);
       if (win != null) {
-        this.$store.dispatch("setFrame", win);
+        this.$store.dispatch("app/setFrame", win);
       } else {
         win = this.frame;
       }
-      this.$store.dispatch("setAttrsForm", win);
+      this.$store.dispatch("app/setAttrsForm", win);
+      if (this.token) {
+        this.$store.dispatch("user/getInfo");
+      }
       // this.qq_group();
     },
-    onClickExport() {
+    onClickExportTk() {
       // 创建隐藏的可下载链接
       let eleLink = document.createElement("a");
       // 指定文件名和后缀
@@ -142,6 +156,22 @@ export default {
       // 然后移除
       document.body.removeChild(eleLink);
     },
+    onClickExportCode() {
+      let t = new GenerateCode(this.frame);
+      let code = t.build();
+      // 创建隐藏的可下载链接
+      let eleLink = document.createElement("a");
+      // 指定文件名和后缀
+      eleLink.download = this.frame.text + ".py";
+      eleLink.style.display = "none";
+      let blob = new Blob([code]);
+      eleLink.href = URL.createObjectURL(blob);
+      // 触发点击
+      document.body.appendChild(eleLink);
+      eleLink.click();
+      // 然后移除
+      document.body.removeChild(eleLink);
+    },
     beforeUpload(file) {
       let reader = new FileReader();
       reader.readAsText(file, "utf8");
@@ -154,7 +184,7 @@ export default {
           if (!info.win) {
             throw new Error();
           }
-          this.$store.dispatch("setFrame", info.win);
+          this.$store.dispatch("app/setFrame", info.win);
           this.$message.success("数据导入成功");
         } catch (error) {
           this.$message.error("文件解析错误");
@@ -162,6 +192,12 @@ export default {
       };
       // console.log(file);
       return false;
+    },
+    onClickLogin() {
+      this.$refs["LoginBox"].open();
+    },
+    onClickAvatar() {
+      this.$refs["UserCenter"].open();
     },
     viewCode() {
       let t = new GenerateCode(this.frame);

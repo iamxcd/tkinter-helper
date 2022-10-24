@@ -71,10 +71,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["curId", "attrsForm"]),
+    ...mapGetters(["attrsForm", "curId"]),
   },
   methods: {
-    ...mapActions(["setCurId", "setAttrsForm", "showContextMenu"]),
+    ...mapActions({
+      setCurId: "app/setCurId",
+      setAttrsForm: "app/setAttrsForm",
+      showContextMenu: "app/showContextMenu",
+    }),
     elementMove,
     elementKeyDown,
     elementShowMenu,

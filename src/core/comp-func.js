@@ -52,9 +52,9 @@ export function elementMove(evt, element, index, frame) {
     }
     let ele = evt.currentTarget; //获取组件. 绑定事件的元素
     // ele.style.cursor = "move";
-    store.dispatch("setCurId", element.id);
+    store.dispatch("app/setCurId", element.id);
     // 将属性绑定到表单中
-    store.dispatch("setAttrsForm", element);
+    store.dispatch("app/setAttrsForm", element);
 
     // console.log(this.curId);
 
@@ -245,9 +245,9 @@ export function winMove(evt, frame) {
     }
     let ele = evt.currentTarget; //获取组件. 绑定事件的元素
     // ele.style.cursor = "move";
-    store.dispatch("setCurId", "win");
+    store.dispatch("app/setCurId", "win");
     // 将属性绑定到表单中
-    store.dispatch("setAttrsForm", frame);
+    store.dispatch("app/setAttrsForm", frame);
 
     // console.log(this.curIndex);
 

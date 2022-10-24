@@ -52,7 +52,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["setCurId", "setAttrsForm"]),
+    ...mapActions({ attrsForm: "app/attrsForm", setCurId: "app/setCurId" }),
     winResize,
     dragToFrame,
     allowDrop,
@@ -62,7 +62,7 @@ export default {
     elementShowMenu,
     winMove,
     onClickWin() {
-      this.$store.dispatch("setCurId", "win");
+      this.$store.dispatch("app/setCurId", "win");
     },
   },
 };

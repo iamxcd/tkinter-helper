@@ -1,85 +1,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import uniqid from "uniqid";
+import getters from './getters'
+
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  state: {
-    curId: 'win',
-    attrsForm: {},
-    contextMenu: {
-      menuName: "demo",
-      frame: null,
-      eleIndex: null,
-      position: null,
-      axis: {
-        x: null,
-        y: null,
-      },
-      menulists: [
-        {
-          fnHandler: "eleCopy",
-          btnName: "复制组件",
-        },
-        {
-          fnHandler: "eleDel",
-          btnName: "删除",
-        },
-      ],
-    },
-    frame: {
-      top: 20,
-      left: 60,
-      width: 600,
-      height: 500,
-      id: uniqid(),
-      type: 'tk_win',
-      text: "我是标题 ~ Tkinter布局助手",
-      elements: [],
-    },
-  },
-  getters: {
-    curId: (state) => state.curId,
-    attrsForm: (state) => state.attrsForm,
-    contextMenu: (state) => state.contextMenu,
-    frame: (state) => state.frame,
-  },
-  mutations: {
-    SET_CUR_ID(state, id) {
-      state.curId = id
-    },
-    SET_FRAME(state, frame) {
-      state.frame = frame
-    },
-    SET_ATTRS_FORM(state, form) {
-      state.attrsForm = form
-    },
-    SET_CONTEXT_MENU(state, params) {
-      state.contextMenu.position = params.position
-      state.contextMenu.eleIndex = params.index
-      state.contextMenu.frame = params.frame
-      state.contextMenu.axis.x = params.x
-      state.contextMenu.axis.y = params.y
-      if (params.menu && params.menu.length > 0) {
-        state.contextMenu.menulists = params.menu
-      }
-    }
-  },
-  actions: {
-    setCurId({ commit }, curId) {
-      commit("SET_CUR_ID", curId)
-    },
-    setAttrsForm({ commit }, form) {
-      commit("SET_ATTRS_FORM", form)
-    },
-    showContextMenu({ commit }, params) {
-      commit("SET_CONTEXT_MENU", params)
-    },
-    setFrame({ commit }, frame) {
-      commit("SET_FRAME", frame)
-    }
+// https://webpack.js.org/guides/dependency-management/#requirecontext
+const modulesFiles = require.context('./modules', true, /\.js$/)
 
-  },
-  modules: {
-  }
+// you do not need `import app from './modules/app'`
+// it will auto require all vuex module from modules file
+const modules = modulesFiles.keys().reduce((modules, modulePath) => {
+  // set './app.js' => 'app'
+  const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
+  const value = modulesFiles(modulePath)
+  modules[moduleName] = value.default
+  return modules
+}, {})
+
+const store = new Vuex.Store({
+  modules,
+  getters
 })
+
+export default store
