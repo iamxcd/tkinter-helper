@@ -8,6 +8,7 @@ import store from './store'
 import config from "./config.js"
 import axios from "axios"
 import api from "./utils/request"
+import router from './router'
 
 Vue.use(ElementUI, {
   "size": "mini",
@@ -25,5 +26,6 @@ window._ = require('lodash');
 // 挂载到全局
 window._VUE = new Vue({
   store,
+  router,
   render: h => h(App)
 }).$mount('#app')

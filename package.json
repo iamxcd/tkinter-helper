@@ -16,10 +16,12 @@
     "uniqid": "^5.4.0",
     "vue": "^2.7.8",
     "vue-codemirror": "^4.0.6",
+    "vue-router": "^3.5.1",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^5.0.8",
+    "@vue/cli-plugin-router": "^5.0.8",
     "@vue/cli-plugin-vuex": "^5.0.8",
     "@vue/cli-service": "^5.0.8",
     "sass": "^1.53.0",
