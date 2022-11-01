@@ -23,7 +23,7 @@ export default class BaseTpl {
     tk_label(ele) {
         return `
     def __tk_label_${ele.id}(self):
-        label = Label(self,text="${ele.text}")
+        label = Label(self,text="${ele.text}",background="red",anchor="center")
         label.place(x=${ele.left}, y=${ele.top}, width=${ele.width}, height=${ele.height})
         return label
 `

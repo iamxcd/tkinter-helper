@@ -1,6 +1,6 @@
 export const preview = {
     url: 'http://127.0.0.1:12300',
-    version: '2.1.1',
+    version: '2.1.2',
 }
 
 export const baseURL = 'https://v1.pytk.net/api';

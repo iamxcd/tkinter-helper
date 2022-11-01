@@ -15,7 +15,7 @@ class BaseTpl:
         ipt.place(x=ele['left'], y=ele['top'], width=ele['width'], height=ele['height'])
 
     def tk_label(self, ele):
-        label = Label(self.root, text=ele['text'])
+        label = Label(self.root, text=ele['text'], anchor="center")
         label.place(x=ele['left'], y=ele['top'], width=ele['width'], height=ele['height'])
 
     def tk_text(self, ele):
