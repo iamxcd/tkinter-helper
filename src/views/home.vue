@@ -10,7 +10,6 @@
           <i class="el-icon-document icon"
             @click="viewCode()"></i>
         </el-tooltip>
-
         <el-tooltip class="item"
           effect="dark"
           :open-delay="openDelay"
@@ -108,34 +107,27 @@
 import GenerateCode from "@/core/generate-code";
 import CodeView from "@/components/code-view.vue";
 import WidgetBox from "@/components/widget-box.vue";
-import IHeader from "@/components/iheader.vue";
-import IFooter from "@/components/ifooter.vue";
 import AttrsBox from "@/components/attrs-box.vue";
 import Elements from "@/components/elements.vue";
 import EventBind from "@/components/event-bind.vue";
 import OptionsBox from "@/components/options-box.vue";
 import ColumnsEditBox from "@/components/columns-edit-box.vue";
-import LoginBox from "@/components/login-box.vue";
-import UserCenter from "@/components/user-center.vue";
 import VueContextMenu from "@/components/VueContextMenu/VueContextMenu.vue";
 import ContextMenuHandler from "@/core/handler/context-menu-handler.js";
 import { Base64 } from "js-base64";
 import { mapActions, mapGetters } from "vuex";
 import { preview } from "@/config.js";
+import { Loading } from "element-ui";
 export default {
   components: {
     CodeView,
     WidgetBox,
     AttrsBox,
-    IHeader,
-    IFooter,
     Elements,
     VueContextMenu,
     EventBind,
     OptionsBox,
     ColumnsEditBox,
-    LoginBox,
-    UserCenter,
   },
   data() {
     return {
@@ -259,6 +251,7 @@ export default {
       };
       tk_code = JSON.stringify(tk_code);
 
+      let loadingInstance = Loading.service();
       this.$http
         .post(preview.url, tk_code, {
           headers: {
@@ -266,10 +259,12 @@ export default {
           },
         })
         .then((res) => {
+          loadingInstance.close();
           this.$message.success("发送成功");
           this.checkVersion();
         })
         .catch((err) => {
+          loadingInstance.close();
           this.$alert(
             "预览服务未启动，请按照<a href='https://www.pytk.net/tkinter-helper-preview.html'>说明文档</a>，启动后在尝试。",
             "服务未启动",
@@ -352,8 +347,7 @@ export default {
     align-items: center;
     justify-content: center;
     height: 40px;
-    margin-bottom: 5px;
-    background-color: #fff;
+    border-bottom: 1px solid #d1d1d1;
     .menu {
       .icon {
         margin: 0 16px;
@@ -400,6 +394,7 @@ export default {
   .collapse {
     border: 1px solid #d1d1d1;
     background-color: #fff;
+    border-top: none !important;
     .el-collapse-item {
       &__content {
         padding: 2px 10px;
@@ -409,8 +404,8 @@ export default {
         font-weight: 600;
         font-size: 14px;
       }
-      &:last-child{
-        border-bottom: 1px solid #d1d1d1
+      &:last-child {
+        border-bottom: 1px solid #d1d1d1;
       }
     }
     .el-collapse-item__header {

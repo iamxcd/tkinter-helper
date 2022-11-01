@@ -1,12 +1,15 @@
 <template>
   <div>
-    123
+    项目
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+
+}
 </script>
 
 <style>
+
 </style>

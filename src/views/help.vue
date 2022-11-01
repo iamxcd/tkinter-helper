@@ -1,6 +1,6 @@
 <template>
   <div>
-    123
+    帮助
   </div>
 </template>
 

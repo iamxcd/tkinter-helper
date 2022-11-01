@@ -1,21 +1,26 @@
 <template>
-  <div class="main">
-    <div class="logo">
+  <div class="iheader">
+    <div class="logo"
+      @click="goto('/')">
       {{$config.name}}
     </div>
     <div class="rigth_menu">
       <div class="menus">
-        <div class='menu'>
-          菜单
+        <div class='menu'
+          @click="goto('/')">
+          首页
         </div>
-        <div class='menu'>
-          菜单
+        <div class='menu'
+          @click="goto('/project')">
+          项目
         </div>
-        <div class='menu'>
-          菜单
+        <div class='menu'
+          @click="goto('/help')">
+          帮助
         </div>
-        <div class='menu'>
-          菜单
+        <div class='menu'
+          @click="goto('/about')">
+          关于
         </div>
       </div>
       <div class="nav-gap">
@@ -80,12 +85,18 @@ export default {
       this.$store.dispatch("user/logout");
       this.$message.success("注销登录成功");
     },
+    goto(path) {
+      if (this.$route.path == path) {
+        return;
+      }
+      this.$router.push({ path });
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.main {
+.iheader {
   display: flex;
   align-items: center;
   padding: 0 20px;
@@ -95,6 +106,7 @@ export default {
     font-size: 24px;
     line-height: 60px;
     padding-left: 30px;
+    cursor: pointer;
   }
   .rigth_menu {
     display: flex;
