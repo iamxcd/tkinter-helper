@@ -51,6 +51,12 @@ const actions = {
         reject(error)
       })
     })
+  },
+  logout({ commit }) {
+    commit('SET_TOKEN', '')
+    commit('SET_INFO', {})
+    commit('SET_SETINGS', {})
+    removeToken()
   }
 }
 

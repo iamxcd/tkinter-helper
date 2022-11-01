@@ -21,11 +21,25 @@
       <div class="nav-gap">
       </div>
       <div class="user">
-        <el-avatar v-if="isLogin"
-          :src="require('@/assets/avatar.png')"
-          @click.native="onClickAvatar()"
-          size="medium">
-        </el-avatar>
+        <div v-if="isLogin">
+          <el-dropdown class="export_btn"
+            size="medium"
+            placement="bottom-start"
+            @command="clickDropdown">
+            <el-avatar :src="require('@/assets/avatar.png')"
+              size="medium">
+            </el-avatar>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="info">
+                账户信息
+              </el-dropdown-item>
+              <el-dropdown-item command="logout">
+                注销登录
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+
         <span v-else
           @click="()=>{this.$emit('onClickLogin')}">登录</span>
 
@@ -48,6 +62,23 @@ export default {
   methods: {
     onClickAvatar() {
       this.$emit("onClickAvatar");
+    },
+    clickDropdown(cmd) {
+      console.log(cmd);
+      switch (cmd) {
+        case "info":
+          break;
+        case "logout":
+          this.logout();
+          break;
+
+        default:
+          break;
+      }
+    },
+    logout() {
+      this.$store.dispatch("user/logout");
+      this.$message.success("注销登录成功");
     },
   },
 };
