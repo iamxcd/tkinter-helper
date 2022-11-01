@@ -32,7 +32,12 @@ export default {
     UserCenter,
   },
   data() {
-    return {};
+    return {
+      paths: {
+        userCenter: "/user-center",
+        login: "/login",
+      },
+    };
   },
   created() {
     this.init();
@@ -44,10 +49,13 @@ export default {
       }
     },
     onClickLogin() {
-      this.$refs["LoginBox"].open();
+      this.goto("login");
     },
     onClickAvatar() {
-      this.$refs["UserCenter"].open();
+      this.goto("userCenter");
+    },
+    goto(to) {
+      this.$router.push({ path: this.paths[to] });
     },
   },
 };
