@@ -149,7 +149,7 @@ export function elementKeyDown(evt, attrsForm) {
  */
 export function elementShowMenu(event, index, frame) {
     event.preventDefault();
-    store.dispatch("showContextMenu", {
+    store.dispatch("app/showContextMenu", {
         x: event.clientX,
         y: event.clientY,
         index,
