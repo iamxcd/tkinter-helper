@@ -57,6 +57,7 @@ export default {
 .main {
   display: flex;
   align-items: center;
+  padding: 0 20px;
 
   .logo {
     flex: 1;

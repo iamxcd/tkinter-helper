@@ -1,18 +1,18 @@
 <template>
   <div class="home">
-    <el-container>
-      <el-header class="header">
+    <div>
+      <div class="header">
         <IHeader @onClickLogin="onClickLogin"
           @onClickAvatar="onClickAvatar"></IHeader>
-      </el-header>
-      <el-container style="height:calc(100vh - 60px - 40px - 1px);">
+      </div>
+      <div style="height:calc(100vh - 60px - 40px - 2px);">
         <router-view />
-      </el-container>
-      <el-footer class="footer"
+      </div>
+      <div class="footer"
         style="height: 40px;">
         <IFooter></IFooter>
-      </el-footer>
-    </el-container>
+      </div>
+    </div>
 
     <LoginBox ref="LoginBox"></LoginBox>
     <UserCenter ref="UserCenter"></UserCenter>

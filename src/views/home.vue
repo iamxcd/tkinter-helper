@@ -345,9 +345,8 @@ export default {
 
 <style lang="scss" scoped>
 .home {
-  display: flex;
-  flex-direction: column;
   width: 100%;
+  height: 100%;
   .toobar {
     display: flex;
     align-items: center;
@@ -379,6 +378,7 @@ export default {
     flex-basis: auto;
     box-sizing: border-box;
     min-width: 0;
+    height: calc(100% - 40px - 5px);
 
     .left_side,
     .right_side {
@@ -408,6 +408,9 @@ export default {
         padding-left: 10px;
         font-weight: 600;
         font-size: 14px;
+      }
+      &:last-child{
+        border-bottom: 1px solid #d1d1d1
       }
     }
     .el-collapse-item__header {
