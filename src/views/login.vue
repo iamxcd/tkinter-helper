@@ -5,6 +5,7 @@
         欢迎使用Tkinter布局助手
       </div>
       <el-tabs v-model="curTab"
+        stretch
         class="tabs"
         lazy
         @tab-click="handleClickTab">
@@ -46,8 +47,9 @@
           </el-form>
 
         </el-tab-pane>
-        <el-tab-pane label="注册"
-          name="register">
+        <el-tab-pane label="注册 [暂未开放]"
+          name="register"
+          disabled>
           <el-form ref="register_form"
             :model="registerForm">
             <el-form-item>
@@ -92,10 +94,10 @@
           </el-form>
         </el-tab-pane>
       </el-tabs>
-      <span class="footer">
+      <div class="footer">
         登录/注册即表示您已阅读并同意<a target="_blank"
           href="https://www.pytk.net/serve_and_privacy.html">服务条款</a>
-      </span>
+      </div>
     </div>
   </div>
 
@@ -184,7 +186,7 @@ export default {
   }
   .form-box {
     width: 400px;
-    padding: 0 20px 30px 20px;
+    padding: 0 20px 20px 20px;
     color: #606266;
     font-size: 14px;
     background: #fff;
@@ -208,6 +210,9 @@ export default {
       text-align: center;
       font-size: 12px;
       color: #9aa5b8;
+      a {
+        text-decoration: none;
+      }
     }
   }
 }
