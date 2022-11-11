@@ -15,12 +15,8 @@
           项目
         </div>
         <div class='menu'
-          @click="goto('/help')">
+          @click="help()">
           帮助
-        </div>
-        <div class='menu'
-          @click="goto('/about')">
-          关于
         </div>
         <div class='menu'
           @click="onClickGithub()">
@@ -98,6 +94,10 @@ export default {
       let url = "https://github.com/iamxcd/tkinter-helper";
       window.open(url);
     },
+    help() {
+      let url = "https://www.pytk.net/blog/1660703137.html";
+      window.open(url);
+    }
   },
 };
 </script>
