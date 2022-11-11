@@ -22,8 +22,12 @@
           @click="goto('/about')">
           关于
         </div>
-      </div>
-      <div class="nav-gap">
+        <div class='menu'
+          @click="onClickGithub()">
+          <img class="github-icon"
+            :src="require('@/assets/svg/github.svg')">
+          <img src="https://img.shields.io/github/stars/iamxcd/tkinter-helper.svg">
+        </div>
       </div>
       <div class="user">
         <div v-if="isLogin">
@@ -44,7 +48,6 @@
             </el-dropdown-menu>
           </el-dropdown>
         </div>
-
         <span v-else
           @click="()=>{this.$emit('onClickLogin')}">登录</span>
 
@@ -91,6 +94,10 @@ export default {
       }
       this.$router.push({ path });
     },
+    onClickGithub() {
+      let url = "https://github.com/iamxcd/tkinter-helper";
+      window.open(url);
+    },
   },
 };
 </script>
@@ -113,25 +120,19 @@ export default {
     align-items: center;
     .menus {
       display: flex;
+      text-align: center;
       cursor: pointer;
       .menu {
         width: 100px;
-      }
-    }
-    .nav-gap {
-      position: relative;
-      width: 1px;
-      padding: 0 20px;
-      &::before {
-        content: "";
-        position: absolute;
-        top: calc(50% - 8px);
-        width: 1px;
-        height: 20px;
-        background: #909399;
+        .github-icon {
+          width: 22px;
+          padding-right: 6px;
+        }
       }
     }
     .user {
+      width: 100px;
+      text-align: center;
       font-size: 16px;
       cursor: pointer;
     }

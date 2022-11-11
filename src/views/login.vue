@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <img class="left-img"
+      :src="require('@/assets/svg/login-bg.svg')">
     <div class="form-box">
       <div class="title">
         欢迎使用Tkinter布局助手
@@ -178,6 +180,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #fafafa;
+  .left-img {
+    width: 300px;
+    margin-right: 300px;
+  }
   .title {
     line-height: 24px;
     font-size: 18px;
