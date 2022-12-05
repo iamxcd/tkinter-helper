@@ -1,22 +1,56 @@
 <template>
   <div class="home">
     <div class="toobar">
+      <div class="info"
+        v-if="curProjectFileId">
+        <el-dropdown size="large">
+          <span class="name">
+            {{projectFile.name}}<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>黄金糕</el-dropdown-item>
+            <el-dropdown-item>狮子头</el-dropdown-item>
+            <el-dropdown-item>螺蛳粉</el-dropdown-item>
+            <el-dropdown-item disabled>双皮奶</el-dropdown-item>
+            <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <div class="save">
+          <el-tooltip class="item"
+            effect="dark"
+            :open-delay="openDelay"
+            content="保存"
+            placement="bottom">
+            <el-badge is-dot
+              type="warning">
+              <span class="icon-save icon iconfont"
+                @click="onClickSave()"></span>
+            </el-badge>
+          </el-tooltip>
+        </div>
+      </div>
+
+      <div class="divider"
+        v-if="curProjectFileId">
+        <el-divider direction="vertical"></el-divider>
+      </div>
       <div class="menu">
+
         <el-tooltip class="item"
           effect="dark"
           :open-delay="openDelay"
           content="查看代码"
           placement="bottom">
-          <i class="el-icon-document icon"
-            @click="viewCode()"></i>
+          <span class="icon-code icon iconfont"
+            @click="viewCode()"></span>
         </el-tooltip>
         <el-tooltip class="item"
           effect="dark"
           :open-delay="openDelay"
           content="预览效果"
           placement="bottom">
-          <i class="el-icon-view icon"
-            @click="preview()"></i>
+          <span class="icon-yunxin icon iconfont"
+            @click="preview()"></span>
         </el-tooltip>
 
         <el-tooltip class="item"
@@ -118,6 +152,9 @@ import { Base64 } from "js-base64";
 import { mapActions, mapGetters } from "vuex";
 import { preview } from "@/config.js";
 import { Loading } from "element-ui";
+import uniqid from "uniqid";
+import md5 from "md5";
+
 export default {
   components: {
     CodeView,
@@ -132,46 +169,96 @@ export default {
   data() {
     return {
       openDelay: 1000,
+      projectFile: {
+        id: null,
+        name: null,
+        md5: null,
+      },
     };
   },
   created() {
+    // 获取用户信息
+    if (this.token) {
+      this.$store.dispatch("user/getInfo");
+    }
+    // 获取文件信息
+    if (this.curProjectFileId) {
+      this.getProjectFileInfo();
+    }
+  },
+  mounted() {
     this.init();
   },
   computed: {
     ...mapGetters(["attrsForm", "contextMenu", "frame", "token"]),
+    curProjectFileId() {
+      return this.$route.query.fid;
+    },
+    isLogin() {
+      return this.$store.getters.userInfo?.id != null;
+    },
+    localFileMd5() {
+      let content = {
+        win: this.frame,
+      };
+      content = JSON.stringify(content);
+      content = Base64.encode(content);
+      return md5(content);
+    },
   },
   methods: {
     ...mapActions({ setFrame: "app/setFrame" }),
     isTk(tks) {
       return tks.indexOf(this.attrsForm.type) > -1;
     },
-    init() {
+    async init() {
+      // 获取本地缓存
       let win = localStorage.getItem("win");
       win = JSON.parse(win);
+      // url上有文件ID 并且 已经登录的情况
+      if (this.curProjectFileId && this.isLogin) {
+        try {
+          let data = await this.getProjectFileInfo();
+          if (data.tk == null || data.tk == "") {
+            throw new Error("tk无数据");
+          }
+          if (this.localFileMd5 == this.projectFile.md5) {
+            return;
+          }
+          let tk = Base64.decode(data.tk);
+          tk = JSON.parse(tk);
+          if (!tk.win) {
+            throw new Error("tk数据解析失败");
+          }
+          if (win != null) {
+            this.$confirm("当前本地存在缓存, 是否用云端数据覆盖?", "提示", {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning",
+            }).then(() => {
+              this.$store.dispatch("app/setFrame", tk.win);
+              win = tk.win;
+            });
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
       if (win != null) {
         this.$store.dispatch("app/setFrame", win);
       } else {
         win = this.frame;
       }
       this.$store.dispatch("app/setAttrsForm", win);
-      if (this.token) {
-        this.$store.dispatch("user/getInfo");
-      }
-      // this.qq_group();
     },
-    clearData() {
-      this.$confirm("此操作将会清空数据和缓存, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      }).then(() => {
-        this.elements = [];
-        localStorage.clear();
-        this.$message({
-          type: "success",
-          message: "删除成功!",
-        });
-      });
+    async getProjectFileInfo() {
+      const { data } = await this.$api.get(
+        `project-file/${this.curProjectFileId}`
+      );
+      this.$set(this.projectFile, "id", data.id);
+      this.$set(this.projectFile, "name", data.name);
+      this.$set(this.projectFile, "md5", md5(data.tk));
+      return data;
     },
     onClickExportTk() {
       // 创建隐藏的可下载链接
@@ -245,6 +332,18 @@ export default {
       let handler = new ContextMenuHandler(this.contextMenu, handlerName);
       handler.run();
     },
+    onClickSave() {
+      let content = {
+        win: this.frame,
+      };
+      content = JSON.stringify(content);
+      content = Base64.encode(content);
+      let id = this.curProjectFileId;
+      this.$api.put(`project-file/${id}`, { tk: content }).then((res) => {
+        this.$message.success("保存成功");
+        this.getProjectFileInfo();
+      });
+    },
     preview() {
       let tk_code = {
         win: this.frame,
@@ -293,14 +392,27 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        this.frame.elements = [];
-        this.frame.event_bind_list = [];
-        localStorage.clear();
+        this.frameRerest();
         this.$message({
           type: "success",
           message: "删除成功!",
         });
       });
+    },
+    frameRerest() {
+      localStorage.clear();
+      let frame = {
+        top: 20,
+        left: 60,
+        width: 600,
+        height: 500,
+        id: uniqid(),
+        type: "tk_win",
+        text: "我是标题 ~ Tkinter布局助手",
+        elements: [],
+        event_bind_list: [],
+      };
+      this.$store.dispatch("app/setFrame", frame);
     },
     clickDropdown(cmd) {
       console.log(cmd);
@@ -348,7 +460,29 @@ export default {
     justify-content: center;
     height: 40px;
     border-bottom: 1px solid #d1d1d1;
+    .info {
+      display: flex;
+      .name {
+        padding: 0 16px;
+        line-height: 24px;
+        font-size: 16px;
+        font-weight: 400;
+      }
+      .save {
+        margin: 0 16px;
+        color: #606266;
+        cursor: pointer;
+        .icon {
+          font-size: 24px;
+          font-weight: 400;
+        }
+      }
+    }
+    .divider {
+      margin: 0 5px;
+    }
     .menu {
+      display: flex;
       .icon {
         margin: 0 16px;
         font-size: 24px;

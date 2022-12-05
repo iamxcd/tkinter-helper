@@ -32,6 +32,7 @@ const state = {
     type: 'tk_win',
     text: "我是标题 ~ Tkinter布局助手",
     elements: [],
+    event_bind_list: []
   },
 }
 

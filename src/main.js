@@ -4,6 +4,7 @@ import components from './components/tk_widget/auto-reg.js'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import '@/assets/iconfont/iconfont.css'
 import store from './store'
 import config from "./config.js"
 import axios from "axios"

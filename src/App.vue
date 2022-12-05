@@ -54,7 +54,7 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-  border-bottom: 1px solid #d1d1d1;
+  background-color: #fff;
   box-shadow: 0 1px rgb(12 13 14 / 10%), 0 1px 6px rgb(60 65 70 / 10%);
 }
 .main {
@@ -83,5 +83,25 @@ body {
 
 .el-notification__content {
   user-select: text;
+}
+</style>
+
+<style>
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 0;
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.15);
+  transition: color 0.2s ease;
 }
 </style>

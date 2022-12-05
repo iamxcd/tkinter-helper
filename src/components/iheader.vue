@@ -85,7 +85,7 @@ export default {
       this.$message.success("注销登录成功");
     },
     goto(path) {
-      if (this.$route.path == path) {
+      if (this.$route.fullPath == path) {
         return;
       }
       this.$router.push({ path });
@@ -97,7 +97,7 @@ export default {
     help() {
       let url = "https://www.pytk.net/blog/1660703137.html";
       window.open(url);
-    }
+    },
   },
 };
 </script>

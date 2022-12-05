@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import { getToken, removeToken } from '@/utils/auth'
 import { baseURL } from '@/config'
 // create an axios instance
 const service = axios.create({
@@ -81,11 +81,13 @@ service.interceptors.response.use(
       return Promise.reject(error)
     }
     if (status == 401) {
+      removeToken()
       Message({
         message: '未登录',
         type: 'error',
         duration: 5 * 1000
       })
+      location.reload()
       return Promise.reject(error)
     }
     Message({

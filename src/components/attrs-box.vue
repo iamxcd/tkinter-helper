@@ -18,10 +18,12 @@
       <el-form-item label="height">
         <el-input v-model="attrsForm.height"></el-input>
       </el-form-item>
-      <el-form-item label="top">
+      <el-form-item v-if="!isWin"
+        label="top">
         <el-input v-model="attrsForm.top"></el-input>
       </el-form-item>
-      <el-form-item label="left">
+      <el-form-item v-if="!isWin"
+        label="left">
         <el-input v-model="attrsForm.left"></el-input>
       </el-form-item>
       <el-form-item v-if="attrsForm.text != null"
@@ -40,6 +42,9 @@ export default {
   },
   computed: {
     ...mapGetters(["attrsForm"]),
+    isWin() {
+      return this.attrsForm.type == "tk_win";
+    },
   },
 };
 </script>
