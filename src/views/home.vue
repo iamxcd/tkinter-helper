@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <ToolBar></ToolBar>
+    <ToolBar :isSaved="isSaved"
+      @updateInfo="getProjectFileInfo()"></ToolBar>
     <div class="main">
       <div class="left_side aside">
         <el-collapse class="collapse"
@@ -59,8 +60,6 @@ import ContextMenuHandler from "@/core/handler/context-menu-handler.js";
 import ToolBar from "@/components/toolbar.vue";
 import { Base64 } from "js-base64";
 import { mapActions, mapGetters } from "vuex";
-import { preview } from "@/config.js";
-import { Loading } from "element-ui";
 import md5 from "md5";
 
 export default {
@@ -83,7 +82,7 @@ export default {
       this.$store.dispatch("user/getInfo");
     }
     // 获取文件信息
-    if (this.curProjectFileId) {
+    if (this.curFile.id) {
       this.getProjectFileInfo();
     }
   },
@@ -91,20 +90,23 @@ export default {
     this.init();
   },
   computed: {
-    ...mapGetters(["attrsForm", "contextMenu", "frame", "token"]),
-    curProjectFileId() {
-      return this.$route.query.fid;
-    },
+    ...mapGetters(["attrsForm", "contextMenu", "frame", "token", "curFile"]),
     isLogin() {
       return this.$store.getters.userInfo?.id != null;
     },
-    localFileMd5() {
+    localMd5() {
       let content = {
         win: this.frame,
       };
       content = JSON.stringify(content);
       content = Base64.encode(content);
       return md5(content);
+    },
+    isSaved() {
+      if (!this.curFile?.id) {
+        return true;
+      }
+      return this.localMd5 == this.curFile.md5;
     },
   },
   methods: {
@@ -116,117 +118,71 @@ export default {
       // 获取本地缓存
       let win = localStorage.getItem("win");
       win = JSON.parse(win);
+
       // url上有文件ID 并且 已经登录的情况
-      if (this.curProjectFileId && this.isLogin) {
-        try {
-          let data = await this.getProjectFileInfo();
-          if (data.tk == null || data.tk == "") {
-            throw new Error("tk无数据");
-          }
-          if (this.localFileMd5 == this.projectFile.md5) {
-            return;
-          }
-          let tk = Base64.decode(data.tk);
-          tk = JSON.parse(tk);
-          if (!tk.win) {
-            throw new Error("tk数据解析失败");
-          }
-          if (win != null) {
-            this.$confirm("当前本地存在缓存, 是否用云端数据覆盖?", "提示", {
-              confirmButtonText: "确定",
-              cancelButtonText: "取消",
-              type: "warning",
-            }).then(() => {
-              this.$store.dispatch("app/setFrame", tk.win);
-              win = tk.win;
-            });
-          }
-        } catch (err) {
-          console.log(err);
+      if (this.curFile.id && this.isLogin) {
+        await this.setFileToFrame();
+      } else {
+        if (win != null) {
+          this.$store.dispatch("app/setFrame", win);
+        } else {
+          win = this.frame;
         }
       }
-      if (win != null) {
-        this.$store.dispatch("app/setFrame", win);
-      } else {
-        win = this.frame;
-      }
-      this.$store.dispatch("app/setAttrsForm", win);
+      this.$store.dispatch("app/setAttrsForm", this.frame);
     },
     async getProjectFileInfo() {
-      const { data } = await this.$api.get(
-        `project-file/${this.curProjectFileId}`
-      );
-      this.$set(this.projectFile, "id", data.id);
-      this.$set(this.projectFile, "name", data.name);
-      this.$set(this.projectFile, "md5", md5(data.tk));
+      const { data } = await this.$api.get(`project-file/${this.curFile.id}`);
+      this.$store.dispatch("app/setCurFileInfo", {
+        id: data.id,
+        name: data.name,
+        md5: data.tk == null ? null : md5(data.tk),
+      });
       return data;
     },
-
-    onClickLogin() {
-      this.$refs["LoginBox"].open();
-    },
-    onClickAvatar() {
-      this.$refs["UserCenter"].open();
-    },
-
     contextMenuHandler(handlerName) {
       let handler = new ContextMenuHandler(this.contextMenu, handlerName);
       handler.run();
     },
-    onClickSave() {
-      let content = {
-        win: this.frame,
-      };
-      content = JSON.stringify(content);
-      content = Base64.encode(content);
-      let id = this.curProjectFileId;
-      this.$api.put(`project-file/${id}`, { tk: content }).then((res) => {
-        this.$message.success("保存成功");
-        this.getProjectFileInfo();
-      });
-    },
-    preview() {
-      let tk_code = {
-        win: this.frame,
-      };
-      tk_code = JSON.stringify(tk_code);
-
-      let loadingInstance = Loading.service();
-      this.$http
-        .post(preview.url, tk_code, {
-          headers: {
-            "Content-Type": "text/plain",
-          },
-        })
-        .then((res) => {
-          loadingInstance.close();
-          this.$message.success("发送成功");
-          this.checkVersion();
-        })
-        .catch((err) => {
-          loadingInstance.close();
-          this.$alert(
-            "预览服务未启动，请按照<a href='https://www.pytk.net/tkinter-helper-preview.html'>说明文档</a>，启动后在尝试。",
-            "服务未启动",
-            {
-              dangerouslyUseHTMLString: true,
-            }
-          );
-        });
-    },
-    checkVersion() {
-      this.$http.get(preview.url).then((res) => {
-        if (res.data.version != preview.version) {
-          this.$alert(
-            "预览服务非最新版本，某些功能上可能不一致，请按照<a href='https://www.pytk.net/tkinter-helper-preview.html'>说明文档</a>进行升级。",
-            "版本不一致",
-            {
-              dangerouslyUseHTMLString: true,
-            }
-          );
+    async setFileToFrame() {
+      try {
+        let data = await this.getProjectFileInfo();
+        if (data.tk == null || data.tk == "") {
+          throw new Error("tk无数据");
         }
-      });
+        if (this.localMd5 == this.curFile.md5) {
+          return;
+        }
+        let tk = Base64.decode(data.tk);
+        tk = JSON.parse(tk);
+        if (!tk.win) {
+          throw new Error("tk数据解析失败");
+        }
+        if (win != null) {
+          this.$confirm("当前本地存在缓存, 是否用云端数据覆盖?", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning",
+          }).then(() => {
+            this.$store.dispatch("app/setFrame", tk.win);
+          });
+        }
+      } catch (err) {
+        console.log(err);
+      }
     },
+  },
+  beforeRouteLeave: function (to, from, next) {
+    if (!this.isSaved) {
+      next(false);
+      this.$confirm("您还未保存简介，确定需要提出吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+        next();
+      });
+    }
   },
 };
 </script>

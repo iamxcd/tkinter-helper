@@ -1,5 +1,5 @@
 import uniqid from 'uniqid'
-
+import { getCurFile, saveCurFile } from "@/utils/helper"
 const state = {
   curId: 'win',
   attrsForm: {},
@@ -34,6 +34,7 @@ const state = {
     elements: [],
     event_bind_list: []
   },
+  curFile: getCurFile()
 }
 
 const mutations = {
@@ -42,6 +43,9 @@ const mutations = {
   },
   SET_FRAME(state, frame) {
     state.frame = frame
+  },
+  SET_CUR_FILE(state, file) {
+    state.curFile = file
   },
   SET_ATTRS_FORM(state, form) {
     state.attrsForm = form
@@ -70,6 +74,10 @@ const actions = {
   },
   setFrame({ commit }, frame) {
     commit("SET_FRAME", frame)
+  },
+  setCurFileInfo({ commit }, file) {
+    commit("SET_CUR_FILE", file)
+    saveCurFile(file)
   }
 }
 

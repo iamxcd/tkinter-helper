@@ -5,5 +5,6 @@ const getters = {
   frame: (state) => state.app.frame,
   token: (state) => state.user.token,
   userInfo: (state) => state.user.info,
+  curFile: (state) => state.app.curFile
 }
 export default getters

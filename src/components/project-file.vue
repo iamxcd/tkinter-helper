@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import md5 from "md5";
+
 export default {
   data() {
     return {
@@ -100,11 +102,13 @@ export default {
       });
     },
     handleDesign(index, row) {
+      this.$store.dispatch("setCurFileInfo", {
+        id: row.id,
+        name: row.name,
+        md5: row.tk == null ? null : md5(row.tk),
+      });
       this.$router.push({
         path: "/",
-        query: {
-          fid: row.id,
-        },
       });
     },
     handleEdit(index, row) {},

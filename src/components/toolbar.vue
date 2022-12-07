@@ -1,26 +1,17 @@
 <template>
   <div class="toolbar">
     <div class="info"
-      v-if="curProjectFileId">
-      <el-dropdown size="large">
-        <span class="name">
-          {{projectFile.name}}<i class="el-icon-arrow-down el-icon--right"></i>
-        </span>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>黄金糕</el-dropdown-item>
-          <el-dropdown-item>狮子头</el-dropdown-item>
-          <el-dropdown-item>螺蛳粉</el-dropdown-item>
-          <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-          <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      v-if="curFile.id">
+      <div class="name">
+        <span>{{curFile.name}}</span>
+      </div>
       <div class="save">
         <el-tooltip class="item"
           effect="dark"
           :open-delay="openDelay"
           content="保存"
           placement="bottom">
-          <el-badge is-dot
+          <el-badge :is-dot="!isSaved"
             type="warning">
             <span class="icon-save icon iconfont"
               @click="onClickSave()"></span>
@@ -30,7 +21,7 @@
     </div>
 
     <div class="divider"
-      v-if="curProjectFileId">
+      v-if="curFile.id">
       <el-divider direction="vertical"></el-divider>
     </div>
     <div class="menu">
@@ -100,26 +91,26 @@ import { mapGetters } from "vuex";
 import md5 from "md5";
 import CodeView from "@/components/code-view.vue";
 import uniqid from "uniqid";
+import { preview } from "@/config.js";
+import { Loading } from "element-ui";
 
 export default {
+  props: {
+    isSaved: {
+      type: Boolean,
+      default: true,
+    },
+  },
   components: {
     CodeView,
   },
   data() {
     return {
       openDelay: 1000,
-      projectFile: {
-        id: null,
-        name: null,
-        md5: null,
-      },
     };
   },
   computed: {
-    ...mapGetters(["attrsForm", "contextMenu", "frame", "token"]),
-    curProjectFileId() {
-      return this.$route.query.fid;
-    },
+    ...mapGetters(["attrsForm", "contextMenu", "frame", "token", "curFile"]),
     isLogin() {
       return this.$store.getters.userInfo?.id != null;
     },
@@ -234,6 +225,64 @@ export default {
       // console.log(file);
       return false;
     },
+    onClickSave() {
+      if (this.isSaved) {
+        this.$message.warning("当前修改已保存");
+        return;
+      }
+      let content = {
+        win: this.frame,
+      };
+      content = JSON.stringify(content);
+      content = Base64.encode(content);
+      let id = this.curFile.id;
+      this.$api.put(`project-file/${id}`, { tk: content }).then((res) => {
+        this.$message.success("保存成功");
+        this.$emit("updateInfo");
+      });
+    },
+    preview() {
+      let tk_code = {
+        win: this.frame,
+      };
+      tk_code = JSON.stringify(tk_code);
+
+      let loadingInstance = Loading.service();
+      this.$http
+        .post(preview.url, tk_code, {
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        })
+        .then((res) => {
+          loadingInstance.close();
+          this.$message.success("发送成功");
+          this.checkVersion();
+        })
+        .catch((err) => {
+          loadingInstance.close();
+          this.$alert(
+            "预览服务未启动，请按照<a href='https://www.pytk.net/tkinter-helper-preview.html'>说明文档</a>，启动后在尝试。",
+            "服务未启动",
+            {
+              dangerouslyUseHTMLString: true,
+            }
+          );
+        });
+    },
+    checkVersion() {
+      this.$http.get(preview.url).then((res) => {
+        if (res.data.version != preview.version) {
+          this.$alert(
+            "预览服务非最新版本，某些功能上可能不一致，请按照<a href='https://www.pytk.net/tkinter-helper-preview.html'>说明文档</a>进行升级。",
+            "版本不一致",
+            {
+              dangerouslyUseHTMLString: true,
+            }
+          );
+        }
+      });
+    },
   },
 };
 </script>
@@ -252,6 +301,9 @@ export default {
       line-height: 24px;
       font-size: 16px;
       font-weight: 400;
+      span {
+        padding-right: 5px;
+      }
     }
     .save {
       margin: 0 16px;
