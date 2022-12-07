@@ -1,7 +1,7 @@
 <template>
   <div class="toolbar">
     <div class="info"
-      v-if="curFile.id">
+      v-if="curFile.id && isLogin">
       <div class="name">
         <span>{{curFile.name}}</span>
       </div>
@@ -21,7 +21,7 @@
     </div>
 
     <div class="divider"
-      v-if="curFile.id">
+      v-if="curFile.id && isLogin">
       <el-divider direction="vertical"></el-divider>
     </div>
     <div class="menu">

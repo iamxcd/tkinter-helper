@@ -22,7 +22,6 @@
           @click="onClickGithub()">
           <img class="github-icon"
             :src="require('@/assets/svg/github.svg')">
-          <img src="https://img.shields.io/github/stars/iamxcd/tkinter-helper.svg">
         </div>
       </div>
       <div class="user">
@@ -126,7 +125,6 @@ export default {
         width: 100px;
         .github-icon {
           width: 22px;
-          padding-right: 6px;
         }
       }
     }

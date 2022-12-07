@@ -82,7 +82,7 @@ export default {
       this.$store.dispatch("user/getInfo");
     }
     // 获取文件信息
-    if (this.curFile.id) {
+    if (this.curFile.id && this.isLogin) {
       this.getProjectFileInfo();
     }
   },
