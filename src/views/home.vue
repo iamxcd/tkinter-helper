@@ -10,10 +10,10 @@
             name="widget">
             <WidgetBox></WidgetBox>
           </el-collapse-item>
-          <!-- <el-collapse-item title="组件树"
-              name="tree">
-              开发中
-            </el-collapse-item> -->
+          <el-collapse-item title="组件层级"
+            name="tree">
+            <WidgetTree :widget="frame"></WidgetTree>
+          </el-collapse-item>
         </el-collapse>
       </div>
       <div class='center'>
@@ -58,6 +58,7 @@ import ColumnsEditBox from "@/components/columns-edit-box.vue";
 import VueContextMenu from "@/components/VueContextMenu/VueContextMenu.vue";
 import ContextMenuHandler from "@/core/handler/context-menu-handler.js";
 import ToolBar from "@/components/toolbar.vue";
+import WidgetTree from "@/components/widget-tree.vue";
 import { Base64 } from "js-base64";
 import { mapActions, mapGetters } from "vuex";
 import md5 from "md5";
@@ -72,6 +73,7 @@ export default {
     OptionsBox,
     ColumnsEditBox,
     ToolBar,
+    WidgetTree,
   },
   data() {
     return {};
@@ -220,6 +222,7 @@ export default {
 
 <style lang="scss">
 .aside {
+  overflow-y: scroll;
   .collapse {
     border: 1px solid #d1d1d1;
     background-color: #fff;

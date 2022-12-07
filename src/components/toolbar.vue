@@ -90,10 +90,9 @@ import { Base64 } from "js-base64";
 import { mapGetters } from "vuex";
 import md5 from "md5";
 import CodeView from "@/components/code-view.vue";
-import uniqid from "uniqid";
 import { preview } from "@/config.js";
 import { Loading } from "element-ui";
-
+import { win_default } from "@/core/widget-list";
 export default {
   props: {
     isSaved: {
@@ -139,17 +138,7 @@ export default {
     },
     frameRerest() {
       localStorage.clear();
-      let frame = {
-        top: 20,
-        left: 60,
-        width: 600,
-        height: 500,
-        id: uniqid(),
-        type: "tk_win",
-        text: "我是标题 ~ Tkinter布局助手",
-        elements: [],
-        event_bind_list: [],
-      };
+      let frame = win_default();
       this.$store.dispatch("app/setFrame", frame);
     },
     clickDropdown(cmd) {

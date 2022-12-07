@@ -1,5 +1,5 @@
-import uniqid from 'uniqid'
 import { getCurFile, saveCurFile } from "@/utils/helper"
+import { win_default } from "@/core/widget-list"
 const state = {
   curId: 'win',
   attrsForm: {},
@@ -23,17 +23,7 @@ const state = {
       },
     ],
   },
-  frame: {
-    top: 20,
-    left: 60,
-    width: 600,
-    height: 500,
-    id: uniqid(),
-    type: 'tk_win',
-    text: "我是标题 ~ Tkinter布局助手",
-    elements: [],
-    event_bind_list: []
-  },
+  frame: win_default(),
   curFile: getCurFile()
 }
 

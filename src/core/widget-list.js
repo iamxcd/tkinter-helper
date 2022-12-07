@@ -1,4 +1,5 @@
 import _ from "lodash"
+import uniqid from "uniqid";
 
 const conmon = {
     virtual_events: [],// 虚拟事件,
@@ -8,6 +9,21 @@ const conmon = {
             'intro': '继承父组件(默认)'
         }
     ]
+}
+
+export const win_default = () => {
+    return {
+        top: 20,
+        left: 60,
+        width: 600,
+        height: 500,
+        id: uniqid(),
+        type: 'tk_win',
+        text: "Tkinter布局助手",
+        frame: true,
+        elements: [],
+        event_bind_list: []
+    }
 }
 
 const widget = [

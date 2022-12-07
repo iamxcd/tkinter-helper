@@ -81,7 +81,7 @@ export default {
     },
     logout() {
       this.$store.dispatch("user/logout");
-      this.$message.success("注销登录成功");
+      this.$message.success("退出成功");
     },
     goto(path) {
       if (this.$route.fullPath == path) {
