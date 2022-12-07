@@ -165,6 +165,9 @@ export function elementShowMenu(event, index, frame) {
  * @returns 
  */
 export function isShowTabElement(frame, ele) {
+    if (!ele.is_show) {
+        return false
+    }
     if (frame.type != "tk_tabs") {
         return true;
     }

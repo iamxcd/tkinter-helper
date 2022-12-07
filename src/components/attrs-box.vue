@@ -5,29 +5,33 @@
       size="mini"
       label-position="left"
       :model="attrsForm"
-      label-width="50px">
-      <el-form-item label="ID"
+      label-width="70px">
+      <el-form-item label="组件ID"
         v-if="attrsForm.id != null">
         <el-input v-model="attrsForm.id">
           <template slot="prepend">{{attrsForm.type}}</template>
         </el-input>
       </el-form-item>
-      <el-form-item label="width">
+      <el-form-item label="宽度">
         <el-input v-model="attrsForm.width"></el-input>
       </el-form-item>
-      <el-form-item label="height">
+      <el-form-item label="高度">
         <el-input v-model="attrsForm.height"></el-input>
       </el-form-item>
       <el-form-item v-if="!isWin"
-        label="top">
+        label="距顶距离">
         <el-input v-model="attrsForm.top"></el-input>
       </el-form-item>
       <el-form-item v-if="!isWin"
-        label="left">
+        label="距左距离">
         <el-input v-model="attrsForm.left"></el-input>
       </el-form-item>
+      <el-form-item label="显示组件"
+        v-if="!isWin">
+        <el-switch v-model="attrsForm.is_show"></el-switch>
+      </el-form-item>
       <el-form-item v-if="attrsForm.text != null"
-        label="text">
+        label="文字">
         <el-input v-model="attrsForm.text"></el-input>
       </el-form-item>
     </el-form>

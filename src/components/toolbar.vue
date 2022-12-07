@@ -92,7 +92,7 @@ import md5 from "md5";
 import CodeView from "@/components/code-view.vue";
 import { preview } from "@/config.js";
 import { Loading } from "element-ui";
-import { win_default } from "@/core/widget-list";
+import { win_default } from "@/core/py-attrs";
 export default {
   props: {
     isSaved: {

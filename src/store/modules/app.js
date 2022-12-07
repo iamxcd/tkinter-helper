@@ -1,5 +1,5 @@
 import { getCurFile, saveCurFile } from "@/utils/helper"
-import { win_default } from "@/core/widget-list"
+import { win_default } from "@/core/py-attrs";
 const state = {
   curId: 'win',
   attrsForm: {},

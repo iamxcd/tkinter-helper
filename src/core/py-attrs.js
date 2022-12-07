@@ -1,9 +1,28 @@
+import uniqid from "uniqid";
+
 // 通用属性
 const common_attr = {
     top: 0,
     left: 0,
-    width: 0
+    width: 0,
+    is_show: true, // 布局时 是否展示
 }
+
+export const win_default = () => {
+    return {
+        top: 20,
+        left: 60,
+        width: 600,
+        height: 500,
+        id: uniqid(),
+        type: 'tk_win',
+        text: "Tkinter布局助手",
+        frame: true,
+        elements: [],
+        event_bind_list: []
+    }
+}
+
 export default class Attrs {
     tk_button() {
         return {
