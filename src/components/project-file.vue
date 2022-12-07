@@ -102,7 +102,7 @@ export default {
       });
     },
     handleDesign(index, row) {
-      this.$store.dispatch("setCurFileInfo", {
+      this.$store.dispatch("app/setCurFileInfo", {
         id: row.id,
         name: row.name,
         md5: row.tk == null ? null : md5(row.tk),

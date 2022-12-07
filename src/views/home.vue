@@ -172,7 +172,7 @@ export default {
       }
     },
   },
-  beforeRouteLeave: function (to, from, next) {
+  beforeRouteLeave(to, from, next) {
     if (!this.isSaved) {
       next(false);
       this.$confirm("您还未保存简介，确定需要提出吗?", "提示", {
@@ -182,6 +182,8 @@ export default {
       }).then(() => {
         next();
       });
+    } else {
+      next();
     }
   },
 };
