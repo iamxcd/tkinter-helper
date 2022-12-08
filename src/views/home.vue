@@ -111,6 +111,17 @@ export default {
       return this.localMd5 == this.curFile.md5;
     },
   },
+  watch: {
+    "curFile.id": {
+      // 处理切换项目文件情况 监听ID变化后,获取数据覆盖本地
+      handler(val, oldval) {
+        if (val != oldval && this.curFile.id && this.isLogin) {
+          this.setFileToFrame();
+        }
+      },
+      deep: true,
+    },
+  },
   methods: {
     ...mapActions({ setFrame: "app/setFrame" }),
     isTk(tks) {
@@ -161,7 +172,7 @@ export default {
           throw new Error("tk数据解析失败");
         }
         if (win != null) {
-          this.$confirm("当前本地存在缓存, 是否用云端数据覆盖?", "提示", {
+          this.$confirm("当前本地存在缓存, 是否覆盖?", "提示", {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
             type: "warning",
@@ -177,7 +188,7 @@ export default {
   beforeRouteLeave(to, from, next) {
     if (!this.isSaved) {
       next(false);
-      this.$confirm("您还未保存简介，确定需要提出吗?", "提示", {
+      this.$confirm("您还未保存文件，确定离开吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
