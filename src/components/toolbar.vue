@@ -71,9 +71,16 @@
           </el-dropdown-item>
           <el-dropdown-item>
             <el-upload action=""
-              :before-upload="beforeUpload"
+              :before-upload="importTk"
               :limit="1">
               导入布局文件
+            </el-upload>
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <el-upload action=""
+              :before-upload="importTkAndFix"
+              :limit="1">
+              导入并修复布局
             </el-upload>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -93,6 +100,7 @@ import CodeView from "@/components/code-view.vue";
 import { preview } from "@/config.js";
 import { Loading } from "element-ui";
 import { win_default } from "@/core/py-attrs";
+import Attrs from "@/core/py-attrs";
 export default {
   props: {
     isSaved: {
@@ -193,7 +201,47 @@ export default {
       let code = t.build();
       this.$refs["code_view"].open(code);
     },
-    beforeUpload(file) {
+    importTkAndFix(file) {
+      let reader = new FileReader();
+      reader.readAsText(file, "utf8");
+      reader.onload = () => {
+        // console.log(res);
+        try {
+          let info = reader.result;
+          info = Base64.decode(info);
+          info = JSON.parse(info);
+          if (!info.win) {
+            throw new Error();
+          }
+          console.log("开始修复");
+          let attrs = new Attrs();
+          console.log(attrs);
+          let win = this.fixTk(info.win, attrs);
+          console.log(win);
+          this.$store.dispatch("app/setFrame", win);
+          this.$message.success("数据导入成功");
+        } catch (error) {
+          throw error;
+          this.$message.error("文件解析错误");
+        }
+      };
+      // console.log(file);
+      return false;
+    },
+    fixTk(ele, attrs) {
+      if (ele?.elements) {
+        for (const key in ele.elements) {
+          ele.elements[key] = this.fixTk(ele.elements[key], attrs);
+        }
+      }
+      if (ele.type == "tk_win" || !ele.type) {
+        ele = { ...win_default(), ...ele };
+      } else {
+        ele = { ...attrs[ele.type](), ...ele };
+      }
+      return ele;
+    },
+    importTk(file) {
       let reader = new FileReader();
       reader.readAsText(file, "utf8");
       reader.onload = () => {
