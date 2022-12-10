@@ -30,7 +30,8 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: 'history'
 })
 
 const whiteList = ['/login', '/about', '/help', '/']

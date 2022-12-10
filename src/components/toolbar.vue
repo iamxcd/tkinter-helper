@@ -101,6 +101,7 @@ import { preview } from "@/config.js";
 import { Loading } from "element-ui";
 import { win_default } from "@/core/py-attrs";
 import Attrs from "@/core/py-attrs";
+import config from "@/config";
 export default {
   props: {
     isSaved: {
@@ -169,6 +170,7 @@ export default {
       // 字符内容转变成blob地址
       let content = {
         win: this.frame,
+        ...config,
       };
       content = JSON.stringify(content);
       content = Base64.encode(content);
