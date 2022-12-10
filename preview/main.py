@@ -12,7 +12,7 @@ from pystray import MenuItem
 # 版本号
 from generate_win import GenerateWin
 
-version = "2.1.2"
+version = "2.2.0"
 # 预览服务默认地址
 host = ("127.0.0.1", 12300)
 

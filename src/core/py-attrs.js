@@ -5,6 +5,7 @@ const common_attr = {
     top: 0,
     left: 0,
     width: 0,
+    event_bind_list: [],
     is_show: true, // 布局时 是否展示
 }
 
@@ -19,7 +20,8 @@ export const win_default = () => {
         text: "Tkinter布局助手",
         frame: true,
         elements: [],
-        event_bind_list: []
+        event_bind_list: [],
+        menus: []
     }
 }
 

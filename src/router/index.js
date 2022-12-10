@@ -31,7 +31,8 @@ const routes = [
 
 const router = new VueRouter({
   routes,
-  mode: 'history'
+  mode: 'history',
+  base: '/tkinter-helper/'
 })
 
 const whiteList = ['/login', '/about', '/help', '/']

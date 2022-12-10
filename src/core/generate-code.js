@@ -23,6 +23,8 @@ export default class GenerateCode {
         code += this.py.depend_package()
         code += this.create_class(this.frame)
         code += this.py.create_class('Win(WinGUI)')
+        code += this.create_menu(this.frame.menus)
+        code += this.create_menu_func(this.frame.menus)
         code += this.event_bind('self', this.frame)
         code += this.py.main(this.frame)
         return code
@@ -51,6 +53,29 @@ export default class GenerateCode {
         return code
     }
 
+    create_menu(menus) {
+        let code = ""
+        for (const key in menus) {
+            if (menus[key]?.children) {
+                code += this.py.create_submenu(menus[key].children, menus[key].id)
+            }
+        }
+        code += this.py.create_menu(menus)
+        return code
+    }
+    create_menu_func(menus) {
+        let code = ""
+        for (const key in menus) {
+            if (menus[key]?.children) {
+                code += this.create_menu_func(menus[key]?.children)
+            } else {
+                if (menus[key].call) {
+                    code += this.py.create_menu_func(menus[key].call)
+                }
+            }
+        }
+        return code
+    }
     event_bind(key, frame) {
         let code = ''
         let list = this.find_bind_list(key, frame)

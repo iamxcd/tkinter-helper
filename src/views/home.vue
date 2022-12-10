@@ -21,7 +21,7 @@
       </div>
       <div class="right_side aside">
         <el-collapse class="collapse"
-          :value="['attr','event','options','table']">
+          :value="['attr','event','options','table','menu']">
           <el-collapse-item title="组件配置"
             name="attr">
             <AttrsBox></AttrsBox>
@@ -30,6 +30,11 @@
             title="选项设置"
             name="options">
             <OptionsBox></OptionsBox>
+          </el-collapse-item>
+          <el-collapse-item v-if="isTk(['tk_win'])"
+            title="菜单设置"
+            name="menu">
+            <MenuEditBox></MenuEditBox>
           </el-collapse-item>
           <el-collapse-item v-if="isTk(['tk_table'])"
             title="表头设置"
@@ -55,6 +60,7 @@ import Elements from "@/components/elements.vue";
 import EventBind from "@/components/event-bind.vue";
 import OptionsBox from "@/components/options-box.vue";
 import ColumnsEditBox from "@/components/columns-edit-box.vue";
+import MenuEditBox from "@/components/menu-edit-box.vue";
 import VueContextMenu from "@/components/VueContextMenu/VueContextMenu.vue";
 import ContextMenuHandler from "@/core/handler/context-menu-handler.js";
 import ToolBar from "@/components/toolbar.vue";
@@ -74,6 +80,7 @@ export default {
     ColumnsEditBox,
     ToolBar,
     WidgetTree,
+    MenuEditBox,
   },
   data() {
     return {};

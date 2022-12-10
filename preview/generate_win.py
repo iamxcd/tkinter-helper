@@ -1,5 +1,6 @@
 import json
 from operator import methodcaller
+from tkinter import Menu
 
 from pytpl.base_tpl import BaseTpl
 from pytpl.frame_tpl import FrameTpl
@@ -21,8 +22,8 @@ class GenerateWin:
         win = self.tk_json['win']
         root = WinTpl().make(win)
         root.attributes("-topmost", True)
-
         self.create_elements(win['elements'], root)
+        root.config(menu=self.create_menu(win['menus'], root))
         root.mainloop()
 
     def create_elements(self, elements, root):
@@ -42,6 +43,26 @@ class GenerateWin:
             else:
                 caller = methodcaller(ele['type'], ele)
                 caller(base_tpl)
+
+    def create_menu(self, menus, root):
+        menu_obj = Menu(root, tearoff=False)
+        for menu in menus:
+            if 'children' in menu.keys():
+                submenu = self.create_submenu(menu['children'], menu_obj)
+                menu_obj.add_cascade(label=menu['name'], menu=submenu)
+            else:
+                menu_obj.add_command(label=menu['name'])
+        return menu_obj
+
+    def create_submenu(self, menus, parent):
+        menu_obj = Menu(parent, tearoff=False)
+        for menu in menus:
+            if 'children' in menu.keys():
+                submenu = self.create_submenu(menu['children'], menu_obj)
+                menu_obj.add_cascade(label=menu['name'], menu=submenu)
+            else:
+                menu_obj.add_command(label=menu['name'])
+        return menu_obj
 
 
 if __name__ == "__main__":
