@@ -1,8 +1,14 @@
+import config from "@/config"
 export default class PyCode {
 
     // 依赖包
     depend_package() {
-        return `
+        return `"""
+本代码由[${config.name}]生成
+当前版本:${config.version}
+官网:${config.web}
+QQ交流群:${config.qq_group}
+"""
 from tkinter import *
 from tkinter.ttk import *
 `

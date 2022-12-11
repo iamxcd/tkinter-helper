@@ -144,10 +144,7 @@ npm run build
 
 QQ群: 788392508
 
-## 支持作者
-如果本项目有帮助到您，不妨给开发者加个鸡腿吧！
-
-<div style="text-align: center">
-<img src="https://www.pytk.net/uploads/2022/07/68881986a43ee71f.jpg" style="height:300px;display:inline;" /> 
-<img src="https://www.pytk.net/uploads/2022/07/a1c1e6a4c1334d8a.jpg" style="height:300px;display:inline;margin-left:60px" /> 
-<div>
+## 项目定位以及开源说明
+当第一次接触到Tkinter，觉得它很方便，兼容性也挺不错，而且是Python自带的，用来写小工具挺不错。
+后来为了方便设计界面，我开发了Tkinter布局助手，并且开源了(个人用户开源免费使用，如需商用请联系作者授权)。
+由于Tkinter本身的不足和我并非要打造一款专业的设计软件，所以我给它的定位是：面向非专业桌面开发人员、Python爱好者等，并且主要是用于小工具开发，所以一些复杂的组件或其他的布局方式将不会去支持。[布局助手使用说明看这](https://www.pytk.net/blog/1660703137.html)
