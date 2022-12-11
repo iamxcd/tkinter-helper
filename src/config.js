@@ -7,7 +7,7 @@ export const baseURL = 'https://v1.pytk.net/api';
 
 export default {
     name: 'Tkinter布局助手',
-    web: 'https://pytk.net/tkinter-helper',
+    web: 'https://www.pytk.net/tkinter-helper',
     github: 'https://github.com/iamxcd/tkinter-helper',
     gitee: 'https://gitee.com/iamxcd/tkinter-helper',
     version: '2.5.1',
