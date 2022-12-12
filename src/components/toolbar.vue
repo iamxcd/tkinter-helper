@@ -72,6 +72,7 @@
           <el-dropdown-item>
             <el-upload action=""
               :before-upload="importTk"
+              accept=".tk"
               :limit="1">
               导入布局文件
             </el-upload>
@@ -79,6 +80,7 @@
           <el-dropdown-item>
             <el-upload action=""
               :before-upload="importTkAndFix"
+              accept=".tk"
               :limit="1">
               导入并修复布局
             </el-upload>
