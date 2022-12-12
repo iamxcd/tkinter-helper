@@ -151,7 +151,6 @@ export default {
       this.$store.dispatch("app/setFrame", frame);
     },
     clickDropdown(cmd) {
-      console.log(cmd);
       switch (cmd) {
         case "onClickExportTk":
           this.onClickExportTk();

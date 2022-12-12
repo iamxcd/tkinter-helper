@@ -20,8 +20,10 @@ export default class GenerateCode {
     }
     build() {
         let code = ''
+        // WinGUI 主要负责布局
         code += this.py.depend_package()
         code += this.create_class(this.frame)
+        // Win类 主要负责事件绑定 目录设置
         code += this.py.create_class('Win(WinGUI)')
         code += this.create_menu(this.frame.menus)
         code += this.create_menu_func(this.frame.menus)
@@ -33,17 +35,17 @@ export default class GenerateCode {
     create_class(frame) {
         let code = ""
         code = this.maps[frame.type].make(frame, frame.elements)
+        //  选出不是容器的组件 生成代码 除tk_tabs类型的容器
         let elements = _.filter(frame.elements, function (e) {
             return !e.frame
         })
-
         if (frame.type != "tk_tabs") {
             for (const key in elements) {
                 let tmp = elements[key]
                 code += this.tp[tmp.type](tmp)
             }
         }
-
+        // 选出是容器的组件 再次递归执行create_class
         let frames = _.filter(frame.elements, function (e) {
             return e.frame == true
         })

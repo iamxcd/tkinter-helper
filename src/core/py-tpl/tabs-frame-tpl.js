@@ -42,11 +42,11 @@ ${tabs_frame}
 
             for (const key in elements) {
                 let tmp = elements[key]
+                // 容器组件不再重复生成代码
                 if (tmp.frame) {
-                    code += frame_tp.make(tmp, tmp.elements)
-                } else {
-                    code += base_tp[tmp.type](tmp)
+                    continue
                 }
+                code += base_tp[tmp.type](tmp)
             }
         }
 

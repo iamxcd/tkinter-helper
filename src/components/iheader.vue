@@ -67,7 +67,6 @@ export default {
       this.$emit("onClickAvatar");
     },
     clickDropdown(cmd) {
-      console.log(cmd);
       switch (cmd) {
         case "info":
           break;

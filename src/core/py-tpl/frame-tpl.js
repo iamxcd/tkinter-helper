@@ -17,7 +17,7 @@ class Frame_${frame.id}(Frame):
 
     frame(frame) {
         let place = `self.place(x=${frame.left}, y=${frame.top}, width=${frame.width}, height=${frame.height})`
-        if (!frame.width | !frame.height) {
+        if (!frame.width || !frame.height) {
             place = ""
         }
         return `
