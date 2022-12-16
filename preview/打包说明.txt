@@ -1,6 +1,17 @@
+## 首先你本地要正常安装了python
+开发环境是3.8
 
- 
-## 创建虚拟环境
+## 安装依赖
+
+当前目录下 requirements.txt 记录了当前插件的依赖信息，执行以下程序即可安装。
+
+pip install -r requirements.txt
+
 
 ## 打包命令
+
 pyinstaller -w .\main.py --add-data "static;static" -i .\static\img.png -n "tkinter布局助手预览服务"
+
+如果执行完没有报错，就打包成功了。找到dist目录下的程序执行即可。
+
+更多信息详见： https://www.pytk.net/tkinter-helper-preview.html
